@@ -1,0 +1,105 @@
+.mobile-view-wrapper{
+    .centerx { text-align: center; }
+    .outer-bodyx { 
+    width: 220px; 
+    height: 463px; 
+    border: 2px solid #a2917f; 
+    margin: 50px auto; 
+    border-radius: 30px; 
+    background-color: #ebebeb; 
+    padding: 12px; 
+    position: relative;
+    margin-top: 0px;
+    }
+
+    .headerx .sensor { 
+    width: 5px; 
+    height: 5px; 
+    margin: 0 auto 5px; 
+    border-radius: 5px; 
+    background-color: #585657; 
+    }
+
+    .front-camera { 
+    display: inline-block; 
+    width: 8px; 
+    height: 8px; 
+    border-radius: 4px; 
+    background-color: #75797a;
+    margin-right: 12px; 
+    margin-left: -20px;
+    }
+
+    .speaker { 
+    display: inline-block; 
+    width: 60px; 
+    height: 4px; 
+    margin-bottom: 2px; 
+    background-color: #747879; 
+    }
+
+    .bodyx { 
+    background: #00ca88;
+    width: 100%; 
+    height: 370px; 
+    margin-top: 15px; 
+    border: 1px solid #9F9F9F;
+
+    }
+
+    .mobileMessage {
+    
+        border-radius: 4px;
+        padding: 15px;
+        width: 100%;
+        color: white;
+        height: 100%;
+        overflow: overlay;
+    }
+
+
+    .footerx .home-button { 
+    width: 36px; 
+    height: 36px; 
+    background-color: #ebecee; 
+    border: 2px solid #a2917f; 
+    border-radius: 20px; 
+    margin: 10px auto; 
+    }
+
+    .right-panel-btn-1 { 
+    display: inline-block; 
+    height: 15px; 
+    border: 1px solid #a2917f; 
+    position: absolute; 
+    top: 70px; 
+    left: -4px; 
+    }
+
+    .right-panel-btn-2 { 
+    display: inline-block; 
+    height: 30px; 
+    border: 1px solid #a2917f; 
+    position: absolute; 
+    top: 105px; 
+    left: -4px; 
+    }
+
+    .right-panel-btn-3 { 
+    display: inline-block; 
+    height: 30px; 
+    border: 1px solid #a2917f; 
+    position: absolute; 
+    top: 145px; 
+    left: -4px; 
+    }
+
+    .left-panel-btn { 
+    display: inline-block; 
+    height: 35px; 
+    border: 1px solid #a2917f; 
+    position: absolute; 
+    top: 110px; 
+    right: -4px; 
+    }
+}
