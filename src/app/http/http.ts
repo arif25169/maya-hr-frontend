@@ -1,6 +1,6 @@
 import { token } from '../store/states/auth/auth';
 
-const API_BASE = process.env.REACT_APP_API_ROOT
+const API_BASE = import.meta.env.VITE_APP_API_ROOT
 
 export const request = (url: string, method: string, payload?: any, headers?: any) => {
 
@@ -27,7 +27,7 @@ export const request = (url: string, method: string, payload?: any, headers?: an
 export const requestAuth = (url: string, method: string, payload?: any, headers?: any) => {
 
     let myHeaders = new Headers();
-    myHeaders.append("Authorization", "Basic c2hlYmEtc2Nob29sLXdlYi1yZWFkLXdyaXRlLWNsaWVudDpzaGViYS1zY2hvb2wtd2ViLXJlYWQtd3JpdGUtY2xpZW50MTQzMg==");
+    myHeaders.append("Authorization", "Basic c2hlYmEtaHItd2ViLXJlYWQtd3JpdGUtY2xpZW50OnNoZWJhLWhyLXdlYi1yZWFkLXdyaXRlLWNsaWVudDE0MzI=");
     let formdata = new FormData();
     formdata.append("grant_type", "password");
     formdata.append("username", payload?.username);

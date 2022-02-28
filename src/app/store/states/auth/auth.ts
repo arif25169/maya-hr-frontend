@@ -47,7 +47,7 @@ export const authStore: Auth = {
 		console.log(response);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
-			let url: any = process.env.REACT_APP_API_ROOT
+			let url: any = import.meta.env.VITE_APP_API_ROOT
 			localStorage.setItem("url", url);
 			localStorage.setItem("tok", body.access_token);
 			if (payload.remember) {
@@ -64,7 +64,7 @@ export const authStore: Auth = {
 			///
 			// let headerx = {};
 			// headerx['Authorization'] = `Bearer ${body.access_token}`;
-			// let basicInfo = await fetch(`${process.env.REACT_APP_API_ROOT}/institute/view`, {
+			// let basicInfo = await fetch(`${import.meta.env.VITE_APP_API_ROOT}/institute/view`, {
 			// 	method: "GET",
 			// 	mode: 'cors',
 			// 	cache: 'no-cache',
