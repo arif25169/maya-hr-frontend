@@ -7,12 +7,12 @@ import { SelectGender } from '../../select/SelectGender';
 import { SelectThana } from '../../select/SelectThana';
 import { SelectDistrict } from '../../select/SelectDistrict';
 
-export default function CreateEmployee() {
+export default function employeeList() {
 
     const { Step } = Steps;
     const [form] = Form.useForm();
     const {Option} = Select;
-    const [current, setCurrent] = React.useState(5);
+    const [current, setCurrent] = React.useState(0);
 
     const steps = [
     {
@@ -171,6 +171,32 @@ export default function CreateEmployee() {
                 <Input placeholder='write published year' />
             ),
         },
+    ]
+
+    const traningTableColumn = [
+        {
+            title: 'Traning Name',
+            dataIndex: '',
+            key: '',
+        },
+        {
+            title: 'Instiute Name',
+            dataIndex: '',
+            key: '',
+        },
+        {
+            title: 'Duration',
+            dataIndex: '',
+            key: '',
+        },
+        {
+            title: 'Instiute Name',
+            dataIndex: '',
+            key: '',
+            render: (text, record, index) => (
+                <Input type="file" value={''} onChange={(e) => onchangeFile(e)} />
+            ),
+        }
     ]
 
     const next = () => {
@@ -627,6 +653,20 @@ export default function CreateEmployee() {
             </Col>
         </Row>
     )
+
+    const traningInfoForm = (
+        <Row>
+            <Col span={24}>
+                <Table
+                    columns={traningTableColumn}
+                    // dataSource={tableRowStore}
+                    bordered={true}
+                    pagination={false}
+                    className="p-datatable-responsive-demo"
+                />
+            </Col>
+        </Row>
+    )
     
     const personalInfoSubmit = (value) => {
         console.log('value', value.examName);
@@ -679,14 +719,14 @@ export default function CreateEmployee() {
                         : ''}
 
                         {current == 5 ? 
-                            <div className="steps-content">
+                            <div className="steps-content mb-20">
                                 {educationInfoForm}
                             </div>
                         : ''}
                         
                         {current == 6 ? 
-                            <div className="steps-content">
-                                {steps[current].content}
+                            <div className="steps-content mb-20">
+                                {traningInfoForm}
                             </div>
                         : ''}
 

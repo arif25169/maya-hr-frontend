@@ -18,6 +18,7 @@ import logo from "../assets/images/sdl.png";
 
 import { Footer } from "antd/lib/layout/layout";
 import CreateEmployee from "./container/pages/employee/CreateEmployee";
+import EmployeeList from "./container/pages/employee/EmployeeList";
 
 
 const { Header, Content, Sider } = Layout;
@@ -92,6 +93,7 @@ export default function Container() {
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE} component={CreateEmployee} />
+            <Route exact path={'/' +ROUTES.EMPLOYEE_LIST} component={EmployeeList} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

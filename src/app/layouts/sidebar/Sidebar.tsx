@@ -88,6 +88,9 @@ export function Sidebar() {
 				<Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<UserOutlined />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE} className="nav-text">Create Emloyee</Link>
 				</Menu.Item>
+				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<UserOutlined />}>
+					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Emloyee List</Link>
+				</Menu.Item>
 			</SubMenu>
 		</SubMenu>
 	</Menu>
