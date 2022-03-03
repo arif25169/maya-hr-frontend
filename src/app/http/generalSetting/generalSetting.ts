@@ -20,3 +20,5 @@ export const saveShiftUrl = (payload) => post("/shift/save", payload);
 export const updateShiftUrl = (payload) => post("/shift/update", payload);
 export const fetchShiftUrl = () => get("/shift/list");
 export const deleteShiftUrl = (payload) => del("/shift/delete?shiftId="+payload);
+
+export const saveEmployeeDataFromExcelUrl = (payload) => post('/employee/save', payload);

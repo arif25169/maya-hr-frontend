@@ -18,6 +18,10 @@ import logo from "../assets/images/sdl.png";
 
 import { Footer } from "antd/lib/layout/layout";
 import CreateEmployee from "./container/pages/employee/CreateEmployee";
+import SalaryGrade from "./container/pages/payroll/Settings/SalaryGrade.page";
+import HeadAddition from "./container/pages/payroll/Settings/HeadAddition.page";
+import HeadDeduction from "./container/pages/payroll/Settings/HeadDeduction.page";
+import SalaryGradeConfigure from "./container/pages/payroll/Configure/SalaryGradeConfigure.page";
 import EmployeeList from "./container/pages/employee/EmployeeList";
 import CreateDesignation from "./container/pages/generalSettings/CreateDesignation";
 import CreateEmployeeType from "./container/pages/generalSettings/CreateEmployeeType";
@@ -103,6 +107,10 @@ export default function Container() {
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE} component={CreateEmployee} />
+            <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_GRADE} component={SalaryGrade} />
+            <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_ADDITION} component={HeadAddition} />
+            <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_DEDUCTION} component={HeadDeduction} />
+            <Route exact path={'/' +ROUTES.CONFIGURE_PAYROLL_GRADE} component={SalaryGradeConfigure} />
             <Route exact path={'/' +ROUTES.EMPLOYEE_LIST} component={EmployeeList} />
             <Route exact path={'/' +ROUTES.CREATE_DESIGNATION} component={CreateDesignation} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_ADD} component={CreateEmployeeType} />

@@ -95,6 +95,25 @@ export function Sidebar() {
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Emloyee List</Link>
 				</Menu.Item>
 			</SubMenu>
+		</SubMenu>		
+		<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >
+			<SubMenu key={"payrollSetiings"} icon={<PartitionOutlined />} title="Settings" >
+				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<UserOutlined />}>
+					<Link to={ROUTES.SETTINGS_PAYROLL_GRADE} className="nav-text">Grade</Link>
+				</Menu.Item>				
+				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_ADDITION} icon={<UserOutlined />}>
+					<Link to={ROUTES.SETTINGS_PAYROLL_ADDITION} className="nav-text">Addition</Link>
+				</Menu.Item>				
+				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_DEDUCTION} icon={<UserOutlined />}>
+					<Link to={ROUTES.SETTINGS_PAYROLL_DEDUCTION} className="nav-text">Deduction</Link>
+				</Menu.Item>
+			</SubMenu>			
+			<SubMenu key={"payrollConfigure"} icon={<PartitionOutlined />} title="Configure" >
+				<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<UserOutlined />}>
+					<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
+				</Menu.Item>				
+
+			</SubMenu>
 		</SubMenu>
 		<SubMenu key={"generalSetting"} icon={<PartitionOutlined />} title="General Settings" >
 			<Menu.Item key={ROUTES.CREATE_COMPANY} icon={<UserOutlined />}>

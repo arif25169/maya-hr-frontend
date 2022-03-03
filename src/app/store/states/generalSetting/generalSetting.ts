@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteShiftUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchShiftUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteShiftUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchShiftUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeDataFromExcelUrl, saveEmployeeTypeUrl, saveShiftUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany : Thunk<GeneralSetting, any>,
@@ -33,6 +33,8 @@ export interface GeneralSetting {
 	setShiftList:  Action<GeneralSetting, any>;
 	updateShift : Thunk<GeneralSetting, any>;
 	deleteShift : Thunk<GeneralSetting, any>;
+
+	saveEmployeeFromExcell : Thunk<GeneralSetting, any>;
 }
 
 export const generalSettingStore: GeneralSetting = {
@@ -301,6 +303,20 @@ export const generalSettingStore: GeneralSetting = {
 			if (body.messageType == 1) {
 				notification.success({ message: body.message })
 				actions.fetchShiftList();
+			}else{
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	saveEmployeeFromExcell:thunk(async (actions, payload) => {
+		const response = await saveEmployeeDataFromExcelUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
 			}else{
 				notification.error({ message: body.message })
 			}

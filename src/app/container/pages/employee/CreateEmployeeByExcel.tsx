@@ -22,6 +22,7 @@ export default function CreateEmployeeByExcel() {
     const fetchCompanyDesignationList = useStoreActions((state) => state.common.fetchCompanyDesignationList);
     const fetchCompanyEmployeeList = useStoreActions((state) => state.common.fetchCompanyEmployeeList);
     const fetchCompanyShiftList = useStoreActions((state) => state.common.fetchCompanyShiftList);
+    const saveEmployeeFromExcell = useStoreActions((state) => state.generalSetting.saveEmployeeFromExcell)
     const [fileList, setFileList] = useState<any>([]);
     const [tableRowStore, setTableRowStore] = useState([]);
     useEffect(function(){
@@ -83,6 +84,19 @@ export default function CreateEmployeeByExcel() {
         {title : 'Joining Date', dataIndex: 'joiningDate', key: 'joiningDate', showOnResponse: true, showOnDesktop: true},
     ]
 
+    const submitFrom = (value) => {
+        let postdata:any = {
+            departmentId: value.department,
+            designationId: value.designation,
+            employeeBasicRequestList: tableRowStore,
+            employeeTypeId: value.employeeType,
+            shiftId: value.shift
+          }
+          
+          saveEmployeeFromExcell(postdata);
+          setTableRowStore([]);
+    }
+
     return (
         <>
             <Card title="Create Employee">
@@ -90,7 +104,7 @@ export default function CreateEmployeeByExcel() {
                     layout="vertical"
                     id="CreateEmployeeByExcel"
                     form={form}
-                    // onFinish={}
+                    onFinish={submitFrom}
                 >
                     <Row>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
