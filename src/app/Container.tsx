@@ -22,6 +22,8 @@ import SalaryGrade from "./container/pages/payroll/Settings/SalaryGrade.page";
 import HeadAddition from "./container/pages/payroll/Settings/HeadAddition.page";
 import HeadDeduction from "./container/pages/payroll/Settings/HeadDeduction.page";
 import SalaryGradeConfigure from "./container/pages/payroll/Configure/SalaryGradeConfigure.page";
+import EmployeeList from "./container/pages/employee/EmployeeList";
+
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -99,6 +101,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_ADDITION} component={HeadAddition} />
             <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_DEDUCTION} component={HeadDeduction} />
             <Route exact path={'/' +ROUTES.CONFIGURE_PAYROLL_GRADE} component={SalaryGradeConfigure} />
+            <Route exact path={'/' +ROUTES.EMPLOYEE_LIST} component={EmployeeList} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

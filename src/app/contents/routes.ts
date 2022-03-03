@@ -6,4 +6,5 @@ export const ROUTES = {
   SETTINGS_PAYROLL_ADDITION: "settings-payroll-addition",
   SETTINGS_PAYROLL_DEDUCTION: "settings-payroll-deduction",
   CONFIGURE_PAYROLL_GRADE: "configure-payroll-grade",
+  EMPLOYEE_LIST: "employee-list"
 };
