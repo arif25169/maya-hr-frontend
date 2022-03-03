@@ -18,7 +18,10 @@ import logo from "../assets/images/sdl.png";
 
 import { Footer } from "antd/lib/layout/layout";
 import CreateEmployee from "./container/pages/employee/CreateEmployee";
-
+import SalaryGrade from "./container/pages/payroll/Settings/SalaryGrade.page";
+import HeadAddition from "./container/pages/payroll/Settings/HeadAddition.page";
+import HeadDeduction from "./container/pages/payroll/Settings/HeadDeduction.page";
+import SalaryGradeConfigure from "./container/pages/payroll/Configure/SalaryGradeConfigure.page";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -92,6 +95,10 @@ export default function Container() {
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE} component={CreateEmployee} />
+            <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_GRADE} component={SalaryGrade} />
+            <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_ADDITION} component={HeadAddition} />
+            <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_DEDUCTION} component={HeadDeduction} />
+            <Route exact path={'/' +ROUTES.CONFIGURE_PAYROLL_GRADE} component={SalaryGradeConfigure} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>
