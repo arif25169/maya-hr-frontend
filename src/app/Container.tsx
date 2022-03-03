@@ -19,6 +19,16 @@ import logo from "../assets/images/sdl.png";
 import { Footer } from "antd/lib/layout/layout";
 import CreateEmployee from "./container/pages/employee/CreateEmployee";
 import EmployeeList from "./container/pages/employee/EmployeeList";
+import CreateDesignation from "./container/pages/generalSettings/CreateDesignation";
+import CreateEmployeeType from "./container/pages/generalSettings/CreateEmployeeType";
+import CreateShift from "./container/pages/generalSettings/CreateShift";
+import CreateDeduction from "./container/pages/generalSettings/CreateDeduction";
+import CreateLeaveCategory from "./container/pages/generalSettings/CreateLeaveCategory";
+import CreateCompany from "./container/pages/generalSettings/CreateCompany";
+import CreateFinancialYear from "./container/pages/generalSettings/CreateFinancialYear";
+import CreateDepartment from "./container/pages/generalSettings/CreateDepartment";
+import CreateHoliday from "./container/pages/generalSettings/CreateHoliday";
+import CreateEmployeeByExcel from "./container/pages/employee/CreateEmployeeByExcel";
 
 
 const { Header, Content, Sider } = Layout;
@@ -94,6 +104,16 @@ export default function Container() {
             <Route exact path="/" component={Dashboard} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE} component={CreateEmployee} />
             <Route exact path={'/' +ROUTES.EMPLOYEE_LIST} component={EmployeeList} />
+            <Route exact path={'/' +ROUTES.CREATE_DESIGNATION} component={CreateDesignation} />
+            <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_ADD} component={CreateEmployeeType} />
+            <Route exact path={'/' +ROUTES.CREATE_SHIFT} component={CreateShift} />
+            <Route exact path={'/' +ROUTES.CREATE_DEDUCTION} component={CreateDeduction} />
+            <Route exact path={'/' +ROUTES.CREATE_LEAVE_CATEGORY} component={CreateLeaveCategory} />
+            <Route exact path={'/' +ROUTES.CREATE_COMPANY} component={CreateCompany} /> 
+            <Route exact path={'/' +ROUTES.CREATE_DEPARTMENT} component={CreateDepartment} /> 
+            <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
+            <Route exact part={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} />
+            
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

@@ -12,7 +12,7 @@ export default function employeeList() {
     const { Step } = Steps;
     const [form] = Form.useForm();
     const {Option} = Select;
-    const [current, setCurrent] = React.useState(0);
+    const [current, setCurrent] = React.useState(1);
 
     const steps = [
     {
@@ -678,7 +678,7 @@ export default function employeeList() {
             <Card title="Create Employee">
                 <Form
                     layout="vertical"
-                    id="classConfigInfo"
+                    id="createEmployee"
                     form={form}
                     onFinish={personalInfoSubmit}
                 >

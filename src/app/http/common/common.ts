@@ -26,3 +26,8 @@ export const fetchexamRoutineList = () => get("/exam/routine/list");
 export const fetchexamRoutineView = (payload) => get("/exam/routine/view?routineId="+payload);
 export const examRoutineDelete = (payload) => del("/exam/routine/delete?routineId="+payload);
 export const examRoutineSave = (payload) => post("/exam/routine/save",payload);
+
+export const selectDepartmentListUrl =() => get("/department/list");
+export const selectDesignationListUrl =() => get("/designation/list");
+export const selectEmployeeTypeListUrl =() => get("/employee-type/list");
+export const selectShiftListUrl =() => get("/shift/list");
