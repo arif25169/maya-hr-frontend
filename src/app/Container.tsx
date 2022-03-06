@@ -33,6 +33,7 @@ import CreateFinancialYear from "./container/pages/generalSettings/CreateFinanci
 import CreateDepartment from "./container/pages/generalSettings/CreateDepartment";
 import CreateHoliday from "./container/pages/generalSettings/CreateHoliday";
 import CreateEmployeeByExcel from "./container/pages/employee/CreateEmployeeByExcel";
+import EmployeeInformation from "./container/pages/employee/EmployeeInformation";
 
 
 const { Header, Content, Sider } = Layout;
@@ -120,8 +121,8 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CREATE_COMPANY} component={CreateCompany} /> 
             <Route exact path={'/' +ROUTES.CREATE_DEPARTMENT} component={CreateDepartment} /> 
             <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
-            <Route exact part={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} />
-            
+            <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} /> 
+            <Route exact path={'/' +ROUTES.EMPLOYEE_INFORMATION} component={EmployeeInformation} /> 
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

@@ -94,6 +94,9 @@ export function Sidebar() {
 				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<UserOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Emloyee List</Link>
 				</Menu.Item>
+				{/* <Menu.Item key={ROUTES.EMPLOYEE_INFORMATION} icon={<UserOutlined />}>
+					<Link to={ROUTES.EMPLOYEE_INFORMATION} className="nav-text">Emloyee Information</Link>
+				</Menu.Item> */}
 			</SubMenu>
 		</SubMenu>		
 		<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >

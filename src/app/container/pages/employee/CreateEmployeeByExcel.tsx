@@ -3,10 +3,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Upload} from 'antd'
-import moment from 'moment';
-import { SelectGender } from '../../select/SelectGender';
-import { SelectThana } from '../../select/SelectThana';
-import { SelectDistrict } from '../../select/SelectDistrict';
 import { SelectDepartment } from '../../select/SelectDepartment';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import { SelectDesignation } from '../../select/SelectDesignation';
@@ -22,7 +18,7 @@ export default function CreateEmployeeByExcel() {
     const fetchCompanyDesignationList = useStoreActions((state) => state.common.fetchCompanyDesignationList);
     const fetchCompanyEmployeeList = useStoreActions((state) => state.common.fetchCompanyEmployeeList);
     const fetchCompanyShiftList = useStoreActions((state) => state.common.fetchCompanyShiftList);
-    const saveEmployeeFromExcell = useStoreActions((state) => state.generalSetting.saveEmployeeFromExcell)
+    const saveEmployeeFromExcell = useStoreActions((state) => state.hr.saveEmployeeFromExcell)
     const [fileList, setFileList] = useState<any>([]);
     const [tableRowStore, setTableRowStore] = useState([]);
     useEffect(function(){
@@ -67,21 +63,21 @@ export default function CreateEmployeeByExcel() {
     };
 
     const columns = [
-        {title : 'Employee Name', dataIndex: 'employeeName', key: 'employeeName', showOnResponse: true, showOnDesktop: true},
-        {title : 'Father Name', dataIndex: 'fatherName', key: 'fatherName', showOnResponse: true, showOnDesktop: true},
-        {title : 'Mother Name', dataIndex: 'motherName', key: 'motherName', showOnResponse: true, showOnDesktop: true},
-        {title : 'Gender', dataIndex: 'gender', key: 'gender', showOnResponse: true, showOnDesktop: true},
-        {title : 'Marital Status', dataIndex: 'maritalStatus', key: 'maritalStatus', showOnResponse: true, showOnDesktop: true},
-        {title : 'Date Of Birth', dataIndex: 'dateOfBirth', key: 'dateOfBirth', showOnResponse: true, showOnDesktop: true},
-        {title : 'Personal Mobile', dataIndex: 'personalMbile', key: 'personalMbile', showOnResponse: true, showOnDesktop: true},
-        {title : 'Corporate Mobile', dataIndex: 'corporateMobile', key: 'corporateMobile', showOnResponse: true, showOnDesktop: true},
-        {title : 'Emergency Contact No', dataIndex: 'emergencyContactNo', key: 'emergencyContactNo', showOnResponse: true, showOnDesktop: true},
-        {title : 'Relation of Emrg. Contact No', dataIndex: 'relationWithEmergencyContact', key: 'relationWithEmergencyContact', showOnResponse: true, showOnDesktop: true},
-        {title : 'National ID No', dataIndex: 'nationalIdNo', key: 'nationalIdNo', showOnResponse: true, showOnDesktop: true},
-        {title : 'Number Of Child', dataIndex: 'numberOfChild', key: 'numberOfChild', showOnResponse: true, showOnDesktop: true},
-        {title : 'Nationality', dataIndex: 'nationality', key: 'nationality', showOnResponse: true, showOnDesktop: true},
-        {title : 'Blood Group', dataIndex: 'bloodGroup', key: 'bloodGroup', showOnResponse: true, showOnDesktop: true},
-        {title : 'Joining Date', dataIndex: 'joiningDate', key: 'joiningDate', showOnResponse: true, showOnDesktop: true},
+        {title : 'Employee Name', dataIndex: 'employeeName', key: 'employeeName', showOnResponse: true, showOnDesktop: true , width: 140,},
+        {title : 'Father Name', dataIndex: 'fatherName', key: 'fatherName', showOnResponse: true, showOnDesktop: true, width: 130,},
+        {title : 'Mother Name', dataIndex: 'motherName', key: 'motherName', showOnResponse: true, showOnDesktop: true, width: 130,},
+        {title : 'Gender', dataIndex: 'gender', key: 'gender', showOnResponse: true, showOnDesktop: true, width: 90},
+        {title : 'Marital Status', dataIndex: 'maritalStatus', key: 'maritalStatus', showOnResponse: true, showOnDesktop: true, width: 130},
+        {title : 'Date Of Birth', dataIndex: 'dateOfBirth', key: 'dateOfBirth', showOnResponse: true, showOnDesktop: true, width: 120},
+        {title : 'Personal Mobile', dataIndex: 'personalMbile', key: 'personalMbile', showOnResponse: true, showOnDesktop: true, width: 140},
+        {title : 'Corporate Mobile', dataIndex: 'corporateMobile', key: 'corporateMobile', showOnResponse: true, showOnDesktop: true, width: 120},
+        {title : 'Emergency Contact No', dataIndex: 'emergencyContactNo', key: 'emergencyContactNo', showOnResponse: true, showOnDesktop: true, width: 120},
+        {title : 'Relation of Emrg. Contact No', dataIndex: 'relationWithEmergencyContact', key: 'relationWithEmergencyContact', showOnResponse: true, showOnDesktop: true, width: 140},
+        {title : 'National ID No', dataIndex: 'nationalIdNo', key: 'nationalIdNo', showOnResponse: true, showOnDesktop: true, width: 140},
+        {title : 'Number Of Child', dataIndex: 'numberOfChild', key: 'numberOfChild', showOnResponse: true, showOnDesktop: true, width: 140},
+        {title : 'Nationality', dataIndex: 'nationality', key: 'nationality', showOnResponse: true, showOnDesktop: true, width: 140},
+        {title : 'Blood Group', dataIndex: 'bloodGroup', key: 'bloodGroup', showOnResponse: true, showOnDesktop: true, width: 140},
+        {title : 'Joining Date', dataIndex: 'joiningDate', key: 'joiningDate', showOnResponse: true, showOnDesktop: true, width: 140, },
     ]
 
     const submitFrom = (value) => {
@@ -158,7 +154,7 @@ export default function CreateEmployeeByExcel() {
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
                             <Space size="small">
-                            <div className='mt-30 mt-mo-0'>
+                                <div className='mt-30 mt-mo-0'>
                                     <Upload
                                         listType="text"
                                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

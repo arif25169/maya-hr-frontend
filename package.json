@@ -39,6 +39,7 @@
     "smshelper": "^0.1.0",
     "typescript": "4.1.2",
     "uuid": "^8.3.2",
+    "uuidv4": "^6.2.12",
     "vite-plugin-svgr": "^1.0.1",
     "web-vitals": "^0.2.4",
     "xlsx": "^0.17.4",
