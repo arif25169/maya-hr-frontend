@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, saveSalaryGrade, saveSalaryGradeConfiguration, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalarySheetViews, saveSalaryGrade, saveSalaryGradeConfiguration, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -40,6 +40,10 @@ export interface Payroll {
     deleteDeductionSalaryGradeConfiguration: Thunk<Payroll, any>;
     //////
     saveSalaryGradeConfiguration: Thunk<Payroll, any>;
+
+    salarySheetViews: any;
+    setsalarySheetViews: Action<Payroll, any>;
+    fetchsalarySheetViews: Thunk<Payroll>;
 }
 
 export const payrollStore: Payroll = {
@@ -374,6 +378,33 @@ export const payrollStore: Payroll = {
         } else {
             const body = await response.json();
             notification.error({ message: 'Something went wrong' })
+        }
+    }),
+
+    
+    salarySheetViews: [],
+
+    setsalarySheetViews: action((state, payload) => {
+        state.salarySheetViews = payload;
+    }),
+
+    fetchsalarySheetViews: thunk(async (actions) => {
+        const response = await fetchsalarySheetViews();
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.item?.employeeList?.length > 0) {
+                actions.setsalarySheetViews(body.item);
+            } else {
+                notification['warning']({
+                    message: 'No data found',
+                });
+                actions.setsalarySheetViews(body.item);
+            }
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
         }
     }),
 

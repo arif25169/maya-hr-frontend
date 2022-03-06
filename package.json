@@ -46,7 +46,7 @@
     "xlsx-parse-json": "^3.1.1"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --port 30001",
     "build": "tsc && vite build",
     "serve": "vite preview"
   },

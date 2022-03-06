@@ -12,7 +12,7 @@ export default function SalaryGradeConfigurePage() {
     return (
         <>
             <Card title="Grade Configure">
-                <Tabs defaultActiveKey="2">
+                <Tabs defaultActiveKey="1">
                     <TabPane tab="Add" key="1">
                         <SalaryGradeConfigure />
                     </TabPane>

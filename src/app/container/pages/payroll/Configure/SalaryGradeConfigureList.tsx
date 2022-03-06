@@ -3,24 +3,26 @@ import { Button, Card, Col, List, Form, Input, InputNumber, Popconfirm, Row, Sel
 import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsiveNoSearch';
-import { SelectPayrollGrade } from '../../../select/SelectPayrollGrade';
+
 
 
 
 export default function SalaryGradeConfigureList() {
     const salaryGradeConfigurationList = useStoreState((state) => state.payroll.salaryGradeConfigurationList);
     const fetchsalaryGradeConfigurationList = useStoreActions((state) => state.payroll.fetchsalaryGradeConfigurationList);
-
-
-
+    const updateAdditionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.updateAdditionSalaryGradeConfiguration);
+    const updateDeductionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.updateDeductionSalaryGradeConfiguration);
+    const deleteAdditionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.deleteAdditionSalaryGradeConfiguration);
+    const deleteDeductionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.deleteDeductionSalaryGradeConfiguration);
 
     useEffect(() => {
         fetchsalaryGradeConfigurationList();
     }, [])
 
-
     console.log(salaryGradeConfigurationList)
-
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible2, setIsModalVisible2] = useState(false);
+    const [configId, setconfigId] = useState<any>(null);
 
 
     const additioncolumns = [
@@ -38,9 +40,39 @@ export default function SalaryGradeConfigureList() {
             showOnResponse: true,
             showOnDesktop: true
         },
+        {
+            title: 'Action',
+            key: 'configId',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                <Space size="middle">
+                    <Tooltip title="Edit">
+                        <Button type='primary' icon={<EditOutlined />} onClick={() => {
+                            updateFormAddition.setFieldsValue({
+                                amount: record.amount,
+                            });
+                            setIsModalVisible(true);
+                            setconfigId(record.configId);
+
+                        }} />
+                    </Tooltip>
+                    <Popconfirm
+                        title="Are you sure to delete this?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => deleteAdditionSalaryGradeConfiguration(record?.configId)}
+                    >
+                        <Tooltip title="Delete">
+                            <Button danger icon={<DeleteOutlined />} />
+                        </Tooltip>
+                    </Popconfirm>
+
+                </Space>
+            ),
+        }
 
     ];
-
 
     const deductioncolumns = [
         {
@@ -57,7 +89,54 @@ export default function SalaryGradeConfigureList() {
             showOnResponse: true,
             showOnDesktop: true
         },
+        {
+            title: 'Action',
+            key: 'configId',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                <Space size="middle">
+                    <Tooltip title="Edit">
+                        <Button type='primary' icon={<EditOutlined />} onClick={() => {
+                            updateFormDeduction.setFieldsValue({
+                                amount: record.amount,
+                            });
+                            setIsModalVisible2(true);
+                            setconfigId(record.configId);
+
+                        }} />
+                    </Tooltip>
+                    <Popconfirm
+                        title="Are you sure to delete this?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => deleteDeductionSalaryGradeConfiguration(record?.configId)}
+                    >
+                        <Tooltip title="Delete">
+                            <Button danger icon={<DeleteOutlined />} />
+                        </Tooltip>
+                    </Popconfirm>
+
+                </Space>
+            ),
+        }
     ];
+    const [updateFormAddition] = Form.useForm();
+    const [updateFormDeduction] = Form.useForm();
+
+    const updateSubmitFormAddition = (value) => {
+        value.configId = configId;
+        updateAdditionSalaryGradeConfiguration(value);
+        setIsModalVisible(false);
+        updateFormAddition.resetFields();
+    }
+
+    const updateSubmitFormDeduction = (value) => {
+        value.configId = configId;
+        updateDeductionSalaryGradeConfiguration(value);
+        setIsModalVisible2(false);
+        updateFormDeduction.resetFields();
+    }
 
     return (
         <>
@@ -122,7 +201,74 @@ export default function SalaryGradeConfigureList() {
                     </Card>
                 )}
             />
-
+            <Modal
+                title="Update"
+                visible={isModalVisible}
+                //  onOk={handleOk}
+                okButtonProps={{ form: 'update', htmlType: 'submit' }}
+                onCancel={() => setIsModalVisible(false)}
+                cancelText="Close"
+                okText="Update"
+                centered
+                destroyOnClose
+                maskClosable={false}
+            >
+                <Form
+                    layout="vertical"
+                    id="update"
+                    onFinish={updateSubmitFormAddition}
+                    form={updateFormAddition}
+                >
+                    <Row>
+                        <Col span={24}>
+                            <Form.Item
+                                name="amount"
+                                label="Amount"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please input amount" },
+                                ]}
+                            >
+                                <Input placeholder="Amount" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
+            </Modal>
+            <Modal
+                title="Update2"
+                visible={isModalVisible2}
+                //  onOk={handleOk}
+                okButtonProps={{ form: 'update', htmlType: 'submit' }}
+                onCancel={() => setIsModalVisible2(false)}
+                cancelText="Close"
+                okText="Update"
+                centered
+                destroyOnClose
+                maskClosable={false}
+            >
+                <Form
+                    layout="vertical"
+                    id="update"
+                    onFinish={updateSubmitFormDeduction}
+                    form={updateFormDeduction}
+                >
+                    <Row>
+                        <Col span={24}>
+                            <Form.Item
+                                name="amount"
+                                label="Amount"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please input amount" },
+                                ]}
+                            >
+                                <Input placeholder="Amount" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
+            </Modal>
 
         </>
     )
