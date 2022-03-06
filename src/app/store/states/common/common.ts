@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
+import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete, selectDepartmentListUrl, selectDesignationListUrl, selectEmployeeTypeListUrl, selectShiftListUrl } from '../../../http/common/common';
 
 export interface Common {
 	districtList: any,
@@ -81,7 +81,21 @@ export interface Common {
 	examRoutineSave: Thunk<Common, any>;
 	examRoutineDelete: Thunk<Common, any>;
 
+	companyDepartmentList: any;
+	setCompanyDepartmentList: Action<Common, any>;
+	fetchCompanyDepartmentList: Thunk<Common>;
 
+	companyDesignationList: any;
+	setCompanyDesignationList: Action<Common, any>;
+	fetchCompanyDesignationList: Thunk<Common>;
+
+	companyEmployeeList: any;
+	setCompanyEmployeeList: Action<Common, any>;
+	fetchCompanyEmployeeList: Thunk<Common>;
+
+	companyShiftList: any;
+	setCompanyShiftList: Action<Common, any>;
+	fetchCompanyShiftList: Thunk<Common>;
 
 }
 
@@ -89,6 +103,10 @@ export const commonStore: Common = {
 	districtList: null,
 	thanaList: null,
 	partnerProfile: null,
+	companyDepartmentList:[],
+	companyDesignationList:[],
+	companyEmployeeList:[],
+	companyShiftList:[],
 	districtListFetch: thunk(async (actions) => {
 		const response = await fetchDistrictList();
 		if (response.status === 201 || response.status === 200) {
@@ -457,5 +475,80 @@ export const commonStore: Common = {
 		}
 	}),
 
+	fetchCompanyDepartmentList:  thunk(async (actions) => {
+		const response = await selectDepartmentListUrl();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				//notification.success({ message: body.message })
+				actions.setCompanyDepartmentList(body?.item);
+			} else {
+				actions.setCompanyDepartmentList(null);
+			}
+
+		} else {
+
+		}
+	}),
+	setCompanyDepartmentList: action((state, payload) => {
+		state.companyDepartmentList = payload;
+	}),
+
+	fetchCompanyDesignationList:  thunk(async (actions) => {
+		const response = await selectDesignationListUrl();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				//notification.success({ message: body.message })
+				actions.setCompanyDesignationList(body?.item);
+			} else {
+				actions.setCompanyDesignationList(null);
+			}
+
+		} else {
+
+		}
+	}),
+	setCompanyDesignationList: action((state, payload) => {
+		state.companyDesignationList = payload;
+	}),
+
+	fetchCompanyEmployeeList:  thunk(async (actions) => {
+		const response = await selectEmployeeTypeListUrl();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				//notification.success({ message: body.message })
+				actions.setCompanyEmployeeList(body?.item);
+			} else {
+				actions.setCompanyEmployeeList(null);
+			}
+
+		} else {
+
+		}
+	}),
+	setCompanyEmployeeList: action((state, payload) => {
+		state.companyEmployeeList = payload;
+	}),
+
+	fetchCompanyShiftList:  thunk(async (actions) => {
+		const response = await selectShiftListUrl();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				//notification.success({ message: body.message })
+				actions.setCompanyShiftList(body?.item);
+			} else {
+				actions.setCompanyShiftList(null);
+			}
+
+		} else {
+
+		}
+	}),
+	setCompanyShiftList: action((state, payload) => {
+		state.companyShiftList = payload;
+	}),
 
 }
