@@ -16,6 +16,7 @@ export default function EducationAndTraning() {
     const [typeConcentrationMajorGroup , setConcentrationMajorGroup] = useState<any>(false);
     const [foreignInstituteShowHide, setForeignInstituteShowHide] = useState<any>(false);
     const [cgpaScaleMarksShowHide, setCgpaScaleMarksShowHide] = useState<any>(false);
+    const [boardShowHide, setBoardShowHide] = useState<any>(true); 
     const callback = (key) => {
         console.log(key);
     }
@@ -25,33 +26,59 @@ export default function EducationAndTraning() {
         switch (val) {
             case val = "-1":
                 setExamDegreeList(examPscTitle);
+                setConcentrationMajorGroup(false);
+                setBoardShowHide(true);
+                setTypeExamDegreeTitle(false);
+                setExamDegreeTitleShowHide(true);
+                setBoardShowHide(true);
                 break;
             case val = "-2":
                 setExamDegreeList(examJscTitle);
+                setConcentrationMajorGroup(false);
+                setBoardShowHide(true);
+                setTypeExamDegreeTitle(false);
+                setExamDegreeTitleShowHide(true);
+                setBoardShowHide(true);
                 break;
             case val = "1":
                 setExamDegreeList(examSecondaryTitle);
                 setConcentrationMajorGroup(true);
+                setBoardShowHide(true);
+                setTypeExamDegreeTitle(false);
+                setExamDegreeTitleShowHide(true);
+                setBoardShowHide(true);
                 break;
             case val = "2":
                 setExamDegreeList(examHigherSecondaryTitle);
                 setConcentrationMajorGroup(true);
+                setBoardShowHide(true);
                 break;
             case val = "3":
                 setExamDegreeList(examDiplomaTitle);
                 setConcentrationMajorGroup(true);
+                setBoardShowHide(false);
+                setTypeExamDegreeTitle(false);
+                setExamDegreeTitleShowHide(true);
                 break;
             case val = "4":
                 setExamDegreeList(examBachelorTitle);
                 setConcentrationMajorGroup(true);
+                setTypeExamDegreeTitle(false);
+                setExamDegreeTitleShowHide(true);
                 break;
             case val = "5":
                 setExamDegreeList(examMasterTitle);
                 setConcentrationMajorGroup(true);
+                setBoardShowHide(false);
+                setTypeExamDegreeTitle(false);
+                setExamDegreeTitleShowHide(true);
                 break;
             case val = "6":
                 setExamDegreeTitleShowHide(false);
                 setConcentrationMajorGroup(true);
+                setBoardShowHide(false);
+                setTypeExamDegreeTitle(true);
+                setExamDegreeTitleShowHide(false);
                 break;
             default:
                 break;
@@ -193,14 +220,14 @@ export default function EducationAndTraning() {
     ]
 
     const onChangeCgpaScaleMarks = (val) => {
-        // switch (val) {
-        //     case value :
+        switch (val) {
+            case val == "15" :
                 
-        //         break;
+                break;
         
-        //     default:
-        //         break;
-        // }
+            default:
+                break;
+        }
     }
     
     return (
@@ -287,6 +314,7 @@ export default function EducationAndTraning() {
                         </Col>
 
                          : ''}
+                         {boardShowHide == true ? 
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
                             <Form.Item
                                 name="board "
@@ -306,6 +334,7 @@ export default function EducationAndTraning() {
                                 </Select>
                             </Form.Item>
                         </Col>
+                        : ''}
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
                             <Form.Item
                                 name="instituteName "
@@ -319,6 +348,7 @@ export default function EducationAndTraning() {
                             </Form.Item>
                             <Checkbox onChange={onChangeForeignInstitute}>This is a foreign institute</Checkbox>
                         </Col>
+                        
                         {foreignInstituteShowHide == true ? 
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
                                     <Form.Item
