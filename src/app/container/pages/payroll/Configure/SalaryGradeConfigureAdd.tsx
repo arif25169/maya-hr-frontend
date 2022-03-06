@@ -251,6 +251,7 @@ export default function SalaryGradeConfigureAdd() {
                             >
                                 <SelectPayrollGrade onChange={onchangeGrade} />
                             </Form.Item>
+                            {amount > 0 && <p style={{marginTop:10}}>Basic Salary: {amount}</p>}
                         </Col>
                     </Col>
                 </Row>

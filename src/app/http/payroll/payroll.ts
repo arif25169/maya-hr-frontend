@@ -24,3 +24,5 @@ export const updateAdditionSalaryGradeConfiguration = (payload) => post("/salary
 export const updateDeductionSalaryGradeConfiguration = (payload) => post("/salary-grade/configuration/update/deduction",payload);
 export const deleteAdditionSalaryGradeConfiguration = (payload) => del("/salary-grade/configuration/delete/addition?configId="+payload);
 export const deleteDeductionSalaryGradeConfiguration = (payload) => del("/salary-grade/configuration/delete/deduction?configId="+payload);
+
+export const fetchsalarySheetViews = () => get("/salary-sheet/view");
