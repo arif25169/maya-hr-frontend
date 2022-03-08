@@ -47,7 +47,7 @@ export default function Dashboard() {
       ];
     return (
         <>
-           <Table dataSource={dataSource} columns={columns} />
+          <div style={{fontSize:34}}> Dashboard</div>
 
         </>
     )
