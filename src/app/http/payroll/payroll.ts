@@ -14,7 +14,7 @@ export const deleteSalaryHeadAddition = (payload) => del("/salary-head/addition/
 export const fetchsalaryHeadListDeduction = () => get("/salary-head/deduction/list");
 export const addSalaryHeadDeduction = (payload) => post("/salary-head/deduction/save",payload);
 export const updateSalaryHeadDeduction = (payload) => post("/salary-head/deduction/update",payload);
-export const deleteSalaryHeadDeduction = (payload) => del("salary-head/deduction/delete?salaryHeadId="+payload);
+export const deleteSalaryHeadDeduction = (payload) => del("/salary-head/deduction/delete?salaryHeadId="+payload);
 
 export const saveSalaryGradeConfiguration = (payload) => post("/salary-grade/configuration/save",payload);
 
@@ -26,3 +26,5 @@ export const deleteAdditionSalaryGradeConfiguration = (payload) => del("/salary-
 export const deleteDeductionSalaryGradeConfiguration = (payload) => del("/salary-grade/configuration/delete/deduction?configId="+payload);
 
 export const fetchsalarySheetViews = () => get("/salary-sheet/view");
+export const saveSalaryProcess = (payload) => post("/salary/process/save", payload);
+

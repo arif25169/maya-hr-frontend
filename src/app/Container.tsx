@@ -29,6 +29,7 @@ import CreateEmployeeType from "./container/pages/generalSettings/CreateEmployee
 import CreateShift from "./container/pages/generalSettings/CreateShift";
 import CreateDeduction from "./container/pages/generalSettings/CreateDeduction";
 import CreateLeaveCategory from "./container/pages/generalSettings/CreateLeaveCategory";
+import CreateLeaveConfig from "./container/pages/generalSettings/CreateLeaveConfig";
 import CreateCompany from "./container/pages/generalSettings/CreateCompany";
 import CreateFinancialYear from "./container/pages/generalSettings/CreateFinancialYear";
 import CreateDepartment from "./container/pages/generalSettings/CreateDepartment";
@@ -120,6 +121,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CREATE_SHIFT} component={CreateShift} />
             <Route exact path={'/' +ROUTES.CREATE_DEDUCTION} component={CreateDeduction} />
             <Route exact path={'/' +ROUTES.CREATE_LEAVE_CATEGORY} component={CreateLeaveCategory} />
+            <Route exact path={'/' +ROUTES.CREATE_LEAVE_CONFIG} component={CreateLeaveConfig} />
             <Route exact path={'/' +ROUTES.CREATE_COMPANY} component={CreateCompany} /> 
             <Route exact path={'/' +ROUTES.CREATE_DEPARTMENT} component={CreateDepartment} /> 
             <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
