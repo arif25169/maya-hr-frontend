@@ -22,8 +22,10 @@ import SalaryGrade from "./container/pages/payroll/Settings/SalaryGrade.page";
 import HeadAddition from "./container/pages/payroll/Settings/HeadAddition.page";
 import HeadDeduction from "./container/pages/payroll/Settings/HeadDeduction.page";
 import SalaryGradeConfigure from "./container/pages/payroll/Configure/SalaryGradeConfigure.page";
+import EmployeeSalaryGradeAssign from "./container/pages/payroll/Configure/EmployeeSalaryGradeAssign.page";
 import EmployeeList from "./container/pages/employee/EmployeeList";
 import SalaryProcess from "./container/pages/payroll/Salary/SalaryProcess.page";
+import SalaryProcessList from "./container/pages/payroll/Salary/SalaryProcessList.page";
 import CreateDesignation from "./container/pages/generalSettings/CreateDesignation";
 import CreateEmployeeType from "./container/pages/generalSettings/CreateEmployeeType";
 import CreateShift from "./container/pages/generalSettings/CreateShift";
@@ -114,7 +116,9 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_ADDITION} component={HeadAddition} />
             <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_DEDUCTION} component={HeadDeduction} />
             <Route exact path={'/' +ROUTES.CONFIGURE_PAYROLL_GRADE} component={SalaryGradeConfigure} />
+            <Route exact path={'/' +ROUTES.CONFIGURE_EMPLOYEE_GRADE} component={EmployeeSalaryGradeAssign} />
             <Route exact path={'/' +ROUTES.SALARY_PROCESS_PAYROLL} component={SalaryProcess} />
+            <Route exact path={'/' +ROUTES.SALARY_PROCESS_LIST} component={SalaryProcessList} />
             <Route exact path={'/' +ROUTES.EMPLOYEE_LIST} component={EmployeeList} />
             <Route exact path={'/' +ROUTES.CREATE_DESIGNATION} component={CreateDesignation} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_ADD} component={CreateEmployeeType} />

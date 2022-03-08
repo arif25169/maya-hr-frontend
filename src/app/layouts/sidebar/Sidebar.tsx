@@ -115,10 +115,19 @@ export function Sidebar() {
 				<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<UserOutlined />}>
 					<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
 				</Menu.Item>
+				<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<UserOutlined />}>
+					<Link to={ROUTES.CONFIGURE_EMPLOYEE_GRADE} className="nav-text">Grade Assign</Link>
+				</Menu.Item>
 			</SubMenu>
-			<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<UserOutlined />}>
-				<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text">Salary Process</Link>
-			</Menu.Item>
+			<SubMenu key={"salaryProcessMenu"} icon={<PartitionOutlined />} title="Salary Process" >
+				<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<UserOutlined />}>
+					<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text"> Save</Link>
+				</Menu.Item>
+				<Menu.Item key={ROUTES.SALARY_PROCESS_LIST} icon={<UserOutlined />}>
+					<Link to={ROUTES.SALARY_PROCESS_LIST} className="nav-text"> View</Link>
+				</Menu.Item>
+			</SubMenu>
+
 
 		</SubMenu>
 		<SubMenu key={"generalSetting"} icon={<PartitionOutlined />} title="General Settings" >
@@ -139,13 +148,13 @@ export function Sidebar() {
 			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Create Shift</Link>
-			</Menu.Item> 
+			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_DEDUCTION} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_DEDUCTION} className="nav-text">Create Deduction</Link>
 			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Create Leave Category</Link>
-			</Menu.Item>			
+			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
 			</Menu.Item>
