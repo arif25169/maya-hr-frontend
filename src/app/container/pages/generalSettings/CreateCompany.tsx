@@ -27,14 +27,11 @@ export default function CreateCompany() {
             websiteLink: value.website
         }
         setSaveCompany(postdata);
-        console.log('postdata', postdata);
-        
+        createForm.resetFields();
     }
 
     const onchangeFile = (val) => {
-        setFileDetails(val.target.files[0])
-        console.log('val.target.files[0]', val.target.files[0]);
-        
+        setFileDetails(val.target.files[0])        
     }
 
     const fetchThanaByDistricID = (val) => {

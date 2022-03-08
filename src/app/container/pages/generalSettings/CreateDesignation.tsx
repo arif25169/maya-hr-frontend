@@ -27,6 +27,7 @@ export default function CreateDesignation() {
             designationSerial: value.serial
         }
         saveDesignation(postdata);
+        createForm.resetFields();
     }
     const updateSubmitForm = (value) => {
         let postdata:any = {
