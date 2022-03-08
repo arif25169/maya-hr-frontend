@@ -145,6 +145,9 @@ export function Sidebar() {
 			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Create Leave Category</Link>
+			</Menu.Item>			
+			<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
 			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_HOLIDAY} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_HOLIDAY} className="nav-text">Create Holiday</Link>

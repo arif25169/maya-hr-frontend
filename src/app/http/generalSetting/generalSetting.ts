@@ -20,3 +20,19 @@ export const saveShiftUrl = (payload) => post("/shift/save", payload);
 export const updateShiftUrl = (payload) => post("/shift/update", payload);
 export const fetchShiftUrl = () => get("/shift/list");
 export const deleteShiftUrl = (payload) => del("/shift/delete?shiftId="+payload);
+
+export const fetchleaveCategoryList = () => get("/leave/category/list");
+export const createLeaveCategory = (payload) => post("/leave/category/save",payload);
+export const updateLeaveCategory = (payload) => post("/leave/category/update",payload);
+export const deleteLeaveCategory = (payload) => del("/leave/category/delete?leaveCatoryId="+payload);
+
+export const fetchholidayList = () => get("/holiday/list");
+export const createHoliday = (payload) => post("/holiday/save",payload);
+export const updateHoliday = (payload) => post("/holiday/update",payload);
+export const deleteHoliday = (payload) => del("/holiday/delete?holidayId="+payload);
+
+
+export const fetchleaveConfigList = () => get("/leave/config/list");
+export const createLeaveConfig = (payload) => post("/leave/config/save",payload);
+export const updateLeaveConfig = (payload) => post("/leave/config/update",payload);
+export const deleteLeaveConfig = (payload) => del("/leave/config/delete?leaveConfigId="+payload);

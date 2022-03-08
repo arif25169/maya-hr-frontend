@@ -63,7 +63,7 @@ export default function SalaryGrade() {
 
         {
             title: 'Action',
-            key: 'salaryGradeId',
+            key: 'ss',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
@@ -162,10 +162,11 @@ export default function SalaryGrade() {
                                     showHeader: true,
                                     columns,
                                     dataSource: salaryGradeList,
-                                    filterData: salaryGradeList,
+                                    // filterData: salaryGradeList,
                                     pagination: true,
                                     bordered: true,
-                                    rowKey: "id",
+                                    rowKey: "key",
+                                    //rowKey:record => record.salaryGradeId
                                 }}
                                 mobileBreakPoint={768}
                             />

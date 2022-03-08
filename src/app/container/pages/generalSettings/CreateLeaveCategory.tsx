@@ -6,28 +6,47 @@ import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import TableView from '../../../contents/AntTableResponsive';
 
 export default function CreateLeaveCategory() {
+
+    const leaveCategoryList = useStoreState((state) => state.generalSetting.leaveCategoryList);
+    const fetchleaveCategoryList = useStoreActions((state) => state.generalSetting.fetchleaveCategoryList);
+    const createLeaveCategory = useStoreActions((state) => state.generalSetting.createLeaveCategory);
+    const updateLeaveCategory = useStoreActions((state) => state.generalSetting.updateLeaveCategory);
+    const deleteLeaveCategory = useStoreActions((state) => state.generalSetting.deleteLeaveCategory);
+
+    useEffect(() => {
+        fetchleaveCategoryList();
+    }, [])
+
     
     const [createForm] = Form.useForm();
     const [updateForm] = Form.useForm();
     const [isModalVisible, setIsModalVisible] = useState<any>(false);
+    
+   
     const createLeaveCategoryForm = (value) => {
-        console.log('value', value);
+        createLeaveCategory(value);
+        createForm.resetFields();
     }
     const updateSubmitForm = (value) => {
-
+        value.leaveCategoryId= id;
+        updateLeaveCategory(value);
+        setIsModalVisible(false);
     }
+    const [id, setId] = useState<any>()
     const columns  = [
         {title : 'SL No.', dataIndex: 'serial', key: 'serial', showOnResponse: true, showOnDesktop: true},
-        {title : 'Leave Category', dataIndex: 'leaveCategory', key: 'leaveCategory', showOnResponse: true, showOnDesktop: true},
+        {title : 'Leave Category', dataIndex: 'leaveCategoryName', key: 'leaveCategoryName', showOnResponse: true, showOnDesktop: true},
         {title : 'Action', dataIndex: '', key: '', showOnResponse: true, showOnDesktop: true,
             render: (text: any, record: any, index) => (
                 <Space size="middle">
                     <Tooltip title="Edit">
                         <Button type='primary' 
                                 onClick={() => {
-                                    setIsModalVisible(true)
+                                    setIsModalVisible(true);
+                                    setId(record.leaveCategoryId);
                                     updateForm.setFieldsValue({
-                                        categoryNameUpdate: record.leaveCategory,
+                                        leaveCategoryName: record.leaveCategoryName,
+                                        serial: record.serial,
                                     });
                                 }} 
                                 icon={<EditOutlined />} 
@@ -38,7 +57,7 @@ export default function CreateLeaveCategory() {
                         title="Are you sure to delete this?"
                         okText="Yes"
                         cancelText="No"
-                        // onConfirm={}
+                        onConfirm={() => deleteLeaveCategory(record?.leaveCategoryId)}
                     >
                         <Tooltip title="Delete">
                             <Button danger  icon={<DeleteOutlined />} />
@@ -50,15 +69,12 @@ export default function CreateLeaveCategory() {
         },
     ]
 
-    let tableData = [
-        {serial : 1, leaveCategory : "Casual Leave"}
-    ]
 
     return (
         <>
             <Card title="Leave Category">
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8, offset: 8  }} lg={{ span: 8, offset: 8  }} xl={{ span: 8, offset: 8  }} >
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24, offset: 4  }} lg={{ span: 24, offset: 4 }} xl={{ span: 24, offset: 4 }} >
                         <Form
                             layout="vertical"
                             
@@ -66,16 +82,28 @@ export default function CreateLeaveCategory() {
                             form={createForm}
                         >
                             <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 20 }} lg={{ span: 20 }} xl={{ span: 20 }}>
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 6 }}>
                                     <Form.Item
-                                        name="categoryName"
+                                        name="serial"
+                                        label="Serial"
+                                        className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please input serial" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Serial No" />
+                                    </Form.Item>
+                                </Col>                              
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 6 }}>
+                                    <Form.Item
+                                        name="leaveCategoryName"
                                         label="Category Name"
                                         className="title-Text"
                                         rules={[
                                             { required: true, message: "Please write category" },
                                         ]}
                                     >
-                                        <Input placeholder="write category name" />
+                                        <Input placeholder="Write category name" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
@@ -95,9 +123,9 @@ export default function CreateLeaveCategory() {
                             antTableProps={{
                                 showHeader: true,
                                 columns:columns,
-                                rowKey:"serial",
-                                dataSource: tableData,
-                                filterData: tableData,
+                                rowKey:"leaveCategoryId",
+                                dataSource: leaveCategoryList,
+                                filterData: leaveCategoryList,
                                 pagination: true,
                                 bordered: true,                           
                             }}
@@ -125,8 +153,20 @@ export default function CreateLeaveCategory() {
                 >
                     <Row>
                         <Col span={24}>
+                        <Form.Item
+                                        name="serial"
+                                        label="Serial"
+                                        className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please input serial" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Serial No" />
+                                    </Form.Item>
+                        </Col>                        
+                        <Col span={24}>
                             <Form.Item
-                                name="categoryNameUpdate"
+                                name="leaveCategoryName"
                                 label="Category Name"
                                 className="title-Text"
                                 rules={[

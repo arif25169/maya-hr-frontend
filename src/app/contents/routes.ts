@@ -7,6 +7,7 @@ export const ROUTES = {
   CREATE_SHIFT: "create-shift",
   CREATE_DEDUCTION: "create-deduction",
   CREATE_LEAVE_CATEGORY: "create-leave-category",
+  CREATE_LEAVE_CONFIG: "create-leave-config",
   CREATE_COMPANY: "create-company",
   CREATE_FINANCIAL_YEAR: "create-financial-year",
   CREATE_DEPARTMENT: "create-department",

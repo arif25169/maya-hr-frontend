@@ -60,6 +60,10 @@ export const payrollStore: Payroll = {
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             if (body?.item?.length > 0) {
+                body.item.forEach((element, index) => {
+                    element.key=index
+                });
+                console.log(body.item)
                 actions.setsalaryGradeList(body.item);
             } else {
                 notification['warning']({

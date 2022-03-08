@@ -6,7 +6,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import { KeyOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { useStoreState } from './store/hooks/easyPeasy';
 import { Link } from "react-router-dom";
-const { Text } = Typography;
+import containerBG from "../../src/assets/images/sp_logo.png";
 
 export default function TopNavBar(props: any) {
 
@@ -87,7 +87,7 @@ export default function TopNavBar(props: any) {
             <>
               <Avatar
                 size={{ xs: 35, sm: 35, md: 35, lg: 35, xl: 40, xxl: 45 }}
-                src="https://joeschmoe.io/api/v1/random"
+                src={containerBG}
                 style={{ marginLeft: 10 }}
               />
               <span className='instiute-name' style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 2 }}>Sheba Hr</span>
@@ -106,7 +106,7 @@ export default function TopNavBar(props: any) {
             <>
               <Avatar
                 size={{ xs: 35, sm: 35, md: 35, lg: 35, xl: 40, xxl: 45 }}
-                src="https://joeschmoe.io/api/v1/random"
+                src={containerBG}
                 style={{ marginLeft: 10 }}
               />
               <span style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 5 }}>Sheba Hr</span>

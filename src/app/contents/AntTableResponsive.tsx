@@ -104,14 +104,14 @@ export default function TableView(props: any) {
   const [searchv, setsearchv] = React.useState<any>('');
 
   const search = (value) => {
-    const result = props.antTableProps?.filterData?.filter(o =>
-      Object.keys(o).some(k =>
-        String(o[k])
-          .toLowerCase()
-          .includes(value.toLowerCase())
-      )
-    );
-    setfilterTable(result)
+    // const result = props.antTableProps?.filterData?.filter(o =>
+    //   Object.keys(o).some(k =>
+    //     String(o[k])
+    //       .toLowerCase()
+    //       .includes(value.toLowerCase())
+    //   )
+    // );
+    // setfilterTable(result)
   }
 
   desktopTableProps.dataSource = filterTable === null ? props.antTableProps.dataSource : filterTable;
