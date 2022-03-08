@@ -40,6 +40,13 @@ export default function SalaryProcessList() {
             key: 'designation',
             showOnResponse: true,
             showOnDesktop: true
+        },        
+        {
+            title: 'Grade',
+            dataIndex: 'salaryGrade',
+            key: 'salaryGrade',
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Basic Salary',
