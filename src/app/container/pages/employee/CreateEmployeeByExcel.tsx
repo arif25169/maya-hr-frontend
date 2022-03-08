@@ -170,7 +170,7 @@ export default function CreateEmployeeByExcel() {
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
                             <Space size="small" style={{ float: "right" }} >
-                                <Button type="primary" onClick={() => window.open('https://res.cloudinary.com/dnyoqhb7g/raw/upload/v1616406742/Student-excel/student_admission_custom_id.xlsx', '_blank')}>Sample File</Button>
+                                <Button type="primary" onClick={() => window.open('https://res.cloudinary.com/dnyoqhb7g/raw/upload/v1646649412/HR_PAYROLL/Employee_Registration_sample_excel.xlsx', '_blank')}>Sample File</Button>
                             </Space>
                         </Col>
                     </Row>

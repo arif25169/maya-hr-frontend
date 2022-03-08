@@ -29,6 +29,7 @@ export default function CreateEmployeeType() {
             typeSerial: value.serial
         }
         saveEmployeeType(postData);
+        createForm.resetFields();
     }
     const updateSubmitForm = (value) => {
         let postData:any = {

@@ -5,6 +5,7 @@ import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select
 import { DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons';
 import { userStore } from '../../../store/states/user/user';
 import EducationAndTraning from './employeeInfoTabs/EducationAndTraning';
+import TrainingInfo from './TrainingInfo';
 
 export default function EmployeeInformation() {
 
@@ -23,17 +24,20 @@ export default function EmployeeInformation() {
                             <TabPane tab="Personal" key="1">
                                 Content of Tab Pane 1
                             </TabPane>
-                            <TabPane tab="Education/Training" key="2">
+                            <TabPane tab="Education" key="2">
                                 <EducationAndTraning />
                             </TabPane>
-                            <TabPane tab="Employment" key="3">
-                                Content of Tab Pane 3
+                            <TabPane tab="Training" key="3">
+                                <TrainingInfo />
                             </TabPane>
-                            <TabPane tab="Other Information" key="4">
-                                Content of Tab Pane 3
+                            <TabPane tab="Employment" key="4">
+                                Content of Tab Pane 4
                             </TabPane>
-                            <TabPane tab="Photograph" key="5">
-                                Content of Tab Pane 3
+                            <TabPane tab="Other Information" key="5">
+                                Content of Tab Pane 5
+                            </TabPane>
+                            <TabPane tab="Photograph" key="6">
+                                Content of Tab Pane 6
                             </TabPane>
                         </Tabs>
                     </Col>

@@ -135,14 +135,11 @@ export function Sidebar() {
 				<Link to={ROUTES.CREATE_DESIGNATION} className="nav-text">Create Designation</Link>
 			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Add Employee</Link>
+				<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Create Employee Type</Link>
 			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Create Shift</Link>
 			</Menu.Item> 
-			<Menu.Item key={ROUTES.CREATE_DEDUCTION} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_DEDUCTION} className="nav-text">Create Deduction</Link>
-			</Menu.Item>
 			<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<UserOutlined />}>
 				<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Create Leave Category</Link>
 			</Menu.Item>

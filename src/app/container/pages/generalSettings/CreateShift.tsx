@@ -37,6 +37,7 @@ export default function CreateShift() {
             shiftStartTime : startTime
           }
         saveShift(postdata);
+        createForm.resetFields();
     }
     const updateSubmitForm = (value) => {
      

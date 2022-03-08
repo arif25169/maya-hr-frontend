@@ -28,6 +28,7 @@ export default function CreateDepartment() {
             departmentName: value.department
         }
         saveDepartment(postdata);
+        createForm.resetFields();
     }
     const updateSubmitForm = (value) => {
         let postdata:any = {
