@@ -7,6 +7,7 @@ export const ROUTES = {
   CREATE_SHIFT: "create-shift",
   CREATE_LEAVE_CATEGORY: "create-leave-category",
   CREATE_LEAVE_CONFIG: "create-leave-config",
+  CREATE_DEDUCTION: "create-deduction",
   CREATE_COMPANY: "create-company",
   CREATE_FINANCIAL_YEAR: "create-financial-year",
   CREATE_DEPARTMENT: "create-department",
@@ -16,7 +17,9 @@ export const ROUTES = {
   SETTINGS_PAYROLL_ADDITION: "settings-payroll-addition",
   SETTINGS_PAYROLL_DEDUCTION: "settings-payroll-deduction",
   CONFIGURE_PAYROLL_GRADE: "configure-payroll-grade",
+  CONFIGURE_EMPLOYEE_GRADE: "configure-employee-grade",
   SALARY_PROCESS_PAYROLL: "salary-process-payroll",
+  SALARY_PROCESS_LIST: "salary-process-list",
   EMPLOYEE_LIST: "employee-list",
   EMPLOYEE_INFORMATION: "employee-information"
 };

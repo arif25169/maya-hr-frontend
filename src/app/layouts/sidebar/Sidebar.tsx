@@ -83,7 +83,39 @@ export function Sidebar() {
 		<Menu.Item key="1" icon={<DashboardTwoTone />}>
 			<Link to={ROUTES.DEFAULT} className="nav-text">Dashboard</Link>
 		</Menu.Item>
-		<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="HR and Payroll" >
+		<SubMenu key={"generalSetting"} icon={<PartitionOutlined />} title="General Settings" >
+			<Menu.Item key={ROUTES.CREATE_COMPANY} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_COMPANY} className="nav-text">Create Company</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_FINANCIAL_YEAR} className="nav-text">Create Financial Year</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_DEPARTMENT} className="nav-text">Create Department</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_DESIGNATION} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_DESIGNATION} className="nav-text">Create Designation</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Create Employee Type</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Create Shift</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_DEDUCTION} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_DEDUCTION} className="nav-text">Create Deduction</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Create Leave Category</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.CREATE_HOLIDAY} icon={<UserOutlined />}>
+				<Link to={ROUTES.CREATE_HOLIDAY} className="nav-text">Create Holiday</Link>
+			</Menu.Item>
+		</SubMenu>
+		<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="HRM" >
 			<SubMenu key={"employee"} icon={<PartitionOutlined />} title="Employee" >
 				<Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<UserOutlined />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE} className="nav-text">Create Emloyee</Link>
@@ -115,41 +147,22 @@ export function Sidebar() {
 				<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<UserOutlined />}>
 					<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
 				</Menu.Item>
+				<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<UserOutlined />}>
+					<Link to={ROUTES.CONFIGURE_EMPLOYEE_GRADE} className="nav-text">Grade Assign</Link>
+				</Menu.Item>
 			</SubMenu>
-			<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<UserOutlined />}>
-				<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text">Salary Process</Link>
-			</Menu.Item>
+			<SubMenu key={"salaryProcessMenu"} icon={<PartitionOutlined />} title="Salary Process" >
+				<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<UserOutlined />}>
+					<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text"> Save</Link>
+				</Menu.Item>
+				<Menu.Item key={ROUTES.SALARY_PROCESS_LIST} icon={<UserOutlined />}>
+					<Link to={ROUTES.SALARY_PROCESS_LIST} className="nav-text"> View</Link>
+				</Menu.Item>
+			</SubMenu>
+
 
 		</SubMenu>
-		<SubMenu key={"generalSetting"} icon={<PartitionOutlined />} title="General Settings" >
-			<Menu.Item key={ROUTES.CREATE_COMPANY} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_COMPANY} className="nav-text">Create Company</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_FINANCIAL_YEAR} className="nav-text">Create Financial Year</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_DEPARTMENT} className="nav-text">Create Department</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_DESIGNATION} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_DESIGNATION} className="nav-text">Create Designation</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Create Employee Type</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Create Shift</Link>
-			</Menu.Item> 
-			<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Create Leave Category</Link>
-			</Menu.Item>			
-			<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_HOLIDAY} icon={<UserOutlined />}>
-				<Link to={ROUTES.CREATE_HOLIDAY} className="nav-text">Create Holiday</Link>
-			</Menu.Item>
-		</SubMenu>
+
 	</Menu>
 	}
 	</>
