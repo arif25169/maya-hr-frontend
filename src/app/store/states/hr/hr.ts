@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { deleteEmployeeInformation, educationInfoUpdateUrl, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl } from '../../../http/hr/hr';
+import { deleteEmployeeInformation, deleteTrainingInfoUrl, educationInfoUpdateUrl, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl } from '../../../http/hr/hr';
 
 
 export interface Hr {
@@ -26,6 +26,7 @@ export interface Hr {
 	employeeTrainingInfoList : any;
 	fetchEmployeeTrainingInfoList : Thunk<Hr, any>;
 	setEmployeeTrainingInfoList:  Action<Hr, any>;
+	deleteEmployeeTrainingInfo : Thunk<Hr, any>;
 
 }
 
@@ -144,6 +145,8 @@ export const hrStore: Hr = {
 			const body = await response.json();
 			if (body.messageType == 1) {
 				notification.success({ message: body.message })
+				let id = localStorage.getItem('employeeId')
+				actions.fetchEmployeeTrainingInfoList(id);
 			}else{
 				notification.error({ message: body.message })
 			}
@@ -169,6 +172,22 @@ export const hrStore: Hr = {
 
 	setEmployeeTrainingInfoList: action((state, payload) => {
 		state.employeeTrainingInfoList = payload;
+	}),
+
+	deleteEmployeeTrainingInfo: thunk(async (actions, payload) => {
+		const response = await deleteTrainingInfoUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				let id = localStorage.getItem('employeeId')
+				actions.fetchEmployeeTrainingInfoList(id);
+			}else{
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
 	}),
 
 }
