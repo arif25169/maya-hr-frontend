@@ -162,7 +162,7 @@ export default function SalaryGrade() {
                                     showHeader: true,
                                     columns,
                                     dataSource: salaryGradeList,
-                                    // filterData: salaryGradeList,
+                                    filterData: salaryGradeList,
                                     pagination: true,
                                     bordered: true,
                                     rowKey: "key",
