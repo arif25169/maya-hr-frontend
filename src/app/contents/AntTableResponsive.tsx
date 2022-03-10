@@ -166,8 +166,8 @@ export default function TableView(props: any) {
                 : undefined;
 
               return (
-                <div style={{ marginTop: 10 }}>
-                  <Card key={rowData.key} {...props.cardProps} {...onRow}>
+       
+                  <Card key={rowData.key} {...props.cardProps} {...onRow} style={{ marginTop: 10 }}>
                     {props.antTableProps.columns
                       ? props.antTableProps.columns.map(
                         (colData: additionalCols, index: any) => {
@@ -210,7 +210,7 @@ export default function TableView(props: any) {
                       )
                       : null}
                   </Card>
-                </div>
+       
               );
             })
           )}
