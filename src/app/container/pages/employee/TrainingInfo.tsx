@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Divider, Popconfirm, Typography} from 'antd'
-import moment from 'moment';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import { monitorEventLoopDelay } from 'perf_hooks';
 import Modal from 'antd/lib/modal/Modal';
+import moment from 'moment';
 
 export default function TrainingInfo() {
 
+    const dateFormat = "YYYY";
     const { Title } = Typography;
     const [form] = Form.useForm();
     const [updateForm] = Form.useForm();
@@ -18,7 +19,10 @@ export default function TrainingInfo() {
     const fetchEmployeeTrainingInfoList = useStoreActions((state) => state.hr.fetchEmployeeTrainingInfoList);
     const employeeTrainingInfoList = useStoreState((state) => state.hr.employeeTrainingInfoList);
     const deleteEmployeeTrainingInfo = useStoreActions((state) => state.hr.deleteEmployeeTrainingInfo);
-    const [isModalVisible, setIsModalVisible] = useState<any>(false);
+    const [isTrainingModalVisible, setTrainingInfoIsModalVisible] = useState<any>(false);
+    const [employeeTrainingListRefineData, setEmployeeTrainingListRefineData] = useState<any>();
+    const updateEmployeeTraningInfo = useStoreActions((state) =>  state.hr.updateEmployeeTraningInfo);
+
 
     useEffect(() => {
         fetchEmployeeTrainingInfoList(localStorage.getItem('employeeId'))
@@ -55,17 +59,56 @@ export default function TrainingInfo() {
 
     const closeModalMethod = (e) => {
         updateForm.resetFields();
-        setIsModalVisible(false);
+        setTrainingInfoIsModalVisible(false);
     }
 
-    const updateTrainingInfoSubmit = () => {
-
+    const updateTrainingInfoSubmit = (value) => {
+        let data:any = {
+            country : value.countryNameUpdate,
+            duration : value.durationUpdate,
+            employeeId : localStorage.getItem('employeeId'),
+            instituteName : value.instituteUpdate,
+            location : value.locationUpdate,
+            topicsCovered : value.topicsCoveredUpdate,
+            trainingId : employeeTrainingListRefineData.trainingId,
+            trainingTitle : value.trainingTitleUpdate,
+            trainingYear : moment(value.trainingYearUpdate).year()
+        }
+        updateEmployeeTraningInfo(data);
+        setTrainingInfoIsModalVisible(false);
     }
 
     const editTrainingInfoMadal = (val) => {
-        setIsModalVisible(true);
-        
+        setTrainingInfoIsModalVisible(true);
+        let dataList:any = {};
+        employeeTrainingInfoList.map((item, index) => {
+            if (item.trainingId == val) {
+                let dataInfo:any = {
+                    country: item.country,
+                    duration: item.duration,
+                    instituteName: item.instituteName,
+                    location: item.location,
+                    topicsCovered: item.topicsCovered,
+                    trainingId: item.trainingId,
+                    trainingTitle: item.trainingTitle,
+                    trainingYear: item.trainingYear
+                }
+                Object.assign(dataList, dataInfo);
+            }
+        });
+        updateForm.setFieldsValue({
+            trainingTitleUpdate : dataList.trainingTitle,
+            countryNameUpdate : dataList.country,
+            topicsCoveredUpdate : dataList.topicsCovered,
+            trainingYearUpdate : moment(dataList.trainingYear, 'YYYY'),
+            instituteUpdate : dataList.instituteName,
+            durationUpdate : dataList.duration,
+            locationUpdate : dataList.location,
+        });
+
+        setEmployeeTrainingListRefineData(dataList);
     }
+    
 
     return (
         <>
@@ -76,7 +119,7 @@ export default function TrainingInfo() {
                             <>
                                 <Row>
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                                        <Title level={3}>Academic {(index + 1)}</Title>
+                                        <Title level={3}>Training {(index + 1)}</Title>
                                     </Col>
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6, offset:12}} lg={{ span: 6, offset:12}} xl={{ span: 6, offset:12}}>
                                         <div style={{ float:"right" }}>
@@ -250,7 +293,7 @@ export default function TrainingInfo() {
                 </Button>
                 <Modal
                     title="Update Training Information"
-                    visible={isModalVisible}
+                    visible={isTrainingModalVisible}
                     //  onOk={handleOk}
                     okButtonProps={{ form: 'update', htmlType: 'submit' }}
                     onCancel={(e) => closeModalMethod(e)}
@@ -312,7 +355,7 @@ export default function TrainingInfo() {
                                         { required: true, message: "Please Select Training Year" },
                                     ]}
                                 >
-                                    <DatePicker picker="year" style={{ width: "100%" }}/>
+                                    <DatePicker picker="year" style={{ width: "100%" }}  />
                                 </Form.Item>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>

@@ -21,5 +21,6 @@ export const ROUTES = {
   SALARY_PROCESS_PAYROLL: "salary-process-payroll",
   SALARY_PROCESS_LIST: "salary-process-list",
   EMPLOYEE_LIST: "employee-list",
-  EMPLOYEE_INFORMATION: "employee-information"
+  EMPLOYEE_INFORMATION: "employee-information",
+  LEAVE_ASSIGN: "leave-assign"
 };

@@ -9,3 +9,4 @@ export const educationInfoUpdateUrl = (payload) => post('/employee/education/upd
 export const saveTraningInfoUrl = (payload) => post('/employee/training/save', payload);
 export const fetchTraningInfoUrl = (payload) => get('/employee/training/list?employeeId='+payload );
 export const deleteTrainingInfoUrl = (payload) => del('/employee/training/delete?trainingId='+payload );
+export const traningInfoUpdateUrl = (payload) => post('/employee/training/update', payload);

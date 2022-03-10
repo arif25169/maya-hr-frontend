@@ -38,6 +38,7 @@ import CreateDepartment from "./container/pages/generalSettings/CreateDepartment
 import CreateHoliday from "./container/pages/generalSettings/CreateHoliday";
 import CreateEmployeeByExcel from "./container/pages/employee/CreateEmployeeByExcel";
 import EmployeeInformation from "./container/pages/employee/EmployeeInformation";
+import LeaveAssing from "./container/pages/generalSettings/LeaveAssing";
 
 
 const { Header, Content, Sider } = Layout;
@@ -131,6 +132,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_INFORMATION} component={EmployeeInformation} /> 
+            <Route exact path={'/' +ROUTES.LEAVE_ASSIGN} component={LeaveAssing} /> 
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

@@ -7,14 +7,17 @@ export interface SelectDepartment {
   onChange?: any;
   selected?: any;
   defaultSelected?: any;
-  style?: any
+  style?: any;
+  allowClear?: any;
 }
 
 export const SelectDepartment = ({
   onChange,
   selected,
   defaultSelected,
-  style
+  style,
+  allowClear
+
 }: SelectDepartment) => {
   const companyDepartmentList = useStoreState((state) => state.common.companyDepartmentList);
   

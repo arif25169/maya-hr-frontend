@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeListByDepartmentIdUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -56,6 +56,15 @@ export interface GeneralSetting {
 	updateLeaveConfig: Thunk<GeneralSetting, any>;
 	deleteLeaveConfig: Thunk<GeneralSetting, any>;
 
+	employeeListByDepartmentId: any;
+	setEmployeeListByDepartmentId: Action<GeneralSetting, any>;
+	fetchEmployeeListByDepartmentId: Thunk<GeneralSetting>;
+
+	leavelListByDepartmentId: any;
+	setLeavelListByDepartmentId: Action<GeneralSetting, any>;
+	fetchLeavelListByDepartmentId: Thunk<GeneralSetting>;
+	saveLeaveAssign: Thunk<GeneralSetting, any>;
+
 }
 
 export const generalSettingStore: GeneralSetting = {
@@ -64,6 +73,8 @@ export const generalSettingStore: GeneralSetting = {
 	designationList: [],
 	employeeTypeList: [],
 	shiftList: [],
+	employeeListByDepartmentId:[],
+	leavelListByDepartmentId:[],
 
 	setSaveCompany: thunk(async (actions, payload) => {
 		const response = await saveCompanyUrl(payload);
@@ -554,6 +565,57 @@ export const generalSettingStore: GeneralSetting = {
 		} else {
 			const body = await response.json();
 			notification.error({ message: 'Something went wrong' })
+		}
+	}),
+
+	fetchEmployeeListByDepartmentId: thunk(async (actions, payload) => {
+		const response = await employeeListByDepartmentIdUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				actions.setEmployeeListByDepartmentId(body.item)
+			} else {
+				actions.setEmployeeListByDepartmentId([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setEmployeeListByDepartmentId: action((state, payload) => {
+		state.employeeListByDepartmentId = payload;
+	}),
+
+	fetchLeavelListByDepartmentId: thunk(async (actions, payload) => {
+		const response = await leaveConfigListByDepartmentIdUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				actions.setLeavelListByDepartmentId(body.item)
+			} else {
+				actions.setLeavelListByDepartmentId([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setLeavelListByDepartmentId: action((state, payload) => {
+		state.leavelListByDepartmentId = payload;
+	}),
+
+	saveLeaveAssign: thunk(async (actions, payload) => {
+		const response = await createLeaveAssignSaveUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			const body = await response.json();
+			notification.error({ message: body.message })
 		}
 	}),
 
