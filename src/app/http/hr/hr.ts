@@ -10,3 +10,6 @@ export const saveTraningInfoUrl = (payload) => post('/employee/training/save', p
 export const fetchTraningInfoUrl = (payload) => get('/employee/training/list?employeeId='+payload );
 export const deleteTrainingInfoUrl = (payload) => del('/employee/training/delete?trainingId='+payload );
 export const traningInfoUpdateUrl = (payload) => post('/employee/training/update', payload);
+
+export const bankInfoUpdateUrl = (payload) => post('/employee/bank/info/update', payload);
+export const basicInfoUpdateUrl = (payload) => post('/employee/basic/info/update', payload);

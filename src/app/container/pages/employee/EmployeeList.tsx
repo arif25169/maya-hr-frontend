@@ -9,6 +9,7 @@ import { SelectDesignation } from '../../select/SelectDesignation';
 import { SelectEmployeeType } from '../../select/SelectEmployeeType';
 import { userStore } from '../../../store/states/user/user';
 import { v4 as uuidv4 } from "uuid";
+import { Redirect } from 'react-router-dom';
 
 export default function EmployeeList() {
 
@@ -36,7 +37,7 @@ export default function EmployeeList() {
         {title : 'Blood Group', dataIndex: 'bloodGroup', key: 'bloodGroup', showOnResponse: true, showOnDesktop: true, width: 120,},
         {title : 'Joining Date', dataIndex: 'joiningDate', key: 'joiningDate', showOnResponse: true, showOnDesktop: true, width: 140,},
         {title : 'Action', dataIndex: 'employeeId', key: 'employeeId', showOnResponse: true, showOnDesktop: true, render: (text, record, index) => (
-            <Tooltip title="Edit">
+            <Tooltip title="View">
                 <Button type='primary' 
                         onClick={() => {
                             pageRedirect(record.employeeId)
@@ -56,7 +57,6 @@ export default function EmployeeList() {
     },[]);
 
     const submitFrom = (value) => {
-        console.log('submitFrom', value);
         let postData:any = {
             department: value.department ? value.department : "",
             designation: value.designation ? value.designation : "",

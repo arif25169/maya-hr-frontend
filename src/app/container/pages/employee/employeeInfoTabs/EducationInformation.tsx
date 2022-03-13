@@ -453,7 +453,7 @@ export default function EducationInformation() {
     
     return (
         <>
-            <Card title="Employee Information">
+            <Card title="Education Information">
                 
                 <>
                     {employeeEducationListData ? (
