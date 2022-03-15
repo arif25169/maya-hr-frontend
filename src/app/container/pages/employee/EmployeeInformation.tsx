@@ -33,7 +33,7 @@ export default function EmployeeInformation() {
                             <TabPane tab="Training" key="4">
                                 {activeTab === "4" && <TrainingInfo /> }
                             </TabPane>
-                            <TabPane tab="Employment" key="5">
+                            {/* <TabPane tab="Employment" key="5">
                                 Content of Tab Pane 5
                             </TabPane>
                             <TabPane tab="Other Information" key="6">
@@ -41,7 +41,7 @@ export default function EmployeeInformation() {
                             </TabPane>
                             <TabPane tab="Photograph" key="7">
                                 Content of Tab Pane 7
-                            </TabPane>
+                            </TabPane> */}
                         </Tabs>
                     </Col>
                 </Row>

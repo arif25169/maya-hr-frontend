@@ -9,6 +9,7 @@ export const ROUTES = {
   CREATE_LEAVE_CONFIG: "create-leave-config",
   CREATE_DEDUCTION: "create-deduction",
   CREATE_COMPANY: "create-company",
+  UPDATE_COMPANY: "update-company",
   CREATE_FINANCIAL_YEAR: "create-financial-year",
   CREATE_DEPARTMENT: "create-department",
   CREATE_HOLIDAY: "create-hoiliday",
@@ -22,5 +23,6 @@ export const ROUTES = {
   SALARY_PROCESS_LIST: "salary-process-list",
   EMPLOYEE_LIST: "employee-list",
   EMPLOYEE_INFORMATION: "employee-information",
-  LEAVE_ASSIGN: "leave-assign"
+  LEAVE_ASSIGN: "leave-assign",
+  EMPLOYEE_ATTENDANCE_CONFIG:"employee-attemdance-config"
 };

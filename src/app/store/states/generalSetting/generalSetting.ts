@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeListByDepartmentIdUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeListByDepartmentIdUrl, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -65,6 +65,11 @@ export interface GeneralSetting {
 	fetchLeavelListByDepartmentId: Thunk<GeneralSetting>;
 	saveLeaveAssign: Thunk<GeneralSetting, any>;
 
+	companyInfo: any;
+	fetchCompanyInfo: Thunk<GeneralSetting>;
+	setCompanyInfo: Action<GeneralSetting, any>;
+	updateCompanyInfo: Thunk<GeneralSetting, any>;
+
 }
 
 export const generalSettingStore: GeneralSetting = {
@@ -75,7 +80,7 @@ export const generalSettingStore: GeneralSetting = {
 	shiftList: [],
 	employeeListByDepartmentId:[],
 	leavelListByDepartmentId:[],
-
+    companyInfo: [],
 	setSaveCompany: thunk(async (actions, payload) => {
 		const response = await saveCompanyUrl(payload);
 		if (response.status === 201 || response.status === 200) {
@@ -619,4 +624,36 @@ export const generalSettingStore: GeneralSetting = {
 		}
 	}),
 
+	fetchCompanyInfo: thunk(async (actions, payload) => {
+		const response = await fetchCompanyInfoUrl();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				actions.setCompanyInfo(body.item)
+			} else {
+				actions.setCompanyInfo([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setCompanyInfo: action((state, payload) => {
+		state.companyInfo = payload;
+	}),
+
+	updateCompanyInfo: thunk(async (actions, payload) => {
+		const response = await updateCompanyInfoUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			const body = await response.json();
+			notification.error({ message: body.message })
+		}
+	}),
 }

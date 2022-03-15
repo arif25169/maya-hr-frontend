@@ -40,3 +40,6 @@ export const deleteLeaveConfig = (payload) => del("/leave/config/delete?leaveCon
 export const employeeListByDepartmentIdUrl = (payload) => get("/employee/list?departmentId="+payload);
 export const leaveConfigListByDepartmentIdUrl = (payload) => get("/leave/config/list/by/departmentId?departmentId="+payload);
 export const createLeaveAssignSaveUrl = (payload) => post("/leave/assign/save",payload);
+
+export const fetchCompanyInfoUrl = () => get('/company/info');
+export const updateCompanyInfoUrl = (payload) => post("/company/update",payload);

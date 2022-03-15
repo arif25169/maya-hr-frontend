@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Popconfirm} from 'antd'
-import { DeleteOutlined, EditOutlined, EyeFilled, SearchOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeFilled, FileExcelOutlined, SearchOutlined } from '@ant-design/icons';
 import TableView from '../../../contents/AntTableResponsive';
 import { SelectDepartment } from '../../select/SelectDepartment';
 import { SelectDesignation } from '../../select/SelectDesignation';
 import { SelectEmployeeType } from '../../select/SelectEmployeeType';
-import { userStore } from '../../../store/states/user/user';
-import { v4 as uuidv4 } from "uuid";
-import { Redirect } from 'react-router-dom';
+import ReactExport from "react-export-excel";
+
+
+// const ExcelFile: any = ReactExport.ExcelFile;
+// const ExcelSheet: any = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn: any = ReactExport.ExcelFile.ExcelColumn;
 
 export default function EmployeeList() {
-
     const [form] = Form.useForm();
     const fetchCompanyDepartmentList = useStoreActions((state) => state.common.fetchCompanyDepartmentList);
     const fetchCompanyDesignationList = useStoreActions((state) => state.common.fetchCompanyDesignationList);
@@ -21,7 +22,7 @@ export default function EmployeeList() {
     const fetchEmployeeList = useStoreActions((state) => state.hr.fetchEmployeeList);
     const employeeList = useStoreState((state) => state.hr.employeeList);
     const tableColumn = [
-        {title : 'Employee Name', dataIndex: 'employeeName', key: 'employeeName', showOnResponse: true, showOnDesktop: true, width: 140,},
+        {title : 'Employee Name', dataIndex: 'employeeName', key: 'employeeName', showOnResponse: true, showOnDesktop: true, width: 130,},
         {title : 'Father Name', dataIndex: 'employeeCustomId', key: 'employeeCustomId', showOnResponse: true, showOnDesktop: true, width: 130,},
         {title : 'Mother Name', dataIndex: 'motherName', key: 'motherName', showOnResponse: true, showOnDesktop: true, width: 130,},
         {title : 'Gender', dataIndex: 'gender', key: 'gender', showOnResponse: true, showOnDesktop: true, width: 90,},
@@ -36,17 +37,32 @@ export default function EmployeeList() {
         {title : 'Nationality', dataIndex: 'nationality', key: 'nationality', showOnResponse: true, showOnDesktop: true, width: 120,},
         {title : 'Blood Group', dataIndex: 'bloodGroup', key: 'bloodGroup', showOnResponse: true, showOnDesktop: true, width: 120,},
         {title : 'Joining Date', dataIndex: 'joiningDate', key: 'joiningDate', showOnResponse: true, showOnDesktop: true, width: 140,},
-        {title : 'Action', dataIndex: 'employeeId', key: 'employeeId', showOnResponse: true, showOnDesktop: true, render: (text, record, index) => (
-            <Tooltip title="View">
-                <Button type='primary' 
-                        onClick={() => {
-                            pageRedirect(record.employeeId)
-                        }} 
-                        icon={<EyeFilled />} 
-                        
-                />
-            </Tooltip>
+        {title : 'View Details', dataIndex: 'employeeId', key: 'employeeId', showOnResponse: true, showOnDesktop: true, width: 120, fixed: 'right', render: (text, record, index) => (
+            <div style={{ textAlign: "center" }}>
+                <Tooltip title="View">
+                    <Button type='primary' 
+                            onClick={() => {
+                                pageRedirect(record.employeeId)
+                            }} 
+                            icon={<EyeFilled />} 
+                            
+                    />
+                </Tooltip>
+            </div>
         )},
+    ];
+
+    const dataSet2 = [
+        {
+            name: "Johnson",
+            total: 25,
+            remainig: 16
+        },
+        {
+            name: "Josef",
+            total: 25,
+            remainig: 7
+        }
     ];
 
     useEffect(function(){
@@ -125,7 +141,7 @@ export default function EmployeeList() {
                     </Col>
                 </Row>
                 {employeeList.length > 0  &&
-
+                    <>
                         <TableView
                             antTableProps={{
                                 showHeader: true,
@@ -134,11 +150,12 @@ export default function EmployeeList() {
                                 dataSource: employeeList,
                                 filterData: employeeList,
                                 pagination: true,
-                                bordered: true,                        
+                                bordered: true,                      
                             }}
                             mobileBreakPoint={768}
                         />
-   
+                    </>
+                            
                 }
             </Card>
         </>

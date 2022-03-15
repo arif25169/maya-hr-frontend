@@ -39,6 +39,7 @@ import CreateHoliday from "./container/pages/generalSettings/CreateHoliday";
 import CreateEmployeeByExcel from "./container/pages/employee/CreateEmployeeByExcel";
 import EmployeeInformation from "./container/pages/employee/EmployeeInformation";
 import LeaveAssing from "./container/pages/generalSettings/LeaveAssing";
+import UpdateCompany from "./container/pages/generalSettings/UpdateCompany";
 
 
 const { Header, Content, Sider } = Layout;
@@ -86,7 +87,7 @@ export default function Container() {
         <div className="logo">
           {!collapsed && (
             <>
-            <img src={logo} style={{height:58, width:200}} />
+            <img src={logo} />
             </>
           )}
           {collapsed && (
@@ -128,6 +129,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CREATE_LEAVE_CATEGORY} component={CreateLeaveCategory} />
             <Route exact path={'/' +ROUTES.CREATE_LEAVE_CONFIG} component={CreateLeaveConfig} />
             <Route exact path={'/' +ROUTES.CREATE_COMPANY} component={CreateCompany} /> 
+            <Route exact path={'/' +ROUTES.UPDATE_COMPANY} component={UpdateCompany} /> 
             <Route exact path={'/' +ROUTES.CREATE_DEPARTMENT} component={CreateDepartment} /> 
             <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} /> 
