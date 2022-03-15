@@ -120,7 +120,7 @@ export function Sidebar() {
 					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk Registration</Link>
 				</Menu.Item>
 				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<UserOutlined />}>
-					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Emloyee List</Link>
+					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
 				</Menu.Item>
 				{/* <Menu.Item key={ROUTES.EMPLOYEE_INFORMATION} icon={<UserOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_INFORMATION} className="nav-text">Emloyee Information</Link>

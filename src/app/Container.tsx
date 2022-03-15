@@ -40,6 +40,7 @@ import CreateEmployeeByExcel from "./container/pages/employee/CreateEmployeeByEx
 import EmployeeInformation from "./container/pages/employee/EmployeeInformation";
 import LeaveAssing from "./container/pages/generalSettings/LeaveAssing";
 import UpdateCompany from "./container/pages/generalSettings/UpdateCompany";
+import StaffTimeConfig from "./container/pages/generalSettings/StaffTimeConfig";
 
 
 const { Header, Content, Sider } = Layout;
@@ -135,6 +136,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_INFORMATION} component={EmployeeInformation} /> 
             <Route exact path={'/' +ROUTES.LEAVE_ASSIGN} component={LeaveAssing} /> 
+            <Route exact path={'/' +ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} component={StaffTimeConfig} /> 
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>
