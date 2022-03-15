@@ -119,6 +119,9 @@ export function Sidebar() {
 				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<UserOutlined />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk Registration</Link>
 				</Menu.Item>
+				{/* <Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<UserOutlined />}>
+					<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Attendance Config</Link>
+				</Menu.Item> */}
 				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<UserOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
 				</Menu.Item>
