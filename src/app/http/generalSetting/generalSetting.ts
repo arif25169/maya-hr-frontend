@@ -43,3 +43,5 @@ export const createLeaveAssignSaveUrl = (payload) => post("/leave/assign/save",p
 
 export const fetchCompanyInfoUrl = () => get('/company/info');
 export const updateCompanyInfoUrl = (payload) => post("/company/update",payload);
+
+export const employeeListForAttendanceConfigUrl = () => get('/employee/list');

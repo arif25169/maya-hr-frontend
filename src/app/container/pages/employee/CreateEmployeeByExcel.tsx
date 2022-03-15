@@ -40,7 +40,7 @@ export default function CreateEmployeeByExcel() {
                         key: index,
                         bloodGroup: item['Blood Group'],
                         corporateMobile: item['Corporate Mobile'],
-                        dateOfBirth: item['Date date Of Birth'],
+                        dateOfBirth: item['Date Of Birth'],
                         emergencyContactNo: item['Emergency Contact No'],
                         employeeCustomId: "",
                         employeeName: item['Employee Name'],
@@ -52,7 +52,7 @@ export default function CreateEmployeeByExcel() {
                         nationalIdNo: item['National ID No'],
                         nationality: item['Nationality'],
                         numberOfChild: item['Number Of Child'],
-                        personalMbile: item['Personal Mbile'],
+                        personalMbile: item['Personal Mobile'],
                         photoName: "",
                         relationWithEmergencyContact: item['Relation of Emrg. Contact No']                        
                     }
