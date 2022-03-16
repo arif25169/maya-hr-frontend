@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { useStoreActions, Actions } from "easy-peasy";
+import { Actions } from "easy-peasy";
+import { useStoreActions, useStoreState } from './store/hooks/easyPeasy';
 import { StoreModel } from "./store/store";
 import { Button, Card, Col, List, Popover, Row, Typography } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import { KeyOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
-import { useStoreState } from './store/hooks/easyPeasy';
 import { Link } from "react-router-dom";
 import containerBG from "../../src/assets/images/sp_logo.png";
 
 export default function TopNavBar(props: any) {
+
+
 
   var isMobile = false; //initiate as false
   if (
@@ -24,7 +26,13 @@ export default function TopNavBar(props: any) {
     (actions: Actions<StoreModel>) => actions.auth.logoutclear
   );
 
-  const user = useStoreState(state => state.auth.user)
+  const user = useStoreState(state => state.auth.user);
+  const fetchCompanyInfo = useStoreActions((state) => state.generalSetting.fetchCompanyInfo);
+  const companyInfo = useStoreState((state) => state.generalSetting.companyInfo);
+
+  useEffect(() => {
+    fetchCompanyInfo();
+  }, []);
 
   const logoutfunc = () => {
     logoutclear(user?.access_token);
@@ -90,7 +98,7 @@ export default function TopNavBar(props: any) {
                 src={containerBG}
                 style={{ marginLeft: 10 }}
               />
-              <span className='instiute-name' style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 2 }}>Sheba Hr</span>
+              <span className='instiute-name' style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 2 }}>{companyInfo?.companyName}</span>
             </>
           }
           {isMobile && !props.value.collapsed &&
@@ -109,7 +117,7 @@ export default function TopNavBar(props: any) {
                 src={containerBG}
                 style={{ marginLeft: 10 }}
               />
-              <span style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 5 }}>Sheba Hr</span>
+              <span style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 5 }}>{companyInfo?.companyName}</span>
             </>
           }
         </div>
