@@ -85,7 +85,7 @@ export function Login() {
                                 <div className="login-form">
                                     <div className="login-title text-center">
                                         <h1>Login</h1>
-                                        <p>Best Educational Institute Management Software in Bangladesh.</p>
+                                        {/* <p>Best Educational Institute Management Software in Bangladesh.</p> */}
                                     </div>
                                     <Form name="login" onFinish={handleSubmit}>
                                         <Form.Item name='username' rules={[{ required: true, message: 'Please input your username or email!' }]}>
