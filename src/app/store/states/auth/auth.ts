@@ -7,6 +7,7 @@ export interface Auth {
 	checkAuth: Thunk<Auth, any>;
 	authenticated: Action<Auth, any>;
 	authenticate: Thunk<Auth, any>;
+	authenticate2: Thunk<Auth, any>;
 	logout: Action<Auth, any>;
 	loginFailed: Action<Auth, string>;
 	error?: string;
@@ -44,7 +45,7 @@ export const authStore: Auth = {
 	authenticate: thunk(async (actions, payload) => {
 		//console.log('here')
 		const response = await login(payload);
-		console.log(response);
+		//console.log(response);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			let url: any = import.meta.env.VITE_APP_API_ROOT
@@ -60,28 +61,34 @@ export const authStore: Auth = {
 
 			actions.authenticated(body);
 
-
-			///
-			// let headerx = {};
-			// headerx['Authorization'] = `Bearer ${body.access_token}`;
-			// let basicInfo = await fetch(`${import.meta.env.VITE_APP_API_ROOT}/institute/view`, {
-			// 	method: "GET",
-			// 	mode: 'cors',
-			// 	cache: 'no-cache',
-			// 	headers: {
-			// 		'Content-Type': 'application/json', ...headerx
-			// 	},
-			// });
-			// if (basicInfo.status === 200) {
-			// 	const bodyx = await basicInfo.json();
-			// 	actions.setinstituteInfo(bodyx.item);
-			// 	localStorage.setItem("basicInfo", JSON.stringify(bodyx.item));
-			// } else {
-			// 	throw new Error("[Auth] Failed");
-			// }
 		} else {
 			//const body = await response.json();
 			actions.loginFailed("Invalid Username/Password");
+		}
+	}),
+	authenticate2: thunk(async (actions, payload) => {
+		//console.log('here')
+		const response = await login(payload);
+		//console.log(response);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			let url: any = import.meta.env.VITE_APP_API_ROOT
+			localStorage.setItem("url", url);
+			localStorage.setItem("tok", body.access_token);
+			if (payload.remember) {
+				localStorage.setItem("jwt", JSON.stringify(body));
+
+			} else {
+				localStorage.removeItem("jwt");
+				localStorage.removeItem("openKeys");
+			}
+
+			//actions.authenticated(body);
+			window.location.href = "/";
+
+		} else {
+			//const body = await response.json();
+			actions.loginFailed("Login failed, please try again");
 		}
 	}),
 	authenticated: action((state, auth) => {

@@ -6,6 +6,7 @@ import './assets/styles.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Container from './app/Container';
 import { Login } from './app/components/auth/Login';
+import { HrLogin } from './app/components/auth/HrLogin';
 import { Authenticated } from './app/components/auth/Authenticated';
 import { useStoreActions, useStoreState } from './app/store/hooks/easyPeasy';
 
@@ -20,6 +21,9 @@ function App() {
 			<Switch>
 				<Route exact path="/login">
 					<Login />
+				</Route>				
+				<Route exact path="/hrlogin">
+					<HrLogin />
 				</Route>				
 				<Route exact path="/success">
 					<Success />
