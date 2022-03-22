@@ -198,13 +198,7 @@ export default function SalaryProcess() {
                 )
             }
         },
-        {
-            title: 'Net Salary',
-            dataIndex: 'netSalary',
-            key: 'netSalary',
-            showOnResponse: true,
-            showOnDesktop: true
-        },
+
         {
             title: 'Gross Salary',
             dataIndex: 'grossSalary',
@@ -212,6 +206,14 @@ export default function SalaryProcess() {
             showOnResponse: true,
             showOnDesktop: true
         },
+        {
+            title: 'Net Salary',
+            dataIndex: 'netSalary',
+            key: 'netSalary',
+            showOnResponse: true,
+            showOnDesktop: true
+        },
+       
     ];
 
     const [tableData, setTableData] = useState<any>([]);

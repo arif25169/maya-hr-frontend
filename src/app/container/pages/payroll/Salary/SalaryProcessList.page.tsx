@@ -166,13 +166,7 @@ export default function SalaryProcessList() {
             showOnDesktop: true,
 
         },
-        {
-            title: 'Net Salary',
-            dataIndex: 'netSalary',
-            key: 'netSalary',
-            showOnResponse: true,
-            showOnDesktop: true
-        },
+
         {
             title: 'Gross Salary',
             dataIndex: 'grossSalary',
@@ -180,6 +174,14 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true
         },
+        {
+            title: 'Net Salary',
+            dataIndex: 'netSalary',
+            key: 'netSalary',
+            showOnResponse: true,
+            showOnDesktop: true
+        },
+      
     ];
 
 
