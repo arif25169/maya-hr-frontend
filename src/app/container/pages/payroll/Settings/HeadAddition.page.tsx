@@ -95,7 +95,7 @@ export default function HeadAddition() {
         }
     ];
     return (
-        <Card title="Addition">
+        <Card title="Create Addition">
             <Row>
                 <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24, offset:2 }} xl={{ span: 24, offset:2}}>
                     <Form

@@ -41,8 +41,8 @@ export default function SalaryProcess() {
     const columns: any = [
         {
             title: 'Employee Id',
-            dataIndex: 'employeeId',
-            key: 'employeeId',
+            dataIndex: 'customEmployeeId',
+            key: 'customEmployeeId',
             showOnResponse: true,
             showOnDesktop: true
         },
@@ -251,7 +251,7 @@ export default function SalaryProcess() {
         let payLoad = selectedValue?.map((item: any) => {
             return {
                 "basicSalary": item.basicSalary,
-                "employeeId": item.employeeId,
+                "customEmployeeId": item.customEmployeeId,
                 "grossSalary": item.grossSalary,
                 "netSalary": item.netSalary,
                 "salaryGradeId": item.salaryGradeId,
@@ -433,7 +433,7 @@ export default function SalaryProcess() {
                                             filterData: tableData,
                                             pagination: true,
                                             bordered: true,
-                                            rowKey: "employeeId",
+                                            rowKey: "customEmployeeId",
                                             rowSelection: rowSelection,
                                         }}
                                         mobileBreakPoint={768}
