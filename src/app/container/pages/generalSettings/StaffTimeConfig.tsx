@@ -121,13 +121,13 @@ export default function StaffTimeConfig() {
 
     return (
         <>
-            <Card title="Staff Attendance Time Configuration">
+            <Card title="Employee Attendance Time Configuration">
                 <Tabs defaultActiveKey="1" onChange={(e) =>  onChangeTabs(e) } type="card">
                     <TabPane tab="Attendance Config" key="1">
                         {activeTab === "1" && 
                             <Row>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
-                                    <Card title="Staff List" className='box-shadow-none'>
+                                    <Card title="Employee List" className='box-shadow-none'>
                                         <TableView
                                             antTableProps={{
                                                 showHeader: true,

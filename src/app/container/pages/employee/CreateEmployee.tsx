@@ -675,7 +675,7 @@ export default function employeeList() {
 
     return (
         <>
-            <Card title="Create Employee">
+            <Card title="Employee Single Registration">
                 <Form
                     layout="vertical"
                     id="createEmployee"

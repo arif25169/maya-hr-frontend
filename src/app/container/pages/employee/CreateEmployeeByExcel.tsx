@@ -95,7 +95,7 @@ export default function CreateEmployeeByExcel() {
 
     return (
         <>
-            <Card title="Create Employee">
+            <Card title="Employee Bulk Registration">
                 <Form
                     layout="vertical"
                     id="CreateEmployeeByExcel"
