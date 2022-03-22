@@ -70,7 +70,7 @@ export default function HeadAddition() {
                     <Tooltip title="Edit">
                         <Button type='primary' icon={<EditOutlined />} onClick={() => {
                             updateForm.setFieldsValue({
-                                salaryHeadSerial: record.salaryHeadSerial,
+                                // salaryHeadSerial: record.salaryHeadSerial,
                                 salaryHeadName: record.salaryHeadName,
                                 note: record.note,
                             });
@@ -105,7 +105,7 @@ export default function HeadAddition() {
                         form={saveForm}
                     >
                         <Row>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                            {/* <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Form.Item
                                     name="salaryHeadSerial"
                                     label="Serial No"
@@ -116,7 +116,7 @@ export default function HeadAddition() {
                                 >
                                     <Input placeholder="Serial No" />
                                 </Form.Item>
-                            </Col>
+                            </Col> */}
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Form.Item
                                     name="salaryHeadName"

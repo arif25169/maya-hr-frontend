@@ -32,7 +32,7 @@ export default function CreateHoliday(props) {
     const saveFormSubmit = (value) => {
         let postData = {
             holidayName: value.holidayName,
-            serial: value.serial,
+            // serial: value.serial,
             holidayStartDate: moment(value?.holidayStartDate).format("YYYY-MM-DD"),
             holidayEndDate: moment(value?.holidayEndDate).format("YYYY-MM-DD")
         };
@@ -135,7 +135,7 @@ export default function CreateHoliday(props) {
                     <Row gutter={8}>
                         <Col xs={24} sm={24} md={24} lg={2} xl={2}> </Col>
 
-                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                        {/* <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                             <Form.Item
                                 name="serial"
                                 label="Serial"
@@ -146,8 +146,8 @@ export default function CreateHoliday(props) {
                             >
                                 <Input placeholder="Serial No" />
                             </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                        </Col> */}
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Form.Item
                                 name="holidayName"
                                 label="Holiday Name"
@@ -172,7 +172,7 @@ export default function CreateHoliday(props) {
                                 <DatePicker style={{ width: '100%' }} placeholder="Select Date" format={"DD/MM/YYYY"} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Form.Item
                                 name="holidayEndDate"
                                 label="End Date"
@@ -185,8 +185,8 @@ export default function CreateHoliday(props) {
                                 <DatePicker style={{ width: '100%' }} placeholder="Select Date" format={"DD/MM/YYYY"} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={2} xl={2}>
-                            <Button type="primary" htmlType="submit" style={{ height: 40, marginTop: 30 }} icon={<SaveOutlined />}>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                            <Button type="primary" htmlType="submit"  style={{ height: 40, marginTop: 30 }} icon={<SaveOutlined />}>
                                 Save
                             </Button>
 

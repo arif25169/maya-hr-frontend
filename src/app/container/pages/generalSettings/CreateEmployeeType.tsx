@@ -26,7 +26,7 @@ export default function CreateEmployeeType() {
         let postData:any = {
             typeId: 0,
             typeName: value.employeeTypeName,
-            typeSerial: value.serial
+            // typeSerial: value.serial
         }
         saveEmployeeType(postData);
         createForm.resetFields();
@@ -98,7 +98,7 @@ export default function CreateEmployeeType() {
                             form={createForm}
                         >
                             <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 10 }} lg={{ span: 10 }} xl={{ span: 10 }}>
+                                {/* <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 10 }} lg={{ span: 10 }} xl={{ span: 10 }}>
                                     <Form.Item
                                         name="serial"
                                         label="Serial"
@@ -109,7 +109,7 @@ export default function CreateEmployeeType() {
                                     >
                                         <InputNumber placeholder="write serial" />
                                     </Form.Item>
-                                </Col>
+                                </Col> */}
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 10 }} lg={{ span: 10 }} xl={{ span: 10 }}>
                                     <Form.Item
                                         name="employeeTypeName"

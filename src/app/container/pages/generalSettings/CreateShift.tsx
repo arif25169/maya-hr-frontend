@@ -33,7 +33,7 @@ export default function CreateShift() {
             shiftEndTime : endTime,
             shiftId : 0,
             shiftName : value.shiftName,
-            shiftSerial :value.serial,
+            // shiftSerial :value.serial,
             shiftStartTime : startTime
           }
         saveShift(postdata);
@@ -125,7 +125,7 @@ export default function CreateShift() {
                             form={createForm}
                         >
                             <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                {/* <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                     <Form.Item
                                         name="serial"
                                         label="Serial"
@@ -136,8 +136,8 @@ export default function CreateShift() {
                                     >
                                         <InputNumber placeholder="write serial" />
                                     </Form.Item>
-                                </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                </Col> */}
+                               <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                     <Form.Item
                                         name="shiftName"
                                         label="Shift"
@@ -181,9 +181,9 @@ export default function CreateShift() {
                                         </div>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4, offset: 20 }} lg={{ span: 4, offset: 20 }} xl={{ span: 4, offset: 20 }}>
-                                    <Space size="small" style={{ float: "right" }} >
-                                        <Button type="primary" className='mt-0' htmlType="submit" icon={<SaveOutlined />} >
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                    <Space size="large" >
+                                        <Button type="primary" className='mt-5' htmlType="submit" icon={<SaveOutlined />} >
                                             Save
                                         </Button>
                                     </Space>

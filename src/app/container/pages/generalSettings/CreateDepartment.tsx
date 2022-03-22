@@ -24,7 +24,7 @@ export default function CreateDepartment() {
     const createDepartmentForm = (value) => {
         let postdata:any = {
             departmentId: "",
-            departmentSerial: value.serial,
+            // departmentSerial: value.serial,
             departmentName: value.department
         }
         saveDepartment(postdata);
@@ -92,7 +92,7 @@ export default function CreateDepartment() {
                             form={createForm}
                         >
                             <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 10 }} lg={{ span: 10 }} xl={{ span: 10 }}>
+                                {/* <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 10 }} lg={{ span: 10 }} xl={{ span: 10 }}>
                                     <Form.Item
                                         name="serial"
                                         label="Serial"
@@ -103,7 +103,7 @@ export default function CreateDepartment() {
                                     >
                                         <InputNumber placeholder="write serial" />
                                     </Form.Item>
-                                </Col>
+                                </Col> */}
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 10 }} lg={{ span: 10 }} xl={{ span: 10 }}>
                                     <Form.Item
                                         name="department"

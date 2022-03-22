@@ -46,7 +46,7 @@ export default function CreateLeaveCategory() {
                                     setId(record.leaveCategoryId);
                                     updateForm.setFieldsValue({
                                         leaveCategoryName: record.leaveCategoryName,
-                                        serial: record.serial,
+                                        // serial: record.serial,
                                     });
                                 }} 
                                 icon={<EditOutlined />} 
@@ -82,7 +82,7 @@ export default function CreateLeaveCategory() {
                             form={createForm}
                         >
                             <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 6 }}>
+                                {/* <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 6 }}>
                                     <Form.Item
                                         name="serial"
                                         label="Serial"
@@ -93,7 +93,7 @@ export default function CreateLeaveCategory() {
                                     >
                                         <Input placeholder="Serial No" />
                                     </Form.Item>
-                                </Col>                              
+                                </Col>                               */}
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 6 }}>
                                     <Form.Item
                                         name="leaveCategoryName"
