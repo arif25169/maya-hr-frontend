@@ -41,7 +41,7 @@ export default function SalaryProcess() {
     const columns: any = [
         {
             title: 'Employee Id',
-            dataIndex: 'employeeId',
+            dataIndex: 'customEmployeeId',
             key: 'employeeId',
             showOnResponse: true,
             showOnDesktop: true

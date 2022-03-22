@@ -22,8 +22,8 @@ export default function SalaryProcessList() {
     const columns: any = [
         {
             title: 'Employee Id',
-            dataIndex: 'employeeId',
-            key: 'employeeId',
+            dataIndex: 'customEmployeeId',
+            key: 'customEmployeeId',
             showOnResponse: true,
             showOnDesktop: true
         },
@@ -267,7 +267,7 @@ export default function SalaryProcessList() {
                                             filterData: tableData,
                                             pagination: true,
                                             bordered: true,
-                                            rowKey: "employeeId",
+                                            rowKey: "customEmployeeId",
 
                                         }}
                                         mobileBreakPoint={768}
