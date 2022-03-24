@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchEmployeeTypeUrl, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -75,9 +75,20 @@ export interface GeneralSetting {
 	setEmployeeListForattendanceTimeConfig: Action<GeneralSetting, any>;
 	saveEmployeeAttendanceTimeConfig: Thunk<GeneralSetting, any>;
 
+	enabledEmployeeListTakeAttendance: any;
+    setenabledEmployeeListTakeAttendance: Action<GeneralSetting, any>;
+    fetchenabledEmployeeListTakeAttendance: Thunk<GeneralSetting>;
+
 	employeeAttendanceTimeConfig: any;
 	fetchEmployeeAttendanceTimeConfig: Thunk<GeneralSetting>;
 	setEmployeeAttendanceTimeConfig: Action<GeneralSetting, any>;
+
+	employeeAtttendanceListForUpdate: any;
+	setemployeeAtttendanceListForUpdate: Action<GeneralSetting, any>;
+	fetchemployeeAtttendanceListForUpdate: Thunk<GeneralSetting, any>
+
+	loading: boolean;
+    setLoading: Action<GeneralSetting, boolean>;	
 
 }
 
@@ -92,6 +103,10 @@ export const generalSettingStore: GeneralSetting = {
     companyInfo: [],
 	employeeListForattendanceTimeConfig: [],
 	employeeAttendanceTimeConfig: [],
+	loading: false,
+	setLoading: action((state, payload) => {
+        state.loading = payload;
+    }),
 	setSaveCompany: thunk(async (actions, payload) => {
 		const response = await saveCompanyUrl(payload);
 		if (response.status === 201 || response.status === 200) {
@@ -666,6 +681,66 @@ export const generalSettingStore: GeneralSetting = {
 			const body = await response.json();
 			notification.error({ message: body.message })
 		}
+	}),
+
+	enabledEmployeeListTakeAttendance: [],
+
+    setenabledEmployeeListTakeAttendance: action((state, payload) => {
+        state.enabledEmployeeListTakeAttendance = payload;
+    }),
+
+	fetchenabledEmployeeListTakeAttendance: thunk(async (actions) => {
+		const response = await fetchenabledEmployeeListTakeAttendance();
+		actions.setLoading(true)
+		if (response.status === 201 || response.status === 200) {
+			actions.setLoading(false)
+			const body = await response.json();
+			if (body?.item?.length > 0) {
+				body.item.forEach((element, index) => {
+					element.index = index;
+					element.attendanceStatus = "1";
+				});
+				//console.log(body.item)
+				actions.setenabledEmployeeListTakeAttendance(body.item);
+			} else {
+				notification['warning']({
+					message: 'No data found',
+				});
+				actions.setenabledEmployeeListTakeAttendance(body.item);
+			}
+		} else {
+			actions.setLoading(false)
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+
+	employeeAtttendanceListForUpdate: [],
+	fetchemployeeAtttendanceListForUpdate: thunk(async (actions, payload) => {
+		actions.setLoading(true);
+		const response = await fetchemployeeAtttendanceListForUpdate(payload);
+		if (response.status === 201 || response.status === 200) {
+			actions.setLoading(false);
+			const body = await response.json();
+			if (body.item?.length > 0) {
+				body.item.forEach((element, index) => {
+					element.index = index;
+				});
+				actions.setemployeeAtttendanceListForUpdate(body?.item);
+			} else {
+				notification.error({ message: "Please take attendance first on the specified date" })
+				actions.setemployeeAtttendanceListForUpdate([]);
+			}
+		} else {
+			notification.error({ message: "Something went wrong" })
+			actions.setLoading(false);
+		}
+	}),
+
+	setemployeeAtttendanceListForUpdate: action((state, payload) => {
+		state.employeeAtttendanceListForUpdate = payload;
 	}),
 
 	fetchEmployeeListForattendanceTimeConfig: thunk(async (actions, payload) => {

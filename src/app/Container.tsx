@@ -41,6 +41,9 @@ import EmployeeInformation from "./container/pages/employee/EmployeeInformation"
 import LeaveAssing from "./container/pages/generalSettings/LeaveAssing";
 import UpdateCompany from "./container/pages/generalSettings/UpdateCompany";
 import StaffTimeConfig from "./container/pages/generalSettings/StaffTimeConfig";
+import TakeAttendanceSave from "./container/pages/attendance/TakeAttendanceSave";
+import UpdateAttendance from "./container/pages/attendance/UpdateAttendance";
+import BankAdviseContent from "./container/pages/payroll/BankAdviseContent";
 
 
 const { Header, Content, Sider } = Layout;
@@ -137,6 +140,9 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.EMPLOYEE_INFORMATION} component={EmployeeInformation} /> 
             <Route exact path={'/' +ROUTES.LEAVE_ASSIGN} component={LeaveAssing} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} component={StaffTimeConfig} /> 
+            <Route exact path={'/' +ROUTES.TAKE_ATTENDANCE} component={TakeAttendanceSave} /> 
+            <Route exact path={'/' +ROUTES.UPDATE_ATTENDANCE} component={UpdateAttendance} /> 
+            <Route exact path={'/' +ROUTES.BANK_ADVISE_CONTENT} component={BankAdviseContent} /> 
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

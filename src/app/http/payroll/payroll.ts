@@ -30,3 +30,6 @@ export const saveSalaryProcess = (payload) => post("/salary/process/save", paylo
 export const assignSalaryGrade = (payload) => post("/salary/grade/assign", payload);
 export const fetchsalaryProcessList = (payload) => get("/salary/process/list?month="+payload?.salaryMonth+"&year="+payload?.salaryYear);
 
+export const fetchbankAdviseContentView = () => get("/bank/advise/content/view");
+export const saveBankAdviseContent = (payload) => post("/bank/advise/content/save",payload);
+

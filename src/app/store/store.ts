@@ -5,6 +5,7 @@ import { GeneralSetting, generalSettingStore } from './states/generalSetting/gen
 import { Hr, hrStore } from './states/hr/hr';
 import { Payroll, payrollStore } from './states/payroll/payroll';
 import { User, userStore } from './states/user/user';
+import { Attendance, attendanceStore } from './states/attendance/attendance';
 
 export interface StoreModel {
 	auth: Auth;
@@ -13,6 +14,7 @@ export interface StoreModel {
 	user: User;
 	generalSetting: GeneralSetting;
 	hr: Hr;
+	attendance: Attendance;
 }
 
 const storeModel: StoreModel = {
@@ -21,7 +23,8 @@ const storeModel: StoreModel = {
 	payroll: payrollStore,
 	user: userStore,
 	generalSetting: generalSettingStore,
-	hr: hrStore
+	hr: hrStore,
+	attendance: attendanceStore,
 }
 
 export const store = createStore(storeModel);

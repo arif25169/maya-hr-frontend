@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -45,12 +45,17 @@ export interface Payroll {
     setsalarySheetViews: Action<Payroll, any>;
     fetchsalarySheetViews: Thunk<Payroll>;
     saveSalaryProcess: Thunk<Payroll, any>;
-    
+
     assignSalaryGrade: Thunk<Payroll, any>;
 
     salaryProcessList: any;
     setsalaryProcessList: Action<Payroll, any>;
     fetchsalaryProcessList: Thunk<Payroll, any>;
+
+    bankAdviseContentView: any;
+    setbankAdviseContentView: Action<Payroll, any>;
+    fetchbankAdviseContentView: Thunk<Payroll>;
+    saveBankAdviseContent: Thunk<Payroll, any>;
 }
 
 export const payrollStore: Payroll = {
@@ -67,7 +72,7 @@ export const payrollStore: Payroll = {
             const body = await response.json();
             if (body?.item?.length > 0) {
                 body.item.forEach((element, index) => {
-                    element.key=index
+                    element.key = index
                 });
                 console.log(body.item)
                 actions.setsalaryGradeList(body.item);
@@ -392,7 +397,7 @@ export const payrollStore: Payroll = {
         }
     }),
 
-    
+
     salarySheetViews: [],
 
     setsalarySheetViews: action((state, payload) => {
@@ -433,8 +438,8 @@ export const payrollStore: Payroll = {
             const body = await response.json();
             notification.error({ message: body.message })
         }
-    }),    
-    
+    }),
+
     assignSalaryGrade: thunk(async (actions, payload) => {
         const response = await assignSalaryGrade(payload);
         if (response.status === 201 || response.status === 200) {
@@ -474,6 +479,48 @@ export const payrollStore: Payroll = {
             notification['error']({
                 message: 'Something went wrong',
             });
+        }
+    }),
+
+    bankAdviseContentView: {},
+
+    setbankAdviseContentView: action((state, payload) => {
+        state.bankAdviseContentView = payload;
+    }),
+
+    fetchbankAdviseContentView: thunk(async (actions) => {
+        const response = await fetchbankAdviseContentView();
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.messageType === 1) {
+                actions.setbankAdviseContentView(body.item);
+            } else {
+                notification['warning']({
+                    message: 'No data found',
+                });
+                actions.setbankAdviseContentView({});
+            }
+        } else {
+            actions.setbankAdviseContentView({});
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),
+
+    saveBankAdviseContent: thunk(async (actions, payload) => {
+        const response = await saveBankAdviseContent(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                actions.fetchbankAdviseContentView();
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.message })
         }
     }),
 

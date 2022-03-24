@@ -45,5 +45,7 @@ export const fetchCompanyInfoUrl = () => get('/company/info');
 export const updateCompanyInfoUrl = (payload) => post("/company/update",payload);
 
 export const employeeListForAttendanceConfigUrl = () => get('/employee/list');
+export const fetchenabledEmployeeListTakeAttendance = () => get('/employee/list');
+export const fetchemployeeAtttendanceListForUpdate = (payload) => get('/employee/attendance/list/for/update?attendanceDate='+payload);
 export const employeeAttendanceConfigSaveUrl = (payload) => post('/attendance/time/configuration/save', payload);
 export const employeeAttendanceConfigListUrl = () => get('/attendance/time/configuration/list');
