@@ -919,11 +919,12 @@ p[name="goHTML"] {
     /* margin-top: 1.5rem; */
 }
 
-.bankAdviseLetter, th, td{
+.bankAdviseLetter td, bankAdviseLetter th {
   border:1px solid black;
   font-size: 11px;
   font-family: "Noto Sans","Helvetica Neue","Helvetica","Arial","Liberation Sans","Roboto","Noto",sans-serif;
 }
+
 .bankAdviseLetter{
   font-size: 11px;
   font-family: "Noto Sans","Helvetica Neue","Helvetica","Arial","Liberation Sans","Roboto","Noto",sans-serif;
