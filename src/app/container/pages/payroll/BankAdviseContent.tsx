@@ -45,7 +45,7 @@ export default function BankAdviseContent() {
                 </Space>
             </Card>
             <Modal
-                title="Class Edit"
+                title="Edit"
                 visible={isModalVisible}
                 //  onOk={handleOk}
                 okButtonProps={{ form: 'update', htmlType: 'submit' }}
