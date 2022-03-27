@@ -89,7 +89,7 @@ export default function BankAdviseContent() {
                                 <Input.TextArea placeholder="Address"></Input.TextArea>
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={24}>
                             <Form.Item
                                 name="salutation"
                                 label="Salutation"
@@ -98,13 +98,13 @@ export default function BankAdviseContent() {
                                 <Input placeholder="Salutation" />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={24}>
                             <Form.Item
                                 name="subjectContent"
                                 label="Subject Content"
                                 className="title-Text"
                             >
-                                <Input placeholder="Subject Content" />
+                                <TextArea placeholder="Subject Content" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
