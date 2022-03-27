@@ -28,4 +28,5 @@ export const ROUTES = {
   TAKE_ATTENDANCE:"take-attendantance",
   UPDATE_ATTENDANCE:"update-attendantance",
   BANK_ADVISE_CONTENT:"bank-advise-content",
+  BANK_ADVISE_VIEW:"bank-advise-view",
 };

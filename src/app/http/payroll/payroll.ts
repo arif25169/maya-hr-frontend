@@ -32,4 +32,5 @@ export const fetchsalaryProcessList = (payload) => get("/salary/process/list?mon
 
 export const fetchbankAdviseContentView = () => get("/bank/advise/content/view");
 export const saveBankAdviseContent = (payload) => post("/bank/advise/content/save",payload);
+export const fetchbankAdviseListView = (payload) => post("/bank/advise/view",payload);
 

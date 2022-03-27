@@ -184,6 +184,9 @@ export function Sidebar() {
 			</SubMenu>
 			<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.BANK_ADVISE_CONTENT} className="nav-text"> Bank Advise Content</Link>
+			</Menu.Item>			
+			<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined  />}>
+				<Link to={ROUTES.BANK_ADVISE_VIEW} className="nav-text"> Bank Advise View</Link>
 			</Menu.Item>
 
 		</SubMenu>

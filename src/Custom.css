@@ -893,3 +893,33 @@ p[name="goHTML"] {
 }
 .ant-select-selector {
   border: 1px solid #03D665 !important; }
+
+  .css-1x02zh0 {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    border-left-width: 4px;
+    border-left-color: #74234e;
+    padding-left: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-size: .8rem;
+}
+
+.css-ex6hny {
+    font-family: "Noto Sans","Helvetica Neue","Helvetica","Arial","Liberation Sans","Roboto","Noto",sans-serif;
+    font-weight: inherit;
+    color: #595959;
+    font-size: .8rem;
+    line-height: 1.5;
+    color: #2d2d2d;
+    margin-bottom: 0;
+    margin-top: 1.5rem;
+}
+
+.bankAdviseLetter, th, td{
+  border:1px solid black;
+}
+.bankAdviseLetter{
+  font-size: .8rem;
+}

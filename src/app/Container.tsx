@@ -44,6 +44,7 @@ import StaffTimeConfig from "./container/pages/generalSettings/StaffTimeConfig";
 import TakeAttendanceSave from "./container/pages/attendance/TakeAttendanceSave";
 import UpdateAttendance from "./container/pages/attendance/UpdateAttendance";
 import BankAdviseContent from "./container/pages/payroll/BankAdviseContent";
+import BankAdviseView from "./container/pages/payroll/BankAdviseView";
 
 
 const { Header, Content, Sider } = Layout;
@@ -143,6 +144,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.TAKE_ATTENDANCE} component={TakeAttendanceSave} /> 
             <Route exact path={'/' +ROUTES.UPDATE_ATTENDANCE} component={UpdateAttendance} /> 
             <Route exact path={'/' +ROUTES.BANK_ADVISE_CONTENT} component={BankAdviseContent} /> 
+            <Route exact path={'/' +ROUTES.BANK_ADVISE_VIEW} component={BankAdviseView} /> 
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>
