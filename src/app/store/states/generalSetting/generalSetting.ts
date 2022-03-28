@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -86,6 +86,10 @@ export interface GeneralSetting {
 	employeeAtttendanceListForUpdate: any;
 	setemployeeAtttendanceListForUpdate: Action<GeneralSetting, any>;
 	fetchemployeeAtttendanceListForUpdate: Thunk<GeneralSetting, any>
+
+	leaveAssignListByDepartment: any;
+    setleaveAssignListByDepartment: Action<GeneralSetting, any>;
+    fetchleaveAssignListByDepartment: Thunk<GeneralSetting, any>;
 
 	loading: boolean;
     setLoading: Action<GeneralSetting, boolean>;	
@@ -793,4 +797,31 @@ export const generalSettingStore: GeneralSetting = {
 	setEmployeeAttendanceTimeConfig: action((state, payload) => {
 		state.employeeAttendanceTimeConfig = payload;
 	}),
+
+	leaveAssignListByDepartment: [],
+
+    setleaveAssignListByDepartment: action((state, payload) => {
+        state.leaveAssignListByDepartment = payload;
+    }),
+
+    fetchleaveAssignListByDepartment: thunk(async (actions, payload) => {
+        const response = await fetchleaveAssignListByDepartment(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.item?.length > 0) {
+                actions.setleaveAssignListByDepartment(body.item);
+            } else {
+                notification['warning']({
+                    message: 'No data found',
+                });
+                actions.setleaveAssignListByDepartment(body.item);
+            }
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),
+
 }

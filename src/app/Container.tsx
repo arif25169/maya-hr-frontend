@@ -38,7 +38,7 @@ import CreateDepartment from "./container/pages/generalSettings/CreateDepartment
 import CreateHoliday from "./container/pages/generalSettings/CreateHoliday";
 import CreateEmployeeByExcel from "./container/pages/employee/CreateEmployeeByExcel";
 import EmployeeInformation from "./container/pages/employee/EmployeeInformation";
-import LeaveAssing from "./container/pages/generalSettings/LeaveAssing";
+import LeaveAssign from "./container/pages/generalSettings/LeaveAssign";
 import UpdateCompany from "./container/pages/generalSettings/UpdateCompany";
 import StaffTimeConfig from "./container/pages/generalSettings/StaffTimeConfig";
 import TakeAttendanceSave from "./container/pages/attendance/TakeAttendanceSave";
@@ -139,7 +139,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_INFORMATION} component={EmployeeInformation} /> 
-            <Route exact path={'/' +ROUTES.LEAVE_ASSIGN} component={LeaveAssing} /> 
+            <Route exact path={'/' +ROUTES.LEAVE_ASSIGN} component={LeaveAssign} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} component={StaffTimeConfig} /> 
             <Route exact path={'/' +ROUTES.TAKE_ATTENDANCE} component={TakeAttendanceSave} /> 
             <Route exact path={'/' +ROUTES.UPDATE_ATTENDANCE} component={UpdateAttendance} /> 

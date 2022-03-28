@@ -49,3 +49,5 @@ export const fetchenabledEmployeeListTakeAttendance = () => get('/employee/list'
 export const fetchemployeeAtttendanceListForUpdate = (payload) => get('/employee/attendance/list/for/update?attendanceDate='+payload);
 export const employeeAttendanceConfigSaveUrl = (payload) => post('/attendance/time/configuration/save', payload);
 export const employeeAttendanceConfigListUrl = () => get('/attendance/time/configuration/list');
+
+export const fetchleaveAssignListByDepartment = (payload) => get("/leave/assign/list/department-id?departmentId="+payload.departmentId+"&year="+payload.year);

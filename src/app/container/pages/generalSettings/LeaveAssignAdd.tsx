@@ -12,7 +12,7 @@ const optionsYear = [
     { value: currentyear, label: currentyear },
     { value: currentyear + 1, label: currentyear + 1 }
 ];
-export default function LeaveAssing() {
+export default function LeaveAssignAdd() {
     
     const [assignForm] = Form.useForm();
     const { Option } = Select;
@@ -91,7 +91,7 @@ export default function LeaveAssing() {
     const [year, setYear] = useState<any>('');
     return (
         <>
-            <Card title="Leave Assign">
+            <>
                 <Row>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24  }} lg={{ span: 14, offset:4  }} xl={{ span: 14, offset: 4  }} >
                         <Form
@@ -102,7 +102,7 @@ export default function LeaveAssing() {
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                 <Form.Item
                                 name="year"
-                                label="Year:"
+                                label="Select Year:"
                                 className="title-Text"
                                 rules={[
                                     { required: true, message: "Please select Year" },
@@ -114,7 +114,7 @@ export default function LeaveAssing() {
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                     <Form.Item
                                         name="department"
-                                        label="Department Name"
+                                        label="Select Department"
                                         className="title-Text"
                                         rules={[
                                             { required: true, message: "Please select depatment name" },
@@ -126,7 +126,7 @@ export default function LeaveAssing() {
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                     <Form.Item
                                         name="employee"
-                                        label="Employee"
+                                        label="Select Employee"
                                         className="title-Text"
                                         rules={[
                                             { required: true, message: "Please select employee" },
@@ -178,7 +178,7 @@ export default function LeaveAssing() {
                         </Row>
                     </>
                 :''}
-            </Card>
+            </>
         </>
     )
 }
