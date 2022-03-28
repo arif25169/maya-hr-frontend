@@ -397,7 +397,7 @@ export default function employeeList() {
                             { required: true, message: "Please enter emergency contact" },
                         ]}
                     >
-                    <Input type="email" placeholder="enter emergency contact" />
+                    <Input  placeholder="enter emergency contact" />
                 </Form.Item>
             </Col>
         </Row>
