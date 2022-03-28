@@ -5,8 +5,13 @@ import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select
 import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import TableView from '../../../contents/AntTableResponsive';
 import { SelectDepartment } from '../../select/SelectDepartment';
-import { format } from 'path';
 
+const currentyear = new Date().getFullYear();
+const optionsYear = [
+    { value: currentyear - 1, label: currentyear - 1 },
+    { value: currentyear, label: currentyear },
+    { value: currentyear + 1, label: currentyear + 1 }
+];
 export default function LeaveAssing() {
     
     const [assignForm] = Form.useForm();
@@ -70,18 +75,11 @@ export default function LeaveAssing() {
 
     const saveData = () => {
         if(selectedLeaveList.length > 0){
-            let configRequestList:any = [];
-            selectedLeaveValueList.map((item:any, index) => {
-                let list:any = {
-                    leaveCategoryId : item?.leaveConfigId,
-                    leaveQuantity : item?.leaveQuantity,
-                }
-                configRequestList.push(list);
-            }); 
 
             let data:any = {
                 employeeIds : employeeId,
-                leaveConfigRequestList : configRequestList
+                leaveConfigRequestList : selectedLeaveValueList.map((item:any, index) => ({leaveCategoryId:item.leaveCategoryId,leaveQuantity:item.leaveQuantity })),
+                year: year
             }
             saveLeaveAssign(data);
             setLeaveConfigList([]);
@@ -90,18 +88,30 @@ export default function LeaveAssing() {
             notification.error({ message: 'Select Row First' });
         }   
     }
-
+    const [year, setYear] = useState<any>('');
     return (
         <>
             <Card title="Leave Assign">
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12, offset: 6  }} lg={{ span: 12, offset: 6  }} xl={{ span: 12, offset: 6  }} >
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24  }} lg={{ span: 14, offset:4  }} xl={{ span: 14, offset: 4  }} >
                         <Form
                             layout="vertical"
                             form={assignForm}
                         >
                             <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                                <Form.Item
+                                name="year"
+                                label="Year:"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please select Year" },
+                                ]}
+                            >
+                                <Select allowClear placeholder="Select Year" options={optionsYear} onChange={(e) => setYear(e)} />
+                            </Form.Item>
+                                </Col>                             
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                     <Form.Item
                                         name="department"
                                         label="Department Name"
@@ -113,7 +123,7 @@ export default function LeaveAssing() {
                                         <SelectDepartment onChange={(e) => onChangeDepartment(e)} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                     <Form.Item
                                         name="employee"
                                         label="Employee"
