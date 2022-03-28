@@ -229,7 +229,7 @@ export default function SalaryGradeConfigureList() {
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <Input placeholder="Amount" />
+                                <InputNumber placeholder="Amount" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -263,7 +263,7 @@ export default function SalaryGradeConfigureList() {
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <Input placeholder="Amount" />
+                                <InputNumber placeholder="Amount" />
                             </Form.Item>
                         </Col>
                     </Row>

@@ -37,13 +37,15 @@ export default function UpdateCompany() {
             hotlineNo: companyInfo?.hotlineNo,
             districtName: companyInfo?.districtId,
             thanaId: companyInfo?.thanaId,
+            thanaName: companyInfo?.thanaId,
             phone: companyInfo?.phoneNo,
             website: companyInfo?.websiteLink
         });
         setDistricName(companyInfo?.districtId);
-        setThanaName(companyInfo?.thanaId);
+         setThanaName(companyInfo?.thanaId);
 
     },[companyInfo])
+
 
     const updateCompany = (value) => {
         let postdata:any = {
@@ -264,11 +266,7 @@ export default function UpdateCompany() {
                                     </Space>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 128 }} xl={{ span: 12 }}>
-                                    <Text type="warning">Please Select Thana Again When Update Information</Text>
-                                </Col>
-                            </Row>
+
                         </Form>
                     </Col>
                 </Row>

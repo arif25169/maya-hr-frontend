@@ -46,7 +46,7 @@ export default function CreateLeaveCategory() {
                                     setId(record.leaveCategoryId);
                                     updateForm.setFieldsValue({
                                         leaveCategoryName: record.leaveCategoryName,
-                                        // serial: record.serial,
+                                         serial: record.serial,
                                     });
                                 }} 
                                 icon={<EditOutlined />} 
@@ -74,7 +74,7 @@ export default function CreateLeaveCategory() {
         <>
             <Card title="Leave Category">
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24, offset: 4  }} lg={{ span: 24, offset: 4 }} xl={{ span: 24, offset: 4 }} >
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24}} lg={{ span: 24, offset: 8 }} xl={{ span: 24, offset: 8 }} >
                         <Form
                             layout="vertical"
                             

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Popconfirm, Modal, notification} from 'antd'
@@ -28,20 +28,20 @@ export default function LeaveAssing() {
         {title : 'Number of Leave', dataIndex: 'leaveConfigId', key: 'leaveConfigId', showOnResponse: true, showOnDesktop: true, 
             render: (text: any, record: any, index) => (
                 <div>
-                    <InputNumber placeholder='write number of leave' onChange={(e) => onChangeNumberofLeave(record.leaveCategoryId, e)}/>
+                    <InputNumber value={record?.leaveQuantity} placeholder='Write number of leave' onChange={onchangeValue("leaveQuantity", record, record?.index)}/>
                 </div>
             )
         },
     ]
 
-    const onChangeNumberofLeave = (id, e) => {
-        leaveConfigList.map((item, index) => {
-            if (item.leaveCategoryId == id) {
-                item.leaveQuantity = e
-            }
-        });
-        setLeaveConfigList(leaveConfigList);
-    }
+    const onchangeValue: any =
+    useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newData = [...leaveConfigList];
+        newData[index][key] = e;
+        setLeaveConfigList(newData);
+    },[leaveConfigList]);
+
+
 
     const onChangeDepartment = (value) => {
         setDepartmentId(value);
@@ -50,7 +50,7 @@ export default function LeaveAssing() {
     }
 
     useEffect(() => {
-        setLeaveConfigList(leavelListByDepartmentId);
+        setLeaveConfigList(leavelListByDepartmentId.map((item, index) => ({...item, index: index})));
     }, [leavelListByDepartmentId])
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export default function LeaveAssing() {
 
     return (
         <>
-            <Card title="Leave Assing">
+            <Card title="Leave Assign">
                 <Row>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12, offset: 6  }} lg={{ span: 12, offset: 6  }} xl={{ span: 12, offset: 6  }} >
                         <Form

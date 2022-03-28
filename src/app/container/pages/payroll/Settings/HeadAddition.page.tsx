@@ -70,7 +70,7 @@ export default function HeadAddition() {
                     <Tooltip title="Edit">
                         <Button type='primary' icon={<EditOutlined />} onClick={() => {
                             updateForm.setFieldsValue({
-                                // salaryHeadSerial: record.salaryHeadSerial,
+                                salaryHeadSerial: record.salaryHeadSerial,
                                 salaryHeadName: record.salaryHeadName,
                                 note: record.note,
                             });
@@ -97,7 +97,7 @@ export default function HeadAddition() {
     return (
         <Card title="Create Addition">
             <Row>
-                <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24, offset:2 }} xl={{ span: 24, offset:2}}>
+                <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24, offset:5 }} xl={{ span: 24, offset:5}}>
                     <Form
                         layout="vertical"
                         id="sessionInfo"
@@ -199,7 +199,7 @@ export default function HeadAddition() {
                                     { required: true, message: "Please input serial no" },
                                 ]}
                             >
-                                <Input placeholder="Grade Name" />
+                                <Input placeholder="Serial No" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>

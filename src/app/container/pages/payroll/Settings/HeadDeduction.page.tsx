@@ -70,7 +70,7 @@ export default function HeadDeduction() {
                     <Tooltip title="Edit">
                         <Button type='primary' icon={<EditOutlined />} onClick={() => {
                             updateForm.setFieldsValue({
-                                // salaryHeadSerial: record.salaryHeadSerial,
+                                 salaryHeadSerial: record.salaryHeadSerial,
                                 salaryHeadName: record.salaryHeadName,
                                 note: record.note,
                             });
@@ -97,7 +97,7 @@ export default function HeadDeduction() {
     return (
         <Card title="Create Deduction">
             <Row>
-                <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24, offset:2 }} xl={{ span: 24, offset:2}}>
+                <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24, offset:5 }} xl={{ span: 24, offset:5}}>
                     <Form
                         layout="vertical"
                         id="sessionInfo"
