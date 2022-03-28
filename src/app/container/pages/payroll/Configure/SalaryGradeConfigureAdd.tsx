@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox } from 'antd'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
@@ -100,8 +100,9 @@ export default function SalaryGradeConfigureAdd() {
                     max={100}
                     disabled={amount === 0 ? true : false}
                     onChange={onchangePercentageAddition("percentage", record, index)}
-                    value={record.percentage}
+                    value={record.percentage===0?null:record.percentage}
                     placeholder="Percentage"
+                    addonAfter="%"
                 ></InputNumber>
             ),
         },
@@ -117,26 +118,30 @@ export default function SalaryGradeConfigureAdd() {
                     disabled={amount === 0 ? true : false}
                     max={amount}
                     onChange={onchangeAmountAddition("amount", record, index)}
-                    value={record.amount}
+                    formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")}
+                    value={record.amount===0?null:record.amount}
                     placeholder="Amount"
+                    addonAfter="TK"
                 ></InputNumber>
             ),
         },
     ];
 
     const onchangePercentageAddition: any =
-        (key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
             const newData = [...tableAddition];
             newData[index][key] = e;
             newData[index]['amount'] = ((e as any) / 100) * amount;
             setTableAddition(newData);
-        };
+        }, [tableAddition]);
+
     const onchangeAmountAddition: any =
-        (key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
             const newData = [...tableAddition];
             newData[index][key] = e;
+            newData[index]['percentage'] = (((e as any) * 100) / amount).toFixed(2);
             setTableAddition(newData);
-        };
+        }, [tableAddition]);
     const deductioncolumns = [
         {
             title: 'Salary Head Name',
@@ -157,8 +162,9 @@ export default function SalaryGradeConfigureAdd() {
                     max={100}
                     disabled={amount === 0 ? true : false}
                     onChange={onchangePercentageDeduction("percentage", record, index)}
-                    value={record.percentage}
+                    value={record.percentage===0?null:record.percentage}
                     placeholder="Percentage"
+                    addonAfter="%"
                 ></InputNumber>
             ),
         },
@@ -174,25 +180,30 @@ export default function SalaryGradeConfigureAdd() {
                     disabled={amount === 0 ? true : false}
                     max={amount}
                     onChange={onchangeAmountDeduction("amount", record, index)}
-                    value={record.amount}
+                    value={record.amount===0?null:record.amount}
+                    formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")}
                     placeholder="Amount"
+                    addonAfter="TK"
                 ></InputNumber>
             ),
         },
     ];
     const onchangePercentageDeduction: any =
-        (key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
             const newData = [...tableDeduction];
             newData[index][key] = e;
             newData[index]['amount'] = ((e as any) / 100) * amount;
             setTableDeduction(newData);
-        };
+        }, [tableDeduction]);
     const onchangeAmountDeduction: any =
-        (key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
             const newData = [...tableDeduction];
             newData[index][key] = e;
+            console.log(e)
+            newData[index]['percentage'] = (((e as any) * 100) / amount).toFixed(2);
             setTableDeduction(newData);
-        };
+        }, [tableDeduction]);
+
     const [selectedRowKeys, setselectedRowKeys] = useState<any>([]);
     const [selectedValue, setselectedValue] = useState<any>([]);
 
@@ -251,7 +262,7 @@ export default function SalaryGradeConfigureAdd() {
                             >
                                 <SelectPayrollGrade onChange={onchangeGrade} />
                             </Form.Item>
-                            {amount > 0 && <p style={{marginTop:10}}>Basic Salary: {amount}</p>}
+                            {amount > 0 && <p style={{ marginTop: 10, fontWeight: "bold", color: 'red' }}>Basic Salary: {amount}</p>}
                         </Col>
                     </Col>
                 </Row>

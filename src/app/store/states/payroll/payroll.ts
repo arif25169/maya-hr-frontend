@@ -78,7 +78,7 @@ export const payrollStore: Payroll = {
                 body.item.forEach((element, index) => {
                     element.key = index
                 });
-                console.log(body.item)
+                // console.log(body.item)
                 actions.setsalaryGradeList(body.item);
             } else {
                 notification['warning']({

@@ -3,6 +3,7 @@ import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, 
 import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
+import { Excel } from 'antd-table-saveas-excel';
 
 
 
@@ -40,7 +41,7 @@ export default function SalaryProcessList() {
             key: 'designation',
             showOnResponse: true,
             showOnDesktop: true
-        },        
+        },
         {
             title: 'Grade',
             dataIndex: 'salaryGrade',
@@ -181,7 +182,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true
         },
-      
+
     ];
 
 
@@ -274,6 +275,26 @@ export default function SalaryProcessList() {
                                         }}
                                         mobileBreakPoint={768}
                                     />
+
+                                    <Space style={{float:"right"}}>
+                                        <Button
+                                            style={{
+                                                marginBottom: 20,
+                                            }}
+                                            onClick={() => {
+                                                const excel = new Excel();
+                                                excel
+                                                    .addSheet('test')
+                                                    .addColumns(columns)
+                                                    .addDataSource(tableData, {
+                                                        str2Percent: true,
+                                                    })
+                                                    .saveAs(`Salary Process View of ${form.getFieldValue('salaryMonth')}-${form.getFieldValue('salaryYear')}.xlsx`);
+                                            }}
+                                        >
+                                            Download Excel
+                                        </Button>
+                                    </Space>
 
                                 </>
                             }
