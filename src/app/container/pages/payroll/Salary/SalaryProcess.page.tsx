@@ -213,7 +213,7 @@ export default function SalaryProcess() {
             showOnResponse: true,
             showOnDesktop: true
         },
-       
+
     ];
 
     const [tableData, setTableData] = useState<any>([]);
@@ -243,7 +243,7 @@ export default function SalaryProcess() {
         onChange: onSelectChange,
     };
 
-    
+
     const [form] = Form.useForm();
     const onProcess = (value) => {
         if (selectedRowKeys.length === 0) {
@@ -415,11 +415,6 @@ export default function SalaryProcess() {
                             </Select>
                         </Form.Item>
                     </Col>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                        <Space size={'middle'} >
-                            <Button type='primary' htmlType='submit' icon={<SettingOutlined />}> Process</Button>
-                        </Space>
-                    </Col>
 
                 </Row>
                 <Row className="m-t-mo-30">
@@ -443,9 +438,16 @@ export default function SalaryProcess() {
 
                                 </>
                             }
+                            <Space size={'middle'} style={{ float: "right" }}>
+                                <Button type='primary' htmlType='submit' icon={<SettingOutlined />}> Process</Button>
+                            </Space>
                         </div>
                     </Col>
                 </Row>
+
+
+
+
             </Form>
         </Card>
     )

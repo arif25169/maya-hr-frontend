@@ -47,7 +47,7 @@ export const SelectBloodGroup = ({
       value={selected}
       style={style}
       placeholder="Select Blood Group"
-      filterOption={(input, option) =>
+      filterOption={(input, option:any) =>
         option !== undefined &&
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }

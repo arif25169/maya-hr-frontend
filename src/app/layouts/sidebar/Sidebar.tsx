@@ -182,6 +182,9 @@ export function Sidebar() {
 					<Link to={ROUTES.SALARY_PROCESS_LIST} className="nav-text"> View</Link>
 				</Menu.Item>
 			</SubMenu>
+			<Menu.Item key={ROUTES.SALARY_SLIP} icon={<ContainerOutlined  />}>
+				<Link to={ROUTES.SALARY_SLIP} className="nav-text"> Salary Slip</Link>
+			</Menu.Item>				
 			<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.BANK_ADVISE_CONTENT} className="nav-text"> Bank Advise Content</Link>
 			</Menu.Item>			

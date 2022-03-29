@@ -21,6 +21,7 @@ export const ROUTES = {
   CONFIGURE_EMPLOYEE_GRADE: "configure-employee-grade",
   SALARY_PROCESS_PAYROLL: "salary-process-payroll",
   SALARY_PROCESS_LIST: "salary-process-list",
+  SALARY_SLIP: "salary-slip",
   EMPLOYEE_LIST: "employee-list",
   EMPLOYEE_INFORMATION: "employee-information",
   LEAVE_ASSIGN: "leave-assign",

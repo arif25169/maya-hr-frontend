@@ -45,7 +45,7 @@ export const SelectThana = ({
       value={selected}
       style={style}
       placeholder="Select Thana"
-      filterOption={(input, option) =>
+      filterOption={(input, option:any) =>
         option !== undefined &&
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }

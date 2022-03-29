@@ -26,6 +26,7 @@ import EmployeeSalaryGradeAssign from "./container/pages/payroll/Configure/Emplo
 import EmployeeList from "./container/pages/employee/EmployeeList";
 import SalaryProcess from "./container/pages/payroll/Salary/SalaryProcess.page";
 import SalaryProcessList from "./container/pages/payroll/Salary/SalaryProcessList.page";
+import SalarySlip from "./container/pages/payroll/Salary/SalarySlip.page";
 import CreateDesignation from "./container/pages/generalSettings/CreateDesignation";
 import CreateEmployeeType from "./container/pages/generalSettings/CreateEmployeeType";
 import CreateShift from "./container/pages/generalSettings/CreateShift";
@@ -126,6 +127,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.CONFIGURE_EMPLOYEE_GRADE} component={EmployeeSalaryGradeAssign} />
             <Route exact path={'/' +ROUTES.SALARY_PROCESS_PAYROLL} component={SalaryProcess} />
             <Route exact path={'/' +ROUTES.SALARY_PROCESS_LIST} component={SalaryProcessList} />
+            <Route exact path={'/' +ROUTES.SALARY_SLIP} component={SalarySlip} />
             <Route exact path={'/' +ROUTES.EMPLOYEE_LIST} component={EmployeeList} />
             <Route exact path={'/' +ROUTES.CREATE_DESIGNATION} component={CreateDesignation} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_ADD} component={CreateEmployeeType} />

@@ -43,7 +43,7 @@ export const SelectShift = ({
       value={selected}
       style={style}
       placeholder="Select Department"
-      filterOption={(input, option) =>
+      filterOption={(input, option:any) =>
         option !== undefined &&
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }

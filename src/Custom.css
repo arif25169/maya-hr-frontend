@@ -933,3 +933,14 @@ p[name="goHTML"] {
   font-size: 11px;
   font-family: "Noto Sans","Helvetica Neue","Helvetica","Arial","Liberation Sans","Roboto","Noto",sans-serif;
 }
+.paysalary td, paysalary th, paysalary tr {
+  border:1px solid black;
+  font-size: 11px;
+  font-family: "Noto Sans","Helvetica Neue","Helvetica","Arial","Liberation Sans","Roboto","Noto",sans-serif;
+}
+.paysalary1 td, paysalary th, paysalary tr {
+  border:1px solid black;
+  font-size: 11px;
+  font-family: "Noto Sans","Helvetica Neue","Helvetica","Arial","Liberation Sans","Roboto","Noto",sans-serif;
+  border-left: none;
+}

@@ -5,6 +5,7 @@ import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select
 import ReactToPrint from 'react-to-print';
 import { SelectDepartment } from '../../select/SelectDepartment';
 import { PrinterOutlined } from '@ant-design/icons';
+import { moneyFormat } from '../../../utils/utils';
 
 
 // Print Media
@@ -47,13 +48,13 @@ const ComponentToPrint = React.forwardRef((props: any, ref: any) => {
                             <td style={{ textAlign: "center" }}>{item.bankName}</td>
                             <td style={{ textAlign: "center" }}>{item.branchName}</td>
                             <td style={{ textAlign: "center" }}>{item.bankAccountNo}</td>
-                            <td style={{ textAlign: "right" }}>{item.netPay}</td>
+                            <td style={{ textAlign: "right" }}>{moneyFormat(item.netPay)}</td>
                         </tr>
                     ))}
                     <tfoot>
                         <tr>
                             <td className="printText"  colSpan={7}><strong>Total Net Payable</strong></td>
-                            <td className="printText" style={{ textAlign: "right" }}>{bankAdviseListView?.total}</td>
+                            <td className="printText" style={{ textAlign: "right" }}>{moneyFormat(bankAdviseListView?.total)}</td>
                         </tr>
                         <tr>
                             <td className="printText" colSpan={8}><strong>Amount (In Words):</strong> {bankAdviseListView?.totalInWord}</td>

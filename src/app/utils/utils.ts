@@ -1,0 +1,1 @@
+export const moneyFormat = (value)=> { return value?.toLocaleString('en-IN') }

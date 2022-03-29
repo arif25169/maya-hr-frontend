@@ -28,9 +28,12 @@ export const deleteDeductionSalaryGradeConfiguration = (payload) => del("/salary
 export const fetchsalarySheetViews = () => get("/salary-sheet/view");
 export const saveSalaryProcess = (payload) => post("/salary/process/save", payload);
 export const assignSalaryGrade = (payload) => post("/salary/grade/assign", payload);
+export const payEmployeeSalary = (payload) => post("/salary/payment/save", payload);
 export const fetchsalaryProcessList = (payload) => get("/salary/process/list?month="+payload?.salaryMonth+"&year="+payload?.salaryYear);
 
 export const fetchbankAdviseContentView = () => get("/bank/advise/content/view");
 export const saveBankAdviseContent = (payload) => post("/bank/advise/content/save",payload);
 export const fetchbankAdviseListView = (payload) => post("/bank/advise/view",payload);
+
+export const fetchviewForSalaryPayment = (payload) => get("/salary/payment/view/for/payment?salaryRecordId="+payload);
 

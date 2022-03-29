@@ -42,7 +42,7 @@ export const SelectPayrollGrade = ({
       value={selected}
       style={style}
       placeholder="Select Grade"
-      filterOption={(input, option) =>
+      filterOption={(input, option:any) =>
         option !== undefined &&
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }

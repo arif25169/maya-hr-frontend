@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, fetchviewForSalaryPayment, payEmployeeSalary, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -51,6 +51,15 @@ export interface Payroll {
     salaryProcessList: any;
     setsalaryProcessList: Action<Payroll, any>;
     fetchsalaryProcessList: Thunk<Payroll, any>;
+    payEmployeeSalary: Thunk<Payroll, any>;
+
+    salaryProcessList2: any;
+    setsalaryProcessList2: Action<Payroll, any>;
+    fetchsalaryProcessList2: Thunk<Payroll, any>;
+
+    viewForSalaryPayment: any;
+    setviewForSalaryPayment: Action<Payroll, any>;
+    fetchviewForSalaryPayment: Thunk<Payroll, any>;
 
     bankAdviseContentView: any;
     setbankAdviseContentView: Action<Payroll, any>;
@@ -486,6 +495,63 @@ export const payrollStore: Payroll = {
         }
     }),
 
+    payEmployeeSalary: thunk(async (actions, payload) => {
+        const response = await payEmployeeSalary(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            notification.success({ message: body.message })
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),
+
+    salaryProcessList2: [],
+
+    setsalaryProcessList2: action((state, payload) => {
+        state.salaryProcessList2 = payload;
+    }),
+
+    fetchsalaryProcessList2: thunk(async (actions, payload) => {
+        const response = await fetchsalaryProcessList(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.item?.employeeList?.length > 0) {
+                actions.setsalaryProcessList2(body.item);
+            } else {
+                notification['warning']({
+                    message: 'No data found',
+                });
+                actions.setsalaryProcessList2(body.item);
+            }
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),
+    viewForSalaryPayment: null,
+
+    setviewForSalaryPayment: action((state, payload) => {
+        state.viewForSalaryPayment = payload;
+    }),
+
+    fetchviewForSalaryPayment: thunk(async (actions, payload) => {
+        const response = await fetchviewForSalaryPayment(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            actions.setviewForSalaryPayment(body.item);
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),
+
     bankAdviseContentView: {},
 
     setbankAdviseContentView: action((state, payload) => {
@@ -539,15 +605,15 @@ export const payrollStore: Payroll = {
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             if (body?.messageType === 1) {
-            if (body?.item?.employeeList?.length>0) {
-                actions.setbankAdviseListView(body.item);
-            }
-            else {
-                notification['warning']({
-                    message: 'No data found',
-                });
-                actions.setbankAdviseListView(null);
-            }
+                if (body?.item?.employeeList?.length > 0) {
+                    actions.setbankAdviseListView(body.item);
+                }
+                else {
+                    notification['warning']({
+                        message: 'No data found',
+                    });
+                    actions.setbankAdviseListView(null);
+                }
             } else {
                 notification['warning']({
                     message: 'No data found',

@@ -47,7 +47,7 @@ export const SelectDistrict = ({
       value={selected}
       style={style}
       placeholder="Select District"
-      filterOption={(input, option) =>
+      filterOption={(input, option:any) =>
         option !== undefined &&
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
