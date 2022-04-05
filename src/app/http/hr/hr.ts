@@ -13,3 +13,5 @@ export const traningInfoUpdateUrl = (payload) => post('/employee/training/update
 
 export const bankInfoUpdateUrl = (payload) => post('/employee/bank/info/update', payload);
 export const basicInfoUpdateUrl = (payload) => post('/employee/basic/info/update', payload);
+
+export const fetchEmployeeByDepartment = (payload) => get('/employee/list/by/departmentId?departmentId='+payload);

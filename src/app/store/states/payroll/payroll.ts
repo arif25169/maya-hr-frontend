@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, fetchviewForSalaryPayment, payEmployeeSalary, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, fetchviewForSalaryPayment, payEmployeeSalary, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -47,6 +47,7 @@ export interface Payroll {
     saveSalaryProcess: Thunk<Payroll, any>;
 
     assignSalaryGrade: Thunk<Payroll, any>;
+    assignDesignation: Thunk<Payroll, any>;
 
     salaryProcessList: any;
     setsalaryProcessList: Action<Payroll, any>;
@@ -455,6 +456,22 @@ export const payrollStore: Payroll = {
 
     assignSalaryGrade: thunk(async (actions, payload) => {
         const response = await assignSalaryGrade(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                // actions.fetchsalaryHeadListAddition();
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.message })
+        }
+    }),    
+    
+    assignDesignation: thunk(async (actions, payload) => {
+        const response = await assignDesignation(payload);
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             if (body.messageType == 1) {

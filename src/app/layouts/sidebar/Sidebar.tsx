@@ -122,6 +122,10 @@ export function Sidebar() {
 
 				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
+				</Menu.Item>			
+				
+				<Menu.Item key={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} icon={<ContainerOutlined  />}>
+					<Link to={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} className="nav-text">Assign Designation</Link>
 				</Menu.Item>
 				{/* <Menu.Item key={ROUTES.EMPLOYEE_INFORMATION} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.EMPLOYEE_INFORMATION} className="nav-text">Emloyee Information</Link>

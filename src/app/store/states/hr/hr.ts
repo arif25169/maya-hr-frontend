@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteEmployeeInformation, deleteTrainingInfoUrl, educationInfoUpdateUrl, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
+import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteEmployeeInformation, deleteTrainingInfoUrl, educationInfoUpdateUrl, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
 
 
 export interface Hr {
@@ -9,6 +9,10 @@ export interface Hr {
 	employeeList : any;
 	fetchEmployeeList : Thunk<Hr>;
 	setEmployeeList:  Action<Hr, any>;
+
+	employeeListByDepartment : any;
+	fetchEmployeeByDepartment : Thunk<Hr>;
+	setEmployeeListByDepartment:  Action<Hr, any>;
 
 	saveEmployeeFromExcell : Thunk<Hr, any>;
 
@@ -237,6 +241,27 @@ export const hrStore: Hr = {
 		} else {
 			notification.error({ message: 'Something Wrong' });
 		}
+	}),
+	
+	employeeListByDepartment:[],
+	
+	fetchEmployeeByDepartment: thunk(async (actions, payload) => {
+		const response = await fetchEmployeeByDepartment(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				
+				actions.setEmployeeListByDepartment(body.item)
+			}else{
+				actions.setEmployeeListByDepartment([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setEmployeeListByDepartment: action((state, payload) => {
+		state.employeeListByDepartment = payload;
 	}),
 
 }
