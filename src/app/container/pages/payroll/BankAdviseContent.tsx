@@ -35,10 +35,10 @@ export default function BankAdviseContent() {
                     <Descriptions.Item label="Subject">{bankAdviseContentView?.subjectContent}</Descriptions.Item>
                     <Descriptions.Item label="Opening Paragraph">{bankAdviseContentView?.openingParagraph}</Descriptions.Item>
                     <Descriptions.Item label="Last Paragraph">{bankAdviseContentView?.lastParagraph}</Descriptions.Item>
-                    <Descriptions.Item label="Transaction Date">{bankAdviseContentView?.signatureTitle}</Descriptions.Item>
-                    <Descriptions.Item label="Signature Title">{bankAdviseContentView?.signatureContent1}</Descriptions.Item>
-                    <Descriptions.Item label="Signature Content2">{bankAdviseContentView?.signatureContent2}</Descriptions.Item>
-                    <Descriptions.Item label="Signature Content3">{bankAdviseContentView?.signatureContent3}</Descriptions.Item>
+                    <Descriptions.Item label="Signature Title">{bankAdviseContentView?.signatureTitle}</Descriptions.Item>
+                    <Descriptions.Item label="Signature Content-1">{bankAdviseContentView?.signatureContent1}</Descriptions.Item>
+                    <Descriptions.Item label="Signature Content-2">{bankAdviseContentView?.signatureContent2}</Descriptions.Item>
+                    <Descriptions.Item label="Signature Content-3">{bankAdviseContentView?.signatureContent3}</Descriptions.Item>
                 </Descriptions>
                 <Space size={"large"} style={{ float: "right", marginTop: 10 }}>
                     <Button type='primary' onClick={() => { form.setFieldsValue(bankAdviseContentView); setIsModalVisible(true) }} icon={<EditOutlined />}>Edit</Button>

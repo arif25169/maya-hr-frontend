@@ -83,7 +83,7 @@ export default function CreateEmployeeByExcel() {
     const submitFrom = (value) => {
         let postdata:any = {
             departmentId: value.department,
-            designationId: value.designation,
+            // designationId: value.designation,
             employeeBasicRequestList: tableRowStore,
             employeeTypeId: value.employeeType,
             shiftId: value.shift
@@ -103,7 +103,7 @@ export default function CreateEmployeeByExcel() {
                     onFinish={submitFrom}
                 >
                     <Row>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 5 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                             <Form.Item
                                 name="department"
                                 label="Department"
@@ -115,7 +115,7 @@ export default function CreateEmployeeByExcel() {
                                 <SelectDepartment />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        {/* <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
                             <Form.Item
                                 name="designation"
                                 label="Designation"
@@ -126,8 +126,8 @@ export default function CreateEmployeeByExcel() {
                             >
                                 <SelectDesignation />
                             </Form.Item>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        </Col> */}
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 5 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                             <Form.Item
                                 name="employeeType"
                                 label="Employee Type"
@@ -140,7 +140,7 @@ export default function CreateEmployeeByExcel() {
                                 
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 5 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                             <Form.Item
                                 name="shift"
                                 label="Shift"
@@ -152,7 +152,7 @@ export default function CreateEmployeeByExcel() {
                                 <SelectShift />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 5 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                             <Space size="small">
                                 <div className='mt-30 mt-mo-0'>
                                     <Upload
@@ -170,7 +170,7 @@ export default function CreateEmployeeByExcel() {
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }} xl={{ span: 4 }}>
                             <Space size="small" style={{ float: "right" }} >
-                                <Button type="primary" onClick={() => window.open('https://res.cloudinary.com/dnyoqhb7g/raw/upload/v1646649412/HR_PAYROLL/Employee_Registration_sample_excel.xlsx', '_blank')}>Sample File</Button>
+                                <Button type="primary" onClick={() => window.open('https://res.cloudinary.com/dnyoqhb7g/raw/upload/v1646649412/HR_PAYROLL/Employee_Registration_sample_excel.xlsx', '_blank')}>Download Sample File</Button>
                             </Space>
                         </Col>
                     </Row>

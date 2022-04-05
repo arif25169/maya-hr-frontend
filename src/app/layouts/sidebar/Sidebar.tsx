@@ -90,14 +90,14 @@ export function Sidebar() {
 			<Menu.Item key={ROUTES.UPDATE_COMPANY} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.UPDATE_COMPANY} className="nav-text">Update Company</Link>
 			</Menu.Item>
-			<Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<ContainerOutlined  />}>
+			{/* <Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.CREATE_FINANCIAL_YEAR} className="nav-text">Financial Year</Link>
-			</Menu.Item>
+			</Menu.Item> */}
 			{/* <Menu.Item key={ROUTES.CREATE_DEDUCTION} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.CREATE_DEDUCTION} className="nav-text">Create Deduction</Link>
 			</Menu.Item> */}
 		</SubMenu>
-		<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="HRM" >
+		<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="Employee Profile" >
 			<SubMenu key={"employeeSetting"} icon={<PartitionOutlined />} title="Settings" >
 				<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.CREATE_DEPARTMENT} className="nav-text">Department</Link>
@@ -112,16 +112,14 @@ export function Sidebar() {
 					<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
 				</Menu.Item>
 			</SubMenu>
-			<SubMenu key={"employee"} icon={<PartitionOutlined />} title="Employee" >
-				<Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<ContainerOutlined  />}>
-					<Link to={ROUTES.CREATE_EMPLOYEE} className="nav-text">Single Registration</Link>
-				</Menu.Item>
+			<SubMenu key={"employee"} icon={<PartitionOutlined />} title="Registration" >
+				{/* <Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<ContainerOutlined  />}>
+					<Link to={ROUTES.CREATE_EMPLOYEE} className="nav-text">Single</Link>
+				</Menu.Item> */}
 				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined  />}>
-					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk Registration</Link>
+					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined  />}>
-					<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Attendance Config</Link>
-				</Menu.Item>
+
 				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
 				</Menu.Item>
@@ -132,6 +130,11 @@ export function Sidebar() {
 		</SubMenu>
 		<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
 			<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
+
+				<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined  />}>
+					<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
+				</Menu.Item>
+
 				<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Leave Category</Link>
 				</Menu.Item>

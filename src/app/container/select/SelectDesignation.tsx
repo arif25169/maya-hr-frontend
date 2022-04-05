@@ -42,7 +42,7 @@ export const SelectDesignation = ({
       defaultValue={defaultSelected}
       value={selected}
       style={style}
-      placeholder="Select Department"
+      placeholder="Select Designation"
       filterOption={(input, option:any) =>
         option !== undefined &&
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
