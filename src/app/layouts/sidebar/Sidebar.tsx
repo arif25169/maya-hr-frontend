@@ -7,11 +7,6 @@ import { useStoreActions, useStoreState } from '../../store/hooks/easyPeasy';
 import { ROUTES } from "../../contents/routes";
 
 export function Sidebar() {
-	// console.log(window.location.pathname)
-
-
-
-
 	const [openkeys, setopenkeys] = useState<any>('')
 	useEffect(() => {
 		//fetchpartnerProfile();
@@ -27,10 +22,6 @@ export function Sidebar() {
 	const [pathValue, setpathValue] = useState<any>("1")
 	const [mainpathValue, setmainpathValue] = useState<any>(null)
 
-	// console.log(pathValue)
-
-	//const key = window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1, location.pathname.length)
-	//console.log(window.location.pathname)
 	const [keys, setKeys] = useState<any>([]);
 	const sideClick = (value) => {
 		setpathValue(value.key)
@@ -49,7 +40,6 @@ export function Sidebar() {
 			setpathValue(val2)
 		}
 		setView(true)
-		//	console.log('here')
 	}, []);
 
 	const [refreshKeys, setRefresh] = useState<any>([]);
@@ -58,8 +48,8 @@ export function Sidebar() {
 	const onOpenChange = (value) => {
 		setKeys(value)
 	}
-	useEffect(() => {
 
+	useEffect(() => {
 		let val: any = localStorage.getItem('openKeys');
 		if (val !== null) {
 			setRefresh(JSON.parse(val))
@@ -67,6 +57,7 @@ export function Sidebar() {
 		setView(true)
 	}, [])
 
+	const setbankAdviseListView2 = useStoreActions((state) => state.payroll.setbankAdviseListView2);
 
 	return <> {view && <Menu
 		theme="dark"
@@ -195,7 +186,7 @@ export function Sidebar() {
 			<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.BANK_ADVISE_CONTENT} className="nav-text"> Bank Advise Content</Link>
 			</Menu.Item>			
-			<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined  />}>
+			<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined  />} onClick={()=>setbankAdviseListView2()}>
 				<Link to={ROUTES.BANK_ADVISE_VIEW} className="nav-text"> Bank Advise View</Link>
 			</Menu.Item>
 

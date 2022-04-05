@@ -69,6 +69,7 @@ export interface Payroll {
 
     bankAdviseListView: any;
     setbankAdviseListView: Action<Payroll, any>;
+    setbankAdviseListView2: Action<Payroll>;
     fetchbankAdviseListView: Thunk<Payroll, any>;
 }
 
@@ -615,6 +616,10 @@ export const payrollStore: Payroll = {
 
     setbankAdviseListView: action((state, payload) => {
         state.bankAdviseListView = payload;
+    }),    
+    
+    setbankAdviseListView2: action((state) => {
+        state.bankAdviseListView = null;
     }),
 
     fetchbankAdviseListView: thunk(async (actions, payload) => {
