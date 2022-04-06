@@ -12,7 +12,11 @@ export interface Hr {
 
 	employeeListByDepartment : any;
 	fetchEmployeeByDepartment : Thunk<Hr>;
-	setEmployeeListByDepartment:  Action<Hr, any>;
+	setEmployeeListByDepartment:  Action<Hr, any>;	
+	
+	employeeListByDepartment2 : any;
+	fetchEmployeeByDepartment2 : Thunk<Hr>;
+	setEmployeeListByDepartment2:  Action<Hr, any>;
 
 	saveEmployeeFromExcell : Thunk<Hr, any>;
 
@@ -262,6 +266,27 @@ export const hrStore: Hr = {
 
 	setEmployeeListByDepartment: action((state, payload) => {
 		state.employeeListByDepartment = payload;
+	}),	
+	
+	employeeListByDepartment2:[],
+	
+	fetchEmployeeByDepartment2: thunk(async (actions, payload) => {
+		const response = await fetchEmployeeByDepartment(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				
+				actions.setEmployeeListByDepartment2(body.item)
+			}else{
+				actions.setEmployeeListByDepartment2([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setEmployeeListByDepartment2: action((state, payload) => {
+		state.employeeListByDepartment2 = payload;
 	}),
 
 }

@@ -109,8 +109,10 @@ export function Sidebar() {
 				</Menu.Item> */}
 				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk</Link>
+				</Menu.Item>				
+				<Menu.Item key={ROUTES.EMPLOYEE_BANK_INFO} icon={<ContainerOutlined  />}>
+					<Link to={ROUTES.EMPLOYEE_BANK_INFO} className="nav-text">Bank Info</Link>
 				</Menu.Item>
-
 				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
 				</Menu.Item>			

@@ -24,6 +24,7 @@ export const ROUTES = {
   SALARY_SLIP: "salary-slip",
   EMPLOYEE_LIST: "employee-list",
   EMPLOYEE_ASSIGN_DESIGNATION: "employee-assign-designation",
+  EMPLOYEE_BANK_INFO: "employee-bank-info",
   EMPLOYEE_INFORMATION: "employee-information",
   LEAVE_ASSIGN: "leave-assign",
   EMPLOYEE_ATTENDANCE_CONFIG:"employee-attemdance-config",
