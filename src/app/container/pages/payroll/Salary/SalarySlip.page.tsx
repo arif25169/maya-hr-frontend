@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox, Descriptions, DatePicker } from 'antd'
 import { DeleteOutlined, EditOutlined, EyeOutlined, PrinterOutlined, SaveOutlined, SearchOutlined, SettingOutlined, UngroupOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
@@ -161,6 +161,7 @@ export default function SalarySlip() {
     const viewForSalaryPayment = useStoreState((state) => state.payroll.viewForSalaryPayment);
     const fetchviewForSalaryPayment = useStoreActions((state) => state.payroll.fetchviewForSalaryPayment);
     const payEmployeeSalary = useStoreActions((state) => state.payroll.payEmployeeSalary);
+    const batchPayEmployeeSalary = useStoreActions((state) => state.payroll.batchPayEmployeeSalary);
 
 
 
@@ -329,24 +330,37 @@ export default function SalarySlip() {
             showOnDesktop: true
         },
         {
-            title: 'Payment Details', dataIndex: '', key: '', showOnResponse: true, showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                <Space size="middle">
-                    <Tooltip title="Payment Details">
-                        <Button type='primary'
-                            onClick={() => {
-                                setsalaryRecordId(record.salaryRecordId)
-                                setIsModalVisible(true);
-                            }}
-                            icon={<UngroupOutlined />}
+            title: 'Payment No',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => {
+                return (
+                    <>
+                        <Input type="text" value={record.paymentNo} className="ant-input" onChange={onchangeValue("paymentNo", record, index)} />
+                    </>
+                )
 
-                        />
-                    </Tooltip>
-
-
-                </Space>
-            ),
+            }
         },
+        // {
+        //     title: 'Payment Details', dataIndex: '', key: '', showOnResponse: true, showOnDesktop: true,
+        //     render: (text: any, record: any, index) => (
+        //         <Space size="middle">
+        //             <Tooltip title="Payment Details">
+        //                 <Button type='primary'
+        //                     onClick={() => {
+        //                         setsalaryRecordId(record.salaryRecordId)
+        //                         setIsModalVisible(true);
+        //                     }}
+        //                     icon={<UngroupOutlined />}
+
+        //                 />
+        //             </Tooltip>
+
+
+        //         </Space>
+        //     ),
+        // },
         {
             title: 'Payment View', dataIndex: '', key: '', showOnResponse: true, showOnDesktop: true,
             render: (text: any, record: any, index) => (
@@ -377,10 +391,21 @@ export default function SalarySlip() {
         setTableData(salaryProcessList?.employeeList);
     }, [salaryProcessList]);
 
+    const onchangeValue: any =
+        useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
+            const newData = [...tableData];
+            newData[index][key] = e.target.value;
+            setTableData(newData);
+        }, [tableData]);
+
     const [form] = Form.useForm();
+    const [form2] = Form.useForm();
     const [paymentform] = Form.useForm();
 
+    const [dta, setDta] = useState<any>('');
+
     const onProcess = (value) => {
+        setDta(value);
         fetchsalaryProcessList(value);
 
     }
@@ -400,6 +425,47 @@ export default function SalarySlip() {
     const [paymentNo, setpaymentNo] = useState<any>(null);
 
     const componentRef: any = useRef();
+
+    const finalSubmit = (value) => {
+        if (selectedRowKeys.length === 0) {
+            message.error("Please select atleast one employee");
+            return;
+        };
+        let payload = selectedValue.map((item: any) => {
+            return {
+                paymentNo: item.paymentNo,
+                salaryRecordId: item.salaryRecordId,
+            }
+        })
+        let finalPayload = {
+            "employees": payload,
+            "paymentDate": moment(value.paymentDate).format('YYYY-MM-DD'),
+            "paymentType": value.paymentType,
+        }
+        batchPayEmployeeSalary(finalPayload);
+        setselectedRowKeys([]);
+        setselectedValue([]);
+        setTimeout(() => {
+            fetchsalaryProcessList(dta);
+        }, 1000);
+
+    };
+
+    const [selectedRowKeys, setselectedRowKeys] = useState<any>([]);
+    const [selectedValue, setselectedValue] = useState<any>([]);
+
+    const onSelectChange = (selectedRowKeys, value) => {
+        setselectedRowKeys(selectedRowKeys);
+        setselectedValue(value);
+        // console.log(value)
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    }
+
+
     return (
         <Card title="Salary Slip">
             <Form
@@ -458,6 +524,44 @@ export default function SalarySlip() {
                     </Col>
 
                 </Row>
+            </Form>
+            <Form
+                layout="vertical"
+                id="sFormSubmit"
+                form={form2}
+                onFinish={finalSubmit}
+            >
+                <Row>
+                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>  </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                        <Form.Item
+                            name="paymentDate"
+                            label="Payment Date"
+                            className="title-Text"
+                            rules={[
+                                { required: true, message: "Please select date" },
+                            ]}
+                        >
+                            <DatePicker placeholder="Payment Date" style={{ width: '100%' }} format={"DD/MM/YYYY"} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                        <Form.Item
+                            name="paymentType"
+                            label="Paymemt Type"
+                            className="title-Text"
+                            rules={[
+                                { required: true, message: "Please select payment type" },
+                            ]}
+                        >
+                            <Select placeholder='Payment Type' value={paymentType} onChange={(e) => setPaymentType(e)} >
+                                <Select.Option value="Cheque">Cheque</Select.Option>
+                                <Select.Option value="Payment Advise">Payment Advise</Select.Option>
+                                <Select.Option value="Cash">Cash</Select.Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
                 <Row className="m-t-mo-30">
                     <Col span="24">
                         <div className="datatable-responsive-demo">
@@ -469,39 +573,23 @@ export default function SalarySlip() {
                                             columns,
                                             dataSource: tableData,
                                             filterData: tableData,
-                                            pagination: true,
+                                            pagination: false,
                                             bordered: true,
                                             rowKey: "customEmployeeId",
-
+                                            rowSelection: rowSelection
                                         }}
                                         mobileBreakPoint={768}
                                     />
-                                    {/* 
-                                    <Space style={{ float: "right" }}>
-                                        <Button
-                                            style={{
-                                                marginBottom: 20,
-                                            }}
-                                            onClick={() => {
-                                                const excel = new Excel();
-                                                excel
-                                                    .addSheet('test')
-                                                    .addColumns(columns)
-                                                    .addDataSource(tableData, {
-                                                        str2Percent: true,
-                                                    })
-                                                    .saveAs(`Salary Process View of ${form.getFieldValue('salaryMonth')}-${form.getFieldValue('salaryYear')}.xlsx`);
-                                            }}
-                                        >
-                                            Download Excel
-                                        </Button>
-                                    </Space> */}
+                                    <Space size={'middle'} style={{ float: "right" }} >
+                                        <Button type='primary' htmlType='submit' icon={<SettingOutlined />}> Generate</Button>
+                                    </Space>
 
                                 </>
                             }
                         </div>
                     </Col>
                 </Row>
+
             </Form>
             <Modal
                 title="Payment"

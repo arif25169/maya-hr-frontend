@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, fetchviewForSalaryPayment, payEmployeeSalary, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateBank, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, batchPayEmployeeSalary, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalarySheetViews, fetchviewForSalaryPayment, payEmployeeSalary, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateBank, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -54,6 +54,7 @@ export interface Payroll {
     setsalaryProcessList: Action<Payroll, any>;
     fetchsalaryProcessList: Thunk<Payroll, any>;
     payEmployeeSalary: Thunk<Payroll, any>;
+    batchPayEmployeeSalary: Thunk<Payroll, any>;
 
     salaryProcessList2: any;
     setsalaryProcessList2: Action<Payroll, any>;
@@ -531,6 +532,19 @@ export const payrollStore: Payroll = {
 
     payEmployeeSalary: thunk(async (actions, payload) => {
         const response = await payEmployeeSalary(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            notification.success({ message: body.message })
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),    
+    
+    batchPayEmployeeSalary: thunk(async (actions, payload) => {
+        const response = await batchPayEmployeeSalary(payload);
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             notification.success({ message: body.message })
