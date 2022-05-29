@@ -48,6 +48,7 @@ import BankAdviseContent from "./container/pages/payroll/BankAdviseContent";
 import BankAdviseView from "./container/pages/payroll/BankAdviseView";
 import EmployeeAssignDesignation from "./container/pages/employee/EmployeeAssignDesignation";
 import EmployeeBankInfo from "./container/pages/employee/EmployeeBankInfo";
+import DeviceProcess from "./container/pages/devices/DeviceProcess";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -150,6 +151,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.BANK_ADVISE_VIEW} component={BankAdviseView} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} component={EmployeeAssignDesignation} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_BANK_INFO} component={EmployeeBankInfo} /> 
+            <Route exact path={'/' +ROUTES.DEVICE_PROCESS} component={DeviceProcess} /> 
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

@@ -32,4 +32,5 @@ export const ROUTES = {
   UPDATE_ATTENDANCE:"update-attendantance",
   BANK_ADVISE_CONTENT:"bank-advise-content",
   BANK_ADVISE_VIEW:"bank-advise-view",
+  DEVICE_PROCESS:"device-process",
 };

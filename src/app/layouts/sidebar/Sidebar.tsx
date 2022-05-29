@@ -1,7 +1,7 @@
 import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { AuditOutlined, CalculatorOutlined, DashboardTwoTone, DeleteOutlined, DollarCircleOutlined, FileTextOutlined, FundProjectionScreenOutlined, FundViewOutlined, PartitionOutlined, SolutionOutlined, UserAddOutlined, ContainerOutlined  } from '@ant-design/icons/lib';
+import { AuditOutlined, CalculatorOutlined, DashboardTwoTone, DeleteOutlined, DollarCircleOutlined, FileTextOutlined, FundProjectionScreenOutlined, FundViewOutlined, PartitionOutlined, SolutionOutlined, UserAddOutlined, ContainerOutlined } from '@ant-design/icons/lib';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { useStoreActions, useStoreState } from '../../store/hooks/easyPeasy';
 import { ROUTES } from "../../contents/routes";
@@ -78,7 +78,7 @@ export function Sidebar() {
 			{/* <Menu.Item key={ROUTES.CREATE_COMPANY} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.CREATE_COMPANY} className="nav-text">Create Company</Link>
 			</Menu.Item> */}
-			<Menu.Item key={ROUTES.UPDATE_COMPANY} icon={<ContainerOutlined  />}>
+			<Menu.Item key={ROUTES.UPDATE_COMPANY} icon={<ContainerOutlined />}>
 				<Link to={ROUTES.UPDATE_COMPANY} className="nav-text">Update Company</Link>
 			</Menu.Item>
 			{/* <Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<ContainerOutlined  />}>
@@ -90,16 +90,16 @@ export function Sidebar() {
 		</SubMenu>
 		<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="Employee Profile" >
 			<SubMenu key={"employeeSetting"} icon={<PartitionOutlined />} title="Settings" >
-				<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_DEPARTMENT} className="nav-text">Department</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_DESIGNATION} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_DESIGNATION} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_DESIGNATION} className="nav-text">Designation</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Employee Type</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
 				</Menu.Item>
 			</SubMenu>
@@ -107,17 +107,17 @@ export function Sidebar() {
 				{/* <Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE} className="nav-text">Single</Link>
 				</Menu.Item> */}
-				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk</Link>
-				</Menu.Item>				
-				<Menu.Item key={ROUTES.EMPLOYEE_BANK_INFO} icon={<ContainerOutlined  />}>
+				</Menu.Item>
+				<Menu.Item key={ROUTES.EMPLOYEE_BANK_INFO} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_BANK_INFO} className="nav-text">Bank Info</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
-				</Menu.Item>			
-				
-				<Menu.Item key={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} icon={<ContainerOutlined  />}>
+				</Menu.Item>
+
+				<Menu.Item key={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} className="nav-text">Assign Designation</Link>
 				</Menu.Item>
 				{/* <Menu.Item key={ROUTES.EMPLOYEE_INFORMATION} icon={<ContainerOutlined  />}>
@@ -126,69 +126,75 @@ export function Sidebar() {
 			</SubMenu>
 		</SubMenu>
 		<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
+			<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
+
+				<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
+				</Menu.Item>
+			</SubMenu>
 			<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
 
-				<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
 				</Menu.Item>
 
-				<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Leave Category</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_HOLIDAY} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CREATE_HOLIDAY} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_HOLIDAY} className="nav-text">Holiday</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.LEAVE_ASSIGN} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.LEAVE_ASSIGN} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.LEAVE_ASSIGN} className="nav-text">Leave Assign</Link>
 				</Menu.Item>
 			</SubMenu>
 			<SubMenu key={"attendanceInput"} icon={<PartitionOutlined />} title="Input" >
-				<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.TAKE_ATTENDANCE} className="nav-text">Manual</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.UPDATE_ATTENDANCE} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.UPDATE_ATTENDANCE} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.UPDATE_ATTENDANCE} className="nav-text">Update</Link>
 				</Menu.Item>
 			</SubMenu>
 		</SubMenu>
 		<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >
 			<SubMenu key={"payrollSetiings"} icon={<PartitionOutlined />} title="Settings" >
-				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.SETTINGS_PAYROLL_GRADE} className="nav-text">Grade</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_ADDITION} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_ADDITION} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.SETTINGS_PAYROLL_ADDITION} className="nav-text">Addition</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_DEDUCTION} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_DEDUCTION} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.SETTINGS_PAYROLL_DEDUCTION} className="nav-text">Deduction</Link>
 				</Menu.Item>
 			</SubMenu>
 			<SubMenu key={"payrollConfigure"} icon={<PartitionOutlined />} title="Configure" >
-				<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CONFIGURE_EMPLOYEE_GRADE} className="nav-text">Grade Assign</Link>
 				</Menu.Item>
 			</SubMenu>
 			<SubMenu key={"salaryProcessMenu"} icon={<PartitionOutlined />} title="Salary Process" >
-				<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text"> Save</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.SALARY_PROCESS_LIST} icon={<ContainerOutlined  />}>
+				<Menu.Item key={ROUTES.SALARY_PROCESS_LIST} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.SALARY_PROCESS_LIST} className="nav-text"> View</Link>
 				</Menu.Item>
 			</SubMenu>
-			<Menu.Item key={ROUTES.SALARY_SLIP} icon={<ContainerOutlined  />}>
+			<Menu.Item key={ROUTES.SALARY_SLIP} icon={<ContainerOutlined />}>
 				<Link to={ROUTES.SALARY_SLIP} className="nav-text"> Salary Slip</Link>
-			</Menu.Item>				
-			<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined  />}>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined />}>
 				<Link to={ROUTES.BANK_ADVISE_CONTENT} className="nav-text"> Bank Advise Content</Link>
-			</Menu.Item>			
-			<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined  />} onClick={()=>setbankAdviseListView2()}>
+			</Menu.Item>
+			<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined />} onClick={() => setbankAdviseListView2()}>
 				<Link to={ROUTES.BANK_ADVISE_VIEW} className="nav-text"> Bank Advise View</Link>
 			</Menu.Item>
 
