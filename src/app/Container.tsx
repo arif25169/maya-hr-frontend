@@ -51,6 +51,8 @@ import EmployeeBankInfo from "./container/pages/employee/EmployeeBankInfo";
 import DeviceProcess from "./container/pages/devices/DeviceProcess";
 import EmployeeIdMappingWrapper from "./container/pages/attendance/EmployeeIdMappingWrapper";
 import HolidayWrapper from "./container/pages/attendance/holiday/HolidayWrapper";
+import EmployeeAttendanceDateWiseReport from "./container/pages/attendance/EmployeeAttendanceDateWiseReport";
+import EmployeeAttendanceMonthWiseReport from "./container/pages/attendance/EmployeeAttendanceMonthWiseReport";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -156,6 +158,8 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.DEVICE_PROCESS} component={DeviceProcess} /> 
             <Route exact path={'/' +ROUTES.ID_MAPPING} component={EmployeeIdMappingWrapper} /> 
             <Route exact path={'/' + ROUTES.HOLIDAY} component={HolidayWrapper} />
+            <Route exact path={'/' + ROUTES.HR_REPORT_DATE_WISE} component={EmployeeAttendanceDateWiseReport} />
+            <Route exact path={'/' + ROUTES.HR_REPORT_MONTH_WISE} component={EmployeeAttendanceMonthWiseReport} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

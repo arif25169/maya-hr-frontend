@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchdisabledEmployee, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchdisabledEmployee, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -32,13 +32,25 @@ export interface Attendance {
     deletegovtHolidayList: Thunk<Attendance, any>;
     govtHolidayList: any;
     setgovtHolidayList: Action<Attendance, any>;
+
+    employeeDateWiseAttReport: any;
+    setemployeeDateWiseAttReport: Action<Attendance, any>;
+    fetchemployeeDateWiseAttReport: Thunk<Attendance, any>
+
+    employeeMonthWiseAttReport: any;
+    setemployeeMonthWiseAttReport: Action<Attendance, any>;
+    fetchemployeeMonthWiseAttReport: Thunk<Attendance, any>
+
+    attendanceDetailsAllEmployee: any;
+    setattendanceDetailsAllEmployee: Action<Attendance, any>;
+    fetchattendanceDetailsAllEmployee: Thunk<Attendance, any>
 }
 
 export const attendanceStore: Attendance = {
-	loading: false,
-	setLoading: action((state, payload) => {
-		state.loading = payload;
-	}),
+    loading: false,
+    setLoading: action((state, payload) => {
+        state.loading = payload;
+    }),
     inputEmployeeAttendance: thunk(async (actions, payload) => {
         const response = await inputEmployeeAttendance(payload);
         if (response.status === 201 || response.status === 200) {
@@ -225,12 +237,12 @@ export const attendanceStore: Attendance = {
         const response = await fetchgovtHolidayList(payload);
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
-            if (body?.item?.length>0){
-				actions.setgovtHolidayList(body.item);
-			} else {
-				actions.setgovtHolidayList([]);
-				notification.warning({ message: "No data found" })
-			}
+            if (body?.item?.length > 0) {
+                actions.setgovtHolidayList(body.item);
+            } else {
+                actions.setgovtHolidayList([]);
+                notification.warning({ message: "No data found" })
+            }
             actions.setLoading(false);
         } else {
             const body = await response.json();
@@ -274,5 +286,86 @@ export const attendanceStore: Attendance = {
         }
     }),
     //////////////
+
+    employeeDateWiseAttReport: [],
+    fetchemployeeDateWiseAttReport: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchemployeeDateWiseAttReport(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body.item?.length > 0) {
+                actions.setemployeeDateWiseAttReport(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setemployeeDateWiseAttReport([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setemployeeDateWiseAttReport: action((state, payload) => {
+        state.employeeDateWiseAttReport = payload;
+    }),
+    employeeMonthWiseAttReport: [],
+    fetchemployeeMonthWiseAttReport: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchemployeeMonthWiseAttReport(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body.item?.details?.length > 0) {
+                actions.setemployeeMonthWiseAttReport(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setemployeeMonthWiseAttReport([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setemployeeMonthWiseAttReport: action((state, payload) => {
+        state.employeeMonthWiseAttReport = payload;
+    }),
+
+    attendanceDetailsAllEmployee: [],
+    fetchattendanceDetailsAllEmployee: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchattendanceDetailsAllEmployee(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body.item?.staffList?.length > 0) {
+                actions.setattendanceDetailsAllEmployee(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setattendanceDetailsAllEmployee([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setattendanceDetailsAllEmployee: action((state, payload) => {
+        state.attendanceDetailsAllEmployee = payload;
+    }),
+
 
 }

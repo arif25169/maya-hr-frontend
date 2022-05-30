@@ -35,4 +35,6 @@ export const ROUTES = {
   DEVICE_PROCESS:"device-process",
   ID_MAPPING:"id-mapping",
   HOLIDAY: "holiday",
+  HR_REPORT_DATE_WISE: "hr-report-date-wise",
+  HR_REPORT_MONTH_WISE: "hr-report-month-wise",
 };

@@ -15,3 +15,6 @@ export const deleteHolidayList = (payload) => del('/holyday/weekly/delete?holyDa
 export const fetchgovtHolidayList = (payload) => get("/holyday/govt/list/by-year?year="+payload?.year);
 export const creategovtHolidayList = (payload) => post("/holyday/govt/save", payload);
 export const deletegovtHolidayList = (payload) => del("/holyday/govt/delete?holyDayId="+payload);
+export const fetchemployeeDateWiseAttReport = (attendanceDate) => get("/employee/attendance/report/date-wise?attendanceDate=" + attendanceDate);
+export const fetchemployeeMonthWiseAttReport = (payload) => get(`/employee/attendance/report/single/employee/details?month=${payload.month}&employeeId=${payload.employeeId}&year=${payload.year}`);
+export const fetchattendanceDetailsAllEmployee = (payload) => get(`/employee/attendance/report/all/employee/details?month=${payload.month}&year=${payload.year}`);

@@ -163,6 +163,14 @@ export function Sidebar() {
 					<Link to={ROUTES.UPDATE_ATTENDANCE} className="nav-text">Update</Link>
 				</Menu.Item>
 			</SubMenu>
+			<SubMenu key={"attendanceReport"} icon={<PartitionOutlined />} title="Report" >
+				<Menu.Item key={ROUTES.HR_REPORT_DATE_WISE} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.HR_REPORT_DATE_WISE} className="nav-text">Daily Details</Link>
+				</Menu.Item>				
+				<Menu.Item key={ROUTES.HR_REPORT_MONTH_WISE} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Monthly Details</Link>
+				</Menu.Item>
+			</SubMenu>
 		</SubMenu>
 
 		<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >

@@ -682,7 +682,8 @@ export const generalSettingStore: GeneralSetting = {
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				actions.setCompanyInfo(body.item)
+				actions.setCompanyInfo(body.item);
+				localStorage.setItem("companyInfo", JSON.stringify(body.item));
 			} else {
 				actions.setCompanyInfo([])
 			}
