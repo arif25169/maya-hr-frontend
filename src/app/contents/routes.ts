@@ -34,4 +34,5 @@ export const ROUTES = {
   BANK_ADVISE_VIEW:"bank-advise-view",
   DEVICE_PROCESS:"device-process",
   ID_MAPPING:"id-mapping",
+  HOLIDAY: "holiday",
 };

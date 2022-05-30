@@ -9,12 +9,14 @@ import { SelectDepartment } from '../../select/SelectDepartment';
 export default function StaffTimeConfig() {
 
     const { TabPane } = Tabs;
-    const [activeTab, setActiveTab] = React.useState<any>("1");
+    const [activeTab, setActiveTab] = React.useState<any>("2");
     const [staffForm] = Form.useForm();
+    const [staffFormUpdate] = Form.useForm();
     const fetchCompanyDepartmentList = useStoreActions((state) => state.common.fetchCompanyDepartmentList);
     const fetchEmployeeListForattendanceTimeConfig = useStoreActions((state) => state.generalSetting.fetchEmployeeListForattendanceTimeConfig);
     const employeeListForattendanceTimeConfig = useStoreState((state) => state.generalSetting.employeeListForattendanceTimeConfig);
     const saveEmployeeAttendanceTimeConfig = useStoreActions((state) => state.generalSetting.saveEmployeeAttendanceTimeConfig);
+    const updateAttendanceTimeConfiguration = useStoreActions((state) => state.generalSetting.updateAttendanceTimeConfiguration);
     const fetchattendanceTimeConfigurationListByDepartmentWise = useStoreActions((state) => state.generalSetting.fetchattendanceTimeConfigurationListByDepartmentWise);
     const deleteAttendanceTimeConfiguration = useStoreActions((state) => state.generalSetting.deleteAttendanceTimeConfiguration);
     const attendanceTimeConfigurationListByDepartmentWise = useStoreState((state) => state.generalSetting.attendanceTimeConfigurationListByDepartmentWise);
@@ -56,6 +58,22 @@ export default function StaffTimeConfig() {
             notification.error({ message: 'Row select first' })
         }
     }
+    const staffUpdateSubmit = (value) => {
+        console.log(value)
+        let dataLoad: any = {
+            "delayTime": value.delayTime,
+            "inTime": value.inTime,
+            "outTime": value.outTime,
+            "attendanceTimeConfigId":attendanceTimeConfigId
+        };
+        console.log(dataLoad)
+        updateAttendanceTimeConfiguration(dataLoad);
+        setIsModalVisible(false);
+        setTimeout(() => {
+            fetchattendanceTimeConfigurationListByDepartmentWise(dep);
+        }, 1000);
+
+    }
 
     const columns = [
         {
@@ -81,6 +99,7 @@ export default function StaffTimeConfig() {
         }
     ];
 
+    const [attendanceTimeConfigId, setattendanceTimeConfigId] = useState<any>('');
     const cocfigurationColumns = [
         {
             title: 'ID',
@@ -123,41 +142,67 @@ export default function StaffTimeConfig() {
             key: 'delayTime',
             showOnResponse: true,
             showOnDesktop: true
-        }
+        },
+        {
+            title: 'Action', dataIndex: '', key: '', showOnResponse: true, showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                <Space size="middle">
+                    <Tooltip title="Edit">
+                        <Button type='primary'
+                            onClick={() => {
+                                setattendanceTimeConfigId(record.attendanceTimeConfigId);
+                                staffFormUpdate.setFieldsValue({
+                                    inTime: record.inTime?.slice(0, -3),
+                                    outTime: record.outTime?.slice(0, -3),
+                                    delayTime: record.delayTime?.slice(0, -3),
+                                });
+                                setIsModalVisible(true);
+                            }}
+                            icon={<EditOutlined />}
+
+                        />
+                    </Tooltip>
+
+
+                </Space>
+            ),
+        },
     ];
 
     const onChangeTabs = (e) => {
         setActiveTab(e);
     };
-    
+
     const [form] = Form.useForm();
-    const [dep,setDep] = useState<any>();
-    
+    const [dep, setDep] = useState<any>();
+
     const submitForm = (val) => {
         setDep(val);
         fetchattendanceTimeConfigurationListByDepartmentWise(val);
     };
 
-    const deleteConfig=()=>{
-        if (selectedRowKeys.length===0){
+    const deleteConfig = () => {
+        if (selectedRowKeys.length === 0) {
             message.error('Select row first');
             return
         };
-        let dataLoad:any = selectedValue.map(item=>item.attendanceTimeConfigId).join(',');
+        let dataLoad: any = selectedValue.map(item => item.attendanceTimeConfigId).join(',');
         deleteAttendanceTimeConfiguration(dataLoad);
         setselectedRowKeys([]);
         setselectedRowKeys([]);
         setTimeout(() => {
             fetchattendanceTimeConfigurationListByDepartmentWise(dep);
         }, 1000);
- 
-    }
+
+    };
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
 
     return (
         <>
             <Card title="Employee Attendance Time Configuration">
-                <Tabs defaultActiveKey="1" onChange={(e) => onChangeTabs(e)} type="card">
+                <Tabs defaultActiveKey="2" onChange={(e) => onChangeTabs(e)} type="card">
                     <TabPane tab="Attendance Config" key="1">
                         {activeTab === "1" &&
                             <Row>
@@ -299,23 +344,23 @@ export default function StaffTimeConfig() {
                                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
 
                                             {attendanceTimeConfigurationListByDepartmentWise?.length > 0 &&
-                                            <>
-                                                <TableView
-                                                    antTableProps={{
-                                                        showHeader: true,
-                                                        columns: cocfigurationColumns,
-                                                        dataSource: attendanceTimeConfigurationListByDepartmentWise,
-                                                        filterData: attendanceTimeConfigurationListByDepartmentWise,
-                                                        pagination: true,
-                                                        bordered: true,
-                                                        rowKey: "attendanceTimeConfigId",
-                                                        rowSelection: rowSelection,
-                                                    }}
-                                                    mobileBreakPoint={768}
-                                                />
-                                                <Space size={"middle"} style={{float:"right"}}>
-                                                    <Button type='primary' icon={<DeleteOutlined/>} onClick={deleteConfig}>Delete</Button>
-                                                </Space>
+                                                <>
+                                                    <TableView
+                                                        antTableProps={{
+                                                            showHeader: true,
+                                                            columns: cocfigurationColumns,
+                                                            dataSource: attendanceTimeConfigurationListByDepartmentWise,
+                                                            filterData: attendanceTimeConfigurationListByDepartmentWise,
+                                                            pagination: true,
+                                                            bordered: true,
+                                                            rowKey: "attendanceTimeConfigId",
+                                                            rowSelection: rowSelection,
+                                                        }}
+                                                        mobileBreakPoint={768}
+                                                    />
+                                                    <Space size={"middle"} style={{ float: "right" }}>
+                                                        <Button type='primary' icon={<DeleteOutlined />} onClick={deleteConfig}>Delete</Button>
+                                                    </Space>
                                                 </>
                                             }
 
@@ -328,6 +373,78 @@ export default function StaffTimeConfig() {
                     </TabPane>
                 </Tabs>
             </Card>
+            <Modal
+                title="Update"
+                visible={isModalVisible}
+                //  onOk={handleOk}
+                okButtonProps={{ form: 'update', htmlType: 'submit' }}
+                onCancel={() => setIsModalVisible(false)}
+                cancelText="Close"
+                okText="Update"
+                centered
+                maskClosable={false}
+                width={"50%"}
+                footer={null}
+            >
+                <Form
+                    layout="vertical"
+                    onFinish={staffUpdateSubmit}
+                    id="basic-info"
+                    form={staffFormUpdate}
+                >
+                    <Row gutter={8}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Form.Item
+                                name="inTime"
+                                label="In Time"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please select in time" },
+                                ]}
+                            >
+                                <Input placeholder="In Time" type={'time'} />
+
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Form.Item
+                                name="outTime"
+                                label="Out Time"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please select out time" },
+                                ]}
+                            >
+                                <Input placeholder="Out Time" type={'time'} />
+
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Form.Item
+                                name="delayTime"
+                                label="Delay Time"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please select delay time" },
+                                ]}
+                            >
+                                <Input placeholder="Delay Time" type={'time'} />
+
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Space size="small" >
+                                <Button type="primary" htmlType="submit" style={{ height: 40 }} icon={<SaveOutlined />}>
+                                    Update
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                </Form>
+            </Modal>
         </>
     )
 }

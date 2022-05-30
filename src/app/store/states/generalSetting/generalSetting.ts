@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -76,6 +76,7 @@ export interface GeneralSetting {
 	fetchEmployeeListForattendanceTimeConfig: Thunk<GeneralSetting>;
 	setEmployeeListForattendanceTimeConfig: Action<GeneralSetting, any>;
 	saveEmployeeAttendanceTimeConfig: Thunk<GeneralSetting, any>;
+	updateAttendanceTimeConfiguration: Thunk<GeneralSetting, any>;
 
 	enabledEmployeeListTakeAttendance: any;
 	setenabledEmployeeListTakeAttendance: Action<GeneralSetting, any>;
@@ -789,6 +790,20 @@ export const generalSettingStore: GeneralSetting = {
 
 	saveEmployeeAttendanceTimeConfig: thunk(async (actions, payload) => {
 		const response = await employeeAttendanceConfigSaveUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			const body = await response.json();
+			notification.error({ message: body.message })
+		}
+	}),
+	updateAttendanceTimeConfiguration: thunk(async (actions, payload) => {
+		const response = await updateAttendanceTimeConfiguration(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {

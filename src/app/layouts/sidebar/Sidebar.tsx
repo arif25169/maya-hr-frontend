@@ -142,8 +142,8 @@ export function Sidebar() {
 				<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_HOLIDAY} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_HOLIDAY} className="nav-text">Holiday</Link>
+				<Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
 				</Menu.Item>
 				<Menu.Item key={ROUTES.LEAVE_ASSIGN} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.LEAVE_ASSIGN} className="nav-text">Leave Assign</Link>

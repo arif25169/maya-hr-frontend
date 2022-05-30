@@ -50,6 +50,7 @@ import EmployeeAssignDesignation from "./container/pages/employee/EmployeeAssign
 import EmployeeBankInfo from "./container/pages/employee/EmployeeBankInfo";
 import DeviceProcess from "./container/pages/devices/DeviceProcess";
 import EmployeeIdMappingWrapper from "./container/pages/attendance/EmployeeIdMappingWrapper";
+import HolidayWrapper from "./container/pages/attendance/holiday/HolidayWrapper";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -154,6 +155,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.EMPLOYEE_BANK_INFO} component={EmployeeBankInfo} /> 
             <Route exact path={'/' +ROUTES.DEVICE_PROCESS} component={DeviceProcess} /> 
             <Route exact path={'/' +ROUTES.ID_MAPPING} component={EmployeeIdMappingWrapper} /> 
+            <Route exact path={'/' + ROUTES.HOLIDAY} component={HolidayWrapper} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

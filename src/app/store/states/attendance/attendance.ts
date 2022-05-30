@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { deleteDisabledEmployee, deviceprocess, fetchdisabledEmployee, fetchenabledEmployee, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchdisabledEmployee, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -17,10 +17,28 @@ export interface Attendance {
     setdisabledEmployee: Action<Attendance, any>;
     fetchdisabledEmployee: Thunk<Attendance>
     deleteDisabledEmployee: Thunk<Attendance, any>;
+
+    loading: boolean;
+    setLoading: Action<Attendance, boolean>;
+
+    fetchweeklyHolidayList: Thunk<Attendance>;
+    createHolidayList: Thunk<Attendance, any>;
+    deleteHolidayList: Thunk<Attendance, any>;
+    weeklyHolidayList: any;
+    setweeklyHolidayList: Action<Attendance, any>;
+
+    fetchgovtHolidayList: Thunk<Attendance, any>;
+    creategovtHolidayList: Thunk<Attendance, any>;
+    deletegovtHolidayList: Thunk<Attendance, any>;
+    govtHolidayList: any;
+    setgovtHolidayList: Action<Attendance, any>;
 }
 
 export const attendanceStore: Attendance = {
-
+	loading: false,
+	setLoading: action((state, payload) => {
+		state.loading = payload;
+	}),
     inputEmployeeAttendance: thunk(async (actions, payload) => {
         const response = await inputEmployeeAttendance(payload);
         if (response.status === 201 || response.status === 200) {
@@ -143,5 +161,118 @@ export const attendanceStore: Attendance = {
             notification.error({ message: "Something went wrong" })
         }
     }),
+
+    ///////////
+    weeklyHolidayList: null,
+
+    fetchweeklyHolidayList: thunk(async (actions) => {
+        actions.setLoading(true);
+        const response = await fetchweeklyHolidayList();
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            actions.setLoading(false);
+
+
+            actions.setweeklyHolidayList(body.item);
+        } else {
+            const body = await response.json();
+            actions.setLoading(false);
+        }
+    }),
+    setweeklyHolidayList: action((state, payload) => {
+        state.weeklyHolidayList = payload;
+    }),
+
+    createHolidayList: thunk(async (actions, payload) => {
+        const response = await createHolidayList(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                actions.fetchweeklyHolidayList();
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.message })
+        }
+    }),
+
+
+    deleteHolidayList: thunk(async (actions, payload) => {
+        const response = await deleteHolidayList(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                actions.fetchweeklyHolidayList();
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.statusText })
+        }
+    }),
+    //////////////
+
+    ///////////
+    govtHolidayList: null,
+
+    fetchgovtHolidayList: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchgovtHolidayList(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.item?.length>0){
+				actions.setgovtHolidayList(body.item);
+			} else {
+				actions.setgovtHolidayList([]);
+				notification.warning({ message: "No data found" })
+			}
+            actions.setLoading(false);
+        } else {
+            const body = await response.json();
+            actions.setLoading(false);
+        }
+    }),
+    setgovtHolidayList: action((state, payload) => {
+        state.govtHolidayList = payload;
+    }),
+
+    creategovtHolidayList: thunk(async (actions, payload) => {
+        const response = await creategovtHolidayList(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                //actions.fetchgovtHolidayList();
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.message })
+        }
+    }),
+
+
+    deletegovtHolidayList: thunk(async (actions, payload) => {
+        const response = await deletegovtHolidayList(payload?.id);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                actions.fetchgovtHolidayList({ year: payload?.year });
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.statusText })
+        }
+    }),
+    //////////////
 
 }
