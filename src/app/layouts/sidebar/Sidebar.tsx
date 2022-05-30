@@ -126,16 +126,14 @@ export function Sidebar() {
 			</SubMenu>
 		</SubMenu>
 		<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
-			<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
 
-				<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
-				</Menu.Item>
-			</SubMenu>
 			<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
 
 				<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
+				</Menu.Item>
+				<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
 				</Menu.Item>
 
 				<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined />}>
@@ -151,6 +149,12 @@ export function Sidebar() {
 					<Link to={ROUTES.LEAVE_ASSIGN} className="nav-text">Leave Assign</Link>
 				</Menu.Item>
 			</SubMenu>
+			<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
+
+				<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
+				</Menu.Item>
+			</SubMenu>
 			<SubMenu key={"attendanceInput"} icon={<PartitionOutlined />} title="Input" >
 				<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.TAKE_ATTENDANCE} className="nav-text">Manual</Link>
@@ -160,6 +164,7 @@ export function Sidebar() {
 				</Menu.Item>
 			</SubMenu>
 		</SubMenu>
+
 		<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >
 			<SubMenu key={"payrollSetiings"} icon={<PartitionOutlined />} title="Settings" >
 				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<ContainerOutlined />}>

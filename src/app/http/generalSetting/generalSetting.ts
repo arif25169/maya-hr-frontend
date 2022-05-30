@@ -51,3 +51,5 @@ export const employeeAttendanceConfigSaveUrl = (payload) => post('/attendance/ti
 export const employeeAttendanceConfigListUrl = () => get('/attendance/time/configuration/list');
 
 export const fetchleaveAssignListByDepartment = (payload) => get("/leave/assign/list/department-id?departmentId="+payload.departmentId+"&year="+payload.year);
+export const fetchattendanceTimeConfigurationListByDepartmentWise = (payload) => get("/attendance/time/configuration/list/by/departmentid?departmentId="+payload.departmentId);
+export const deleteAttendanceTimeConfiguration = (payload) => del("/attendance/time/configuration/delete?attendnaceTimeConfigurationIds="+payload);

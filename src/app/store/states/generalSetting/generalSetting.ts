@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -47,8 +47,10 @@ export interface GeneralSetting {
 	fetchholidayList: Thunk<GeneralSetting>;
 	createHoliday: Thunk<GeneralSetting, any>;
 	updateHoliday: Thunk<GeneralSetting, any>;
-	deleteHoliday: Thunk<GeneralSetting, any>;	
-	
+	deleteHoliday: Thunk<GeneralSetting, any>;
+
+	deleteAttendanceTimeConfiguration: Thunk<GeneralSetting, any>;
+
 	leaveConfigList: any;
 	setleaveConfigList: Action<GeneralSetting, any>;
 	fetchleaveConfigList: Thunk<GeneralSetting>;
@@ -76,23 +78,27 @@ export interface GeneralSetting {
 	saveEmployeeAttendanceTimeConfig: Thunk<GeneralSetting, any>;
 
 	enabledEmployeeListTakeAttendance: any;
-    setenabledEmployeeListTakeAttendance: Action<GeneralSetting, any>;
-    fetchenabledEmployeeListTakeAttendance: Thunk<GeneralSetting>;
+	setenabledEmployeeListTakeAttendance: Action<GeneralSetting, any>;
+	fetchenabledEmployeeListTakeAttendance: Thunk<GeneralSetting>;
 
 	employeeAttendanceTimeConfig: any;
 	fetchEmployeeAttendanceTimeConfig: Thunk<GeneralSetting>;
 	setEmployeeAttendanceTimeConfig: Action<GeneralSetting, any>;
+
+	attendanceTimeConfigurationListByDepartmentWise: any;
+	fetchattendanceTimeConfigurationListByDepartmentWise: Thunk<GeneralSetting, any>;
+	setattendanceTimeConfigurationListByDepartmentWise: Action<GeneralSetting, any>;
 
 	employeeAtttendanceListForUpdate: any;
 	setemployeeAtttendanceListForUpdate: Action<GeneralSetting, any>;
 	fetchemployeeAtttendanceListForUpdate: Thunk<GeneralSetting, any>
 
 	leaveAssignListByDepartment: any;
-    setleaveAssignListByDepartment: Action<GeneralSetting, any>;
-    fetchleaveAssignListByDepartment: Thunk<GeneralSetting, any>;
+	setleaveAssignListByDepartment: Action<GeneralSetting, any>;
+	fetchleaveAssignListByDepartment: Thunk<GeneralSetting, any>;
 
 	loading: boolean;
-    setLoading: Action<GeneralSetting, boolean>;	
+	setLoading: Action<GeneralSetting, boolean>;
 
 }
 
@@ -102,15 +108,16 @@ export const generalSettingStore: GeneralSetting = {
 	designationList: [],
 	employeeTypeList: [],
 	shiftList: [],
-	employeeListByDepartmentId:[],
-	leavelListByDepartmentId:[],
-    companyInfo: [],
+	employeeListByDepartmentId: [],
+	leavelListByDepartmentId: [],
+	companyInfo: [],
 	employeeListForattendanceTimeConfig: [],
 	employeeAttendanceTimeConfig: [],
+	attendanceTimeConfigurationListByDepartmentWise: [],
 	loading: false,
 	setLoading: action((state, payload) => {
-        state.loading = payload;
-    }),
+		state.loading = payload;
+	}),
 	setSaveCompany: thunk(async (actions, payload) => {
 		const response = await saveCompanyUrl(payload);
 		if (response.status === 201 || response.status === 200) {
@@ -528,6 +535,21 @@ export const generalSettingStore: GeneralSetting = {
 		}
 	}),
 
+	deleteAttendanceTimeConfiguration: thunk(async (actions, payload) => {
+		const response = await deleteAttendanceTimeConfiguration(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something went wrong' })
+		}
+	}),
+
 	leaveConfigList: [],
 
 	setleaveConfigList: action((state, payload) => {
@@ -689,9 +711,9 @@ export const generalSettingStore: GeneralSetting = {
 
 	enabledEmployeeListTakeAttendance: [],
 
-    setenabledEmployeeListTakeAttendance: action((state, payload) => {
-        state.enabledEmployeeListTakeAttendance = payload;
-    }),
+	setenabledEmployeeListTakeAttendance: action((state, payload) => {
+		state.enabledEmployeeListTakeAttendance = payload;
+	}),
 
 	fetchenabledEmployeeListTakeAttendance: thunk(async (actions) => {
 		const response = await fetchenabledEmployeeListTakeAttendance();
@@ -798,30 +820,53 @@ export const generalSettingStore: GeneralSetting = {
 		state.employeeAttendanceTimeConfig = payload;
 	}),
 
+	fetchattendanceTimeConfigurationListByDepartmentWise: thunk(async (actions, payload) => {
+		const response = await fetchattendanceTimeConfigurationListByDepartmentWise(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				if (body.item.length > 0) {
+					actions.setattendanceTimeConfigurationListByDepartmentWise(body.item)
+				} else {
+					actions.setattendanceTimeConfigurationListByDepartmentWise([]);
+					notification.warning({ message: 'No data found' })
+				}
+			} else {
+				actions.setattendanceTimeConfigurationListByDepartmentWise([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setattendanceTimeConfigurationListByDepartmentWise: action((state, payload) => {
+		state.attendanceTimeConfigurationListByDepartmentWise = payload;
+	}),
+
 	leaveAssignListByDepartment: [],
 
-    setleaveAssignListByDepartment: action((state, payload) => {
-        state.leaveAssignListByDepartment = payload;
-    }),
+	setleaveAssignListByDepartment: action((state, payload) => {
+		state.leaveAssignListByDepartment = payload;
+	}),
 
-    fetchleaveAssignListByDepartment: thunk(async (actions, payload) => {
-        const response = await fetchleaveAssignListByDepartment(payload);
-        if (response.status === 201 || response.status === 200) {
-            const body = await response.json();
-            if (body?.item?.length > 0) {
-                actions.setleaveAssignListByDepartment(body.item);
-            } else {
-                notification['warning']({
-                    message: 'No data found',
-                });
-                actions.setleaveAssignListByDepartment(body.item);
-            }
-        } else {
-            const body = await response.json();
-            notification['error']({
-                message: 'Something went wrong',
-            });
-        }
-    }),
+	fetchleaveAssignListByDepartment: thunk(async (actions, payload) => {
+		const response = await fetchleaveAssignListByDepartment(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body?.item?.length > 0) {
+				actions.setleaveAssignListByDepartment(body.item);
+			} else {
+				notification['warning']({
+					message: 'No data found',
+				});
+				actions.setleaveAssignListByDepartment(body.item);
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
 
 }

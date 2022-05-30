@@ -1,22 +1,29 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
-import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Popconfirm, Modal, notification, Tabs} from 'antd'
+import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Popconfirm, Modal, notification, Tabs } from 'antd'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import TableView from '../../../contents/AntTableResponsive';
+import { SelectDepartment } from '../../select/SelectDepartment';
 
 export default function StaffTimeConfig() {
-    
+
     const { TabPane } = Tabs;
     const [activeTab, setActiveTab] = React.useState<any>("1");
     const [staffForm] = Form.useForm();
-    const fetchEmployeeListForattendanceTimeConfig = useStoreActions((state) =>  state.generalSetting.fetchEmployeeListForattendanceTimeConfig);
+    const fetchCompanyDepartmentList = useStoreActions((state) => state.common.fetchCompanyDepartmentList);
+    const fetchEmployeeListForattendanceTimeConfig = useStoreActions((state) => state.generalSetting.fetchEmployeeListForattendanceTimeConfig);
     const employeeListForattendanceTimeConfig = useStoreState((state) => state.generalSetting.employeeListForattendanceTimeConfig);
     const saveEmployeeAttendanceTimeConfig = useStoreActions((state) => state.generalSetting.saveEmployeeAttendanceTimeConfig);
-    const fetchEmployeeAttendanceTimeConfig = useStoreActions((state) => state.generalSetting.fetchEmployeeAttendanceTimeConfig);
-    const employeeAttendanceTimeConfig = useStoreState((state) => state.generalSetting.employeeAttendanceTimeConfig);
+    const fetchattendanceTimeConfigurationListByDepartmentWise = useStoreActions((state) => state.generalSetting.fetchattendanceTimeConfigurationListByDepartmentWise);
+    const deleteAttendanceTimeConfiguration = useStoreActions((state) => state.generalSetting.deleteAttendanceTimeConfiguration);
+    const attendanceTimeConfigurationListByDepartmentWise = useStoreState((state) => state.generalSetting.attendanceTimeConfigurationListByDepartmentWise);
     const [selectedRowKeys, setselectedRowKeys] = useState<any>([]);
     const [selectedValue, setselectedValue] = useState<any>([]);
+
+    useEffect(function () {
+        fetchCompanyDepartmentList();
+    }, []);
 
     const onSelectChange = (selectedRowKeys, value) => {
         setselectedRowKeys(selectedRowKeys);
@@ -32,21 +39,21 @@ export default function StaffTimeConfig() {
     }, []);
 
     const staffSubmit = (value) => {
-        let employeeId:any = [];
+        let employeeId: any = [];
         selectedValue.map((item, index) => {
             employeeId.push(item.employeeId)
         })
-        let dataLoad:any = {
+        let dataLoad: any = {
             "dayNames": value.dayNames,
             "delayTime": value.delayTime,
             "employeeIds": employeeId,
             "inTime": value.inTime,
             "outTime": value.outTime
         }
-        if(employeeId.length > 0){
+        if (employeeId.length > 0) {
             saveEmployeeAttendanceTimeConfig(dataLoad);
-        }else{
-            notification.error({message:'Row select first'})
+        } else {
+            notification.error({ message: 'Row select first' })
         }
     }
 
@@ -62,6 +69,13 @@ export default function StaffTimeConfig() {
             title: 'Name',
             dataIndex: 'employeeName',
             key: 'employeeName',
+            showOnResponse: true,
+            showOnDesktop: true
+        },
+        {
+            title: 'Department',
+            dataIndex: 'departmentName',
+            key: 'departmentName',
             showOnResponse: true,
             showOnDesktop: true
         }
@@ -114,17 +128,38 @@ export default function StaffTimeConfig() {
 
     const onChangeTabs = (e) => {
         setActiveTab(e);
-        if(e == 2){
-            fetchEmployeeAttendanceTimeConfig();
-        }
+    };
+    
+    const [form] = Form.useForm();
+    const [dep,setDep] = useState<any>();
+    
+    const submitForm = (val) => {
+        setDep(val);
+        fetchattendanceTimeConfigurationListByDepartmentWise(val);
+    };
+
+    const deleteConfig=()=>{
+        if (selectedRowKeys.length===0){
+            message.error('Select row first');
+            return
+        };
+        let dataLoad:any = selectedValue.map(item=>item.attendanceTimeConfigId).join(',');
+        deleteAttendanceTimeConfiguration(dataLoad);
+        setselectedRowKeys([]);
+        setselectedRowKeys([]);
+        setTimeout(() => {
+            fetchattendanceTimeConfigurationListByDepartmentWise(dep);
+        }, 1000);
+ 
     }
+
 
     return (
         <>
             <Card title="Employee Attendance Time Configuration">
-                <Tabs defaultActiveKey="1" onChange={(e) =>  onChangeTabs(e) } type="card">
+                <Tabs defaultActiveKey="1" onChange={(e) => onChangeTabs(e)} type="card">
                     <TabPane tab="Attendance Config" key="1">
-                        {activeTab === "1" && 
+                        {activeTab === "1" &&
                             <Row>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
                                     <Card title="Employee List" className='box-shadow-none'>
@@ -145,7 +180,7 @@ export default function StaffTimeConfig() {
                                 </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
                                     <Card title="Time and Day" className='box-shadow-none'>
-                                    <Form
+                                        <Form
                                             layout="vertical"
                                             onFinish={staffSubmit}
                                             id="basic-info"
@@ -162,10 +197,10 @@ export default function StaffTimeConfig() {
                                                         ]}
                                                     >
                                                         <Input placeholder="In Time" type={'time'} />
-            
+
                                                     </Form.Item>
                                                 </Col>
-            
+
                                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                                     <Form.Item
                                                         name="outTime"
@@ -176,10 +211,10 @@ export default function StaffTimeConfig() {
                                                         ]}
                                                     >
                                                         <Input placeholder="Out Time" type={'time'} />
-            
+
                                                     </Form.Item>
                                                 </Col>
-            
+
                                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                                     <Form.Item
                                                         name="delayTime"
@@ -190,7 +225,7 @@ export default function StaffTimeConfig() {
                                                         ]}
                                                     >
                                                         <Input placeholder="Delay Time" type={'time'} />
-            
+
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={24} sm={24} md={24} lg={16} xl={16}>
@@ -211,7 +246,7 @@ export default function StaffTimeConfig() {
                                                             <Select.Option value="Thursday">Thursday</Select.Option>
                                                             <Select.Option value="Friday">Friday</Select.Option>
                                                         </Select>
-            
+
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
@@ -229,26 +264,66 @@ export default function StaffTimeConfig() {
                         }
                     </TabPane>
                     <TabPane tab="Configuration List" key="2">
-                        {activeTab === "2" && 
-                            <Row className='m-t-30'>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                                    <Card title="Staff Attendance Configuration List" className='box-shadow-none'>
-                                        <TableView
-                                            antTableProps={{
-                                                showHeader: true,
-                                                columns: cocfigurationColumns,
-                                                dataSource: employeeAttendanceTimeConfig,
-                                                filterData: employeeAttendanceTimeConfig,
-                                                pagination: true,
-                                                bordered: true,
-                                                rowKey: "attendanceTimeConfigId",
-                                                rowSelection: rowSelection,
-                                            }}
-                                            mobileBreakPoint={768}
-                                        />
-                                    </Card>
-                                </Col>
-                            </Row>
+                        {activeTab === "2" &&
+                            <>
+                                <Card title="Staff Attendance Configuration List" className='box-shadow-none'>
+                                    <Form layout="vertical" onFinish={submitForm} id='create-class' form={form} >
+                                        <Row gutter={15} >
+                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}></Col>
+
+                                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                                                <Form.Item
+                                                    name="departmentId"
+                                                    label="Department"
+                                                    className="title-Text"
+                                                    rules={[
+                                                        { required: true, message: "Please select department" },
+                                                    ]}
+                                                >
+                                                    <SelectDepartment />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={2} xl={2}>
+
+                                                <Space size="small"  >
+                                                    <Button type="primary" htmlType="submit" >
+                                                        Search
+                                                    </Button>
+                                                </Space>
+
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={5} xl={5}></Col>
+                                        </Row>
+                                    </Form>
+                                    <Row className='m-t-30'>
+                                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+
+                                            {attendanceTimeConfigurationListByDepartmentWise?.length > 0 &&
+                                            <>
+                                                <TableView
+                                                    antTableProps={{
+                                                        showHeader: true,
+                                                        columns: cocfigurationColumns,
+                                                        dataSource: attendanceTimeConfigurationListByDepartmentWise,
+                                                        filterData: attendanceTimeConfigurationListByDepartmentWise,
+                                                        pagination: true,
+                                                        bordered: true,
+                                                        rowKey: "attendanceTimeConfigId",
+                                                        rowSelection: rowSelection,
+                                                    }}
+                                                    mobileBreakPoint={768}
+                                                />
+                                                <Space size={"middle"} style={{float:"right"}}>
+                                                    <Button type='primary' icon={<DeleteOutlined/>} onClick={deleteConfig}>Delete</Button>
+                                                </Space>
+                                                </>
+                                            }
+
+                                        </Col>
+                                    </Row>
+                                </Card>
+                            </>
+
                         }
                     </TabPane>
                 </Tabs>
