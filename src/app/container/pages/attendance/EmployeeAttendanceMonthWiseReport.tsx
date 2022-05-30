@@ -11,7 +11,7 @@ export default function EmployeeAttendanceMonthWiseReport(props) {
     return (
         <>
             <Card title="Month Wise Attendance">
-                <Tabs defaultActiveKey="2">
+                <Tabs defaultActiveKey="1">
                     <TabPane tab="All" key="1">
                         <EmployeeAttendanceMonthWiseAllReport />
                     </TabPane>
