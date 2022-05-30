@@ -9,7 +9,7 @@ import { SelectDepartment } from '../../select/SelectDepartment';
 export default function StaffTimeConfig() {
 
     const { TabPane } = Tabs;
-    const [activeTab, setActiveTab] = React.useState<any>("2");
+    const [activeTab, setActiveTab] = React.useState<any>("1");
     const [staffForm] = Form.useForm();
     const [staffFormUpdate] = Form.useForm();
     const fetchCompanyDepartmentList = useStoreActions((state) => state.common.fetchCompanyDepartmentList);
@@ -202,7 +202,7 @@ export default function StaffTimeConfig() {
     return (
         <>
             <Card title="Employee Attendance Time Configuration">
-                <Tabs defaultActiveKey="2" onChange={(e) => onChangeTabs(e)} type="card">
+                <Tabs defaultActiveKey="1" onChange={(e) => onChangeTabs(e)} type="card">
                     <TabPane tab="Attendance Config" key="1">
                         {activeTab === "1" &&
                             <Row>
