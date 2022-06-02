@@ -23,9 +23,9 @@ export function HrLogin() {
     const user = useStoreState(state => state.auth.user);
     let rememberChoice: boolean = true;
 
-    if (user) {
-        return <Redirect to="/" />
-    }
+    // if (user) {
+    //     return <Redirect to="/" />
+    // }
 
     const onRememberChange = (event) => {
         rememberChoice = event.target.checked;

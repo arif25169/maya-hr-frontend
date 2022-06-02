@@ -67,29 +67,58 @@ export const authStore: Auth = {
 		}
 	}),
 	authenticate2: thunk(async (actions, payload) => {
-		//console.log('here')
-		const response = await login(payload);
-		//console.log(response);
-		if (response.status === 201 || response.status === 200) {
-			const body = await response.json();
-			let url: any = import.meta.env.VITE_APP_API_ROOT
-			localStorage.setItem("url", url);
-			localStorage.setItem("tok", body.access_token);
-			if (payload.remember) {
-				localStorage.setItem("jwt", JSON.stringify(body));
+		const tok: any = localStorage.getItem("tok");
+
+		const responsex = await logout(tok);
+		//console.log(responsex);
+		if (responsex.status === 201 || responsex.status === 200) {
+			console.log("Clear");
+			const response = await login(payload);
+			//console.log(response);
+			if (response.status === 201 || response.status === 200) {
+				//console.log("next")
+				const body = await response.json();
+				let url: any = import.meta.env.VITE_APP_API_ROOT
+				localStorage.setItem("url", url);
+				localStorage.setItem("tok", body.access_token);
+				if (payload.remember) {
+					localStorage.setItem("jwt", JSON.stringify(body));
+				} else {
+					localStorage.removeItem("jwt");
+					localStorage.removeItem("openKeys");
+				}
+				window.location.href = "/";
+			} else {
+				//const body = await response.json();
+				actions.loginFailed("Login failed, please try again");
+			}
+		} else {
+			console.log("Error");
+
+			const response = await login(payload);
+			//console.log(response);
+			if (response.status === 201 || response.status === 200) {
+				console.log("next")
+				const body = await response.json();
+				let url: any = import.meta.env.VITE_APP_API_ROOT
+				localStorage.setItem("url", url);
+				localStorage.setItem("tok", body.access_token);
+				if (payload.remember) {
+					localStorage.setItem("jwt", JSON.stringify(body));
+				} else {
+					localStorage.removeItem("jwt");
+					localStorage.removeItem("openKeys");
+				}
+				window.location.href = "/";
+
 
 			} else {
-				localStorage.removeItem("jwt");
-				localStorage.removeItem("openKeys");
+				//const body = await response.json();
+				actions.loginFailed("Login failed, please try again");
 			}
-
-			//actions.authenticated(body);
-			window.location.href = "/";
-
-		} else {
-			//const body = await response.json();
-			actions.loginFailed("Login failed, please try again");
 		}
+
+
 	}),
 	authenticated: action((state, auth) => {
 		token = auth?.access_token
@@ -115,7 +144,7 @@ export const authStore: Auth = {
 		window.location.reload()
 	}),
 	logoutclear: thunk(async (actions, payload) => {
-		console.log(payload)
+		//	console.log(payload)
 		const response = await logout(payload);
 		if (response.status === 201 || response.status === 200) {
 			console.log("Clear")
