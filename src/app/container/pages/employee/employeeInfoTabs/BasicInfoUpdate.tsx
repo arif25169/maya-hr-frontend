@@ -48,6 +48,8 @@ export default function BasicInfoUpdate() {
             nationality: value.nationality,
             numberOfChild: value.numberOfChild,
             personalMbile: value.personalMbile,
+            companyEmail: value.companyEmail,
+            personalEmail: value.personalEmail,
             photoName: employeeData.photoName,
             relationWithEmergencyContact: value.relationWithEmergencyContact,
             "employeePhoto":employeePhoto,
@@ -108,6 +110,8 @@ export default function BasicInfoUpdate() {
                     relationWithEmergencyContact: item.relationWithEmergencyContact,
                     employeeId: item.employeeId,
                     employeePhoto: item.employeePhoto,
+                    personalEmail: item.personalEmail,
+                    companyEmail: item.companyEmail,
                 }
                 setEmployeeData(dataList);
             }
@@ -133,6 +137,8 @@ export default function BasicInfoUpdate() {
             bloodGroup: employeeData?.bloodGroup,
             nationality: employeeData?.nationality,
             joiningDate: moment(employeeData?.joiningDate, 'YYYY-MM-DD'),
+            personalEmail: employeeData.personalEmail,
+            companyEmail: employeeData.companyEmail,
         })
     }
 
@@ -246,6 +252,14 @@ export default function BasicInfoUpdate() {
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Corporate Mobile</Title>
                                 <p>{employeeData?.personalMbile}</p>
+                            </Col>                            
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Personal Email</Title>
+                                <p>{employeeData?.personalEmail}</p>
+                            </Col>                           
+                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Company Email</Title>
+                                <p>{employeeData?.companyEmail}</p>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Emergency Contact No</Title>
@@ -368,6 +382,7 @@ export default function BasicInfoUpdate() {
                                 </Select>
                             </Form.Item>
                         </Col>
+
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="maritalStatus"
@@ -431,7 +446,16 @@ export default function BasicInfoUpdate() {
                             >
                                 <InputNumber placeholder='Employee personal number' />
                             </Form.Item>
-
+                        </Col>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                            <Form.Item
+                                name="personalEmail"
+                                label="Personal Email"
+                                className="title-Text"
+                                initialValue={''}
+                            >
+                                <Input placeholder='Employee personal Email' />
+                            </Form.Item>
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
@@ -444,7 +468,16 @@ export default function BasicInfoUpdate() {
                             >
                                 <InputNumber placeholder='Employee corporate mobile' />
                             </Form.Item>
-
+                        </Col>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                            <Form.Item
+                                name="companyEmail"
+                                label="Company Email"
+                                className="title-Text"
+                                initialValue={''}
+                            >
+                                <Input placeholder='Employee company Email' />
+                            </Form.Item>
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
@@ -483,9 +516,9 @@ export default function BasicInfoUpdate() {
                                 <DatePicker format={'YYYY-MM-DD'} style={{ width: "100%" }} />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <div >
-                                <div className="ant-col ant-form-item-label"><label className="ant-form-item-required" >Upload Photo</label></div>
+                                <div className="ant-col ant-form-item-label"><label className="ant-form-item" >Upload Photo</label></div>
                                 <input style={{ borderColor: "#03D665" }} className='ant-input' type="file" accept="image/jpeg,image/gif,image/png," id="upload-file" onChange={uploadPdf} />
                             </div>
                         </Col>
