@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteEmployeeInformation, deleteTrainingInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
+import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
 import FileSaver from 'file-saver'
 
 export interface Hr {
@@ -50,6 +50,7 @@ export interface Hr {
 	updateEmployeeBasicInfo: Thunk<Hr, any>;
 	saveEmployeeAttachmentInfo: Thunk<Hr, any>;
 	downloadHrTraining: Thunk<Hr, any>;
+	deleteAttachment : Thunk<Hr, any>;
 
 }
 
@@ -83,7 +84,9 @@ export const hrStore: Hr = {
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				
+				if (body.item?.length===0){
+					notification.warn({message:"No Data Found"})
+				}
 				actions.setEmployeeList(body.item)
 			}else{
 				actions.setEmployeeList([])
@@ -375,5 +378,21 @@ export const hrStore: Hr = {
             notification.error({ message: body.message })
         }
     }),
+
+	deleteAttachment: thunk(async (actions, payload) => {
+		const response = await deleteAttachment(payload.attachmentId);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				let id = localStorage.getItem('employeeId')
+				actions.fetchattachmentList(payload.employeeId);
+			}else{
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
 
 }

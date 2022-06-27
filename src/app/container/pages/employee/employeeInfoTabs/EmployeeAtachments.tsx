@@ -25,9 +25,10 @@ export default function EmployeeAtachments() {
     const [departmentId, setDepartmentId] = useState<any>();
     const saveEmployeeAttachmentInfo = useStoreActions((state) => state.hr.saveEmployeeAttachmentInfo);
     const fetchattachmentList = useStoreActions((state) => state.hr.fetchattachmentList);
+    const deleteAttachment = useStoreActions((state) => state.hr.deleteAttachment);
     const attachmentList = useStoreState((state) => state.hr.attachmentList);
-    const updateDepartment = useStoreActions((state) => state.generalSetting.updateDepartment);
-    const deleteDepartment = useStoreActions((state) => state.generalSetting.deleteDepartment);
+
+
 
     useEffect(function () {
         let id = localStorage.getItem('employeeId');
@@ -40,13 +41,10 @@ export default function EmployeeAtachments() {
             departmentSerial: value.serialtUpdate,
             departmentName: value.departmentUpdate
         }
-        updateDepartment(postdata);
         setIsModalVisible(false);
     }
 
-    const deleteDepartmentSubmit = (value) => {
-        deleteDepartment(value);
-    }
+
 
     const columns = [
         { title: 'Attachment Title', dataIndex: 'attachmentTitle', key: 'attachmentTitle', showOnResponse: true, showOnDesktop: true },
@@ -67,7 +65,7 @@ export default function EmployeeAtachments() {
                         title="Are you sure to delete this?"
                         okText="Yes"
                         cancelText="No"
-                    // onConfirm={() => deleteDepartmentSubmit(record.departmentId)}
+                     onConfirm={() => deleteAttachment(record)}
                     >
                         <Tooltip title="Delete">
                             <Button danger icon={<DeleteOutlined />} />

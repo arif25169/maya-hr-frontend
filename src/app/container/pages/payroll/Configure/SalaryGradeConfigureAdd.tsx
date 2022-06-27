@@ -4,6 +4,7 @@ import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
 import { SelectPayrollGrade } from '../../../select/SelectPayrollGrade';
+import { moneyFormat } from '../../../../utils/utils';
 
 
 export default function SalaryGradeConfigureAdd() {
@@ -262,7 +263,7 @@ export default function SalaryGradeConfigureAdd() {
                             >
                                 <SelectPayrollGrade onChange={onchangeGrade} />
                             </Form.Item>
-                            {amount > 0 && <p style={{ marginTop: 10, fontWeight: "bold", color: 'red' }}>Basic Salary: {amount}</p>}
+                            {amount > 0 && <p style={{ marginTop: 10, fontWeight: "bold", color: 'red' }}>Basic Salary: {moneyFormat(amount)}</p>}
                         </Col>
                     </Col>
                 </Row>

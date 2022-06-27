@@ -3,6 +3,7 @@ import { Button, Card, Col, List, Form, Input, InputNumber, Popconfirm, Row, Sel
 import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsiveNoSearch';
+import { moneyFormat } from '../../../../utils/utils';
 
 
 
@@ -38,7 +39,10 @@ export default function SalaryGradeConfigureList() {
             dataIndex: 'amount',
             key: 'amount',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.amount)
+            )
         },
         {
             title: 'Action',
@@ -87,7 +91,10 @@ export default function SalaryGradeConfigureList() {
             dataIndex: 'amount',
             key: 'amount',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.amount)
+            )
         },
         {
             title: 'Action',
@@ -154,9 +161,9 @@ export default function SalaryGradeConfigureList() {
                                     column={{ xxl: 4, xl: 4, lg: 4, md: 1, sm: 1, xs: 1 }}
                                 >
                                     <Descriptions.Item style={{ fontWeight: "bold" }} label="Salary Grade Name"><span style={{ fontWeight: "normal" }}>{item?.salaryGradeName}</span></Descriptions.Item>
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Basic Salary"><span style={{ fontWeight: "normal" }}>{item?.basic}</span></Descriptions.Item>
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Net Salary"><span style={{ fontWeight: "normal" }}>{item?.netSalary}</span></Descriptions.Item>
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Gross Salary"><span style={{ fontWeight: "normal" }}>{item?.grossSalary}</span></Descriptions.Item>
+                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Basic Salary"><span style={{ fontWeight: "normal" }}>{moneyFormat(item?.basic)}</span></Descriptions.Item>
+                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Net Salary"><span style={{ fontWeight: "normal" }}>{moneyFormat(item?.netSalary)}</span></Descriptions.Item>
+                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Gross Salary"><span style={{ fontWeight: "normal" }}>{moneyFormat(item?.grossSalary)}</span></Descriptions.Item>
                                 </Descriptions>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
@@ -229,7 +236,7 @@ export default function SalaryGradeConfigureList() {
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <InputNumber placeholder="Amount" />
+                                <InputNumber  formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -263,7 +270,7 @@ export default function SalaryGradeConfigureList() {
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <InputNumber placeholder="Amount" />
+                                <InputNumber  formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount" />
                             </Form.Item>
                         </Col>
                     </Row>

@@ -27,6 +27,12 @@ export default function BasicInfoUpdate() {
     const [employeeData, setEmployeeData] = useState<any>();
     const [isModalVisible, setIsModalVisible] = useState<any>(false);
     const updateEmployeeBasicInfo = useStoreActions((state) => state.hr.updateEmployeeBasicInfo);
+    const fetchAllEmployeeList = useStoreActions((state) => state.hr.fetchAllEmployeeList);
+    const allemployeeList = useStoreState((state) => state.hr.allemployeeList);
+
+    useEffect(() => {
+        fetchAllEmployeeList();
+    }, []);
 
     const updateBasicInfo = (value) => {
         let id = localStorage.getItem('employeeId');
@@ -52,6 +58,7 @@ export default function BasicInfoUpdate() {
             personalEmail: value.personalEmail,
             photoName: employeeData.photoName,
             relationWithEmergencyContact: value.relationWithEmergencyContact,
+            employeeHod: value.employeeHodId,
             "employeePhoto":employeePhoto,
             "employeePhotoContent":employeePhotoContent,
             "employeePhotoFileSave": employeePhotoFileSave,
@@ -112,6 +119,8 @@ export default function BasicInfoUpdate() {
                     employeePhoto: item.employeePhoto,
                     personalEmail: item.personalEmail,
                     companyEmail: item.companyEmail,
+                    employeeHodName: item.employeeHodName,
+                    employeeHodId: item.employeeHodId,
                 }
                 setEmployeeData(dataList);
             }
@@ -139,6 +148,7 @@ export default function BasicInfoUpdate() {
             joiningDate: moment(employeeData?.joiningDate, 'YYYY-MM-DD'),
             personalEmail: employeeData.personalEmail,
             companyEmail: employeeData.companyEmail,
+            employeeHodId: employeeData.employeeHodId,
         })
     }
 
@@ -272,6 +282,10 @@ export default function BasicInfoUpdate() {
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Joining Date</Title>
                                 <p>{employeeData?.joiningDate}</p>
+                            </Col>                           
+                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Employee HOD</Title>
+                                <p>{employeeData?.employeeHodName}</p>
                             </Col>
                         </Row>
 
@@ -516,7 +530,33 @@ export default function BasicInfoUpdate() {
                                 <DatePicker format={'YYYY-MM-DD'} style={{ width: "100%" }} />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Form.Item
+                                        name="employeeHodId"
+                                        label="Employee HOD:"
+                                        className="title-Text"
+                                    >
+                                        <Select
+                                            placeholder="Select Employee"
+                                            id="employeess"
+                                            filterOption={(input, option:any) =>
+                                                option !== undefined &&
+                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                              }
+                                        >
+                                            {allemployeeList ? (
+                                                allemployeeList.map((type, idx) => (
+                                                    <Option key={type.employeeId} value={type.employeeId}>
+                                                        {type.employeeName}
+                                                    </Option>
+                                                ))
+                                            ) : (
+                                                <Option value="fetching">Fetching Employee</Option>
+                                            )}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
                             <div >
                                 <div className="ant-col ant-form-item-label"><label className="ant-form-item" >Upload Photo</label></div>
                                 <input style={{ borderColor: "#03D665" }} className='ant-input' type="file" accept="image/jpeg,image/gif,image/png," id="upload-file" onChange={uploadPdf} />

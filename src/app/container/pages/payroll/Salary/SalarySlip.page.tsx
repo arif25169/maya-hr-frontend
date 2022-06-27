@@ -199,9 +199,12 @@ export default function SalarySlip() {
         {
             title: 'Basic Salary',
             dataIndex: 'basicSalary',
-            key: 'netSalary',
+            key: 'basicSalary',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.basicSalary)
+            )
         },
 
         salaryProcessList?.salaryHeadAdditionName1 !== "" && {
@@ -209,70 +212,100 @@ export default function SalarySlip() {
             dataIndex: 'salaryHeadAdditionAmount1',
             key: 'salaryHeadAdditionAmount1',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount1)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName2 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName2,
             dataIndex: 'salaryHeadAdditionAmount2',
             key: 'salaryHeadAdditionAmount2',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount2)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName3 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName3,
             dataIndex: 'salaryHeadAdditionAmount3',
             key: 'salaryHeadAdditionAmount3',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount3)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName4 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName4,
             dataIndex: 'salaryHeadAdditionAmount4',
             key: 'salaryHeadAdditionAmount4',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount4)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName5 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName5,
             dataIndex: 'salaryHeadAdditionAmount5',
             key: 'salaryHeadAdditionAmount5',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount5)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName6 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName6,
             dataIndex: 'salaryHeadAdditionAmount6',
             key: 'salaryHeadAdditionAmount6',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount6)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName7 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName7,
             dataIndex: 'salaryHeadAdditionAmount7',
             key: 'salaryHeadAdditionAmount7',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount7)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName8 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName8,
             dataIndex: 'salaryHeadAdditionAmount8',
             key: 'salaryHeadAdditionAmount8',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount8)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName9 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName9,
             dataIndex: 'salaryHeadAdditionAmount9',
             key: 'salaryHeadAdditionAmount9',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount9)
+            )
         },
         salaryProcessList?.salaryHeadAdditionName10 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName10,
             dataIndex: 'salaryHeadAdditionAmount10',
             key: 'salaryHeadAdditionAmount10',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount10)
+            )
         },
         salaryProcessList?.salaryHeadDeductionName1 !== "" && {
             title: salaryProcessList?.salaryHeadDeductionName1,
@@ -280,6 +313,9 @@ export default function SalarySlip() {
             key: 'salaryHeadDeductionAmount1',
             showOnResponse: true,
             showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount1)
+            )
 
         },
         salaryProcessList?.salaryHeadDeductionName2 !== "" && {
@@ -288,6 +324,9 @@ export default function SalarySlip() {
             key: 'salaryHeadDeductionAmount2',
             showOnResponse: true,
             showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount2)
+            )
 
         },
         salaryProcessList?.salaryHeadDeductionName3 !== "" && {
@@ -296,6 +335,9 @@ export default function SalarySlip() {
             key: 'salaryHeadDeductionAmount3',
             showOnResponse: true,
             showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount3)
+            )
 
         },
         salaryProcessList?.salaryHeadDeductionName4 !== "" && {
@@ -304,6 +346,9 @@ export default function SalarySlip() {
             key: 'salaryHeadDeductionAmount4',
             showOnResponse: true,
             showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount4)
+            )
 
         },
         salaryProcessList?.salaryHeadDeductionName5 !== "" && {
@@ -312,6 +357,9 @@ export default function SalarySlip() {
             key: 'salaryHeadDeductionAmount5',
             showOnResponse: true,
             showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount5)
+            )
 
         },
 
@@ -320,14 +368,20 @@ export default function SalarySlip() {
             dataIndex: 'grossSalary',
             key: 'grossSalary',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.grossSalary)
+            )
         },
         {
             title: 'Net Salary',
             dataIndex: 'netSalary',
             key: 'netSalary',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.netSalary)
+            )
         },
         {
             title: 'Payment No',

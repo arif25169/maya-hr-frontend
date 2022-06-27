@@ -3,6 +3,7 @@ import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, 
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
+import { moneyFormat } from '../../../../utils/utils';
 
 
 export default function SalaryGrade() {
@@ -51,7 +52,10 @@ export default function SalaryGrade() {
             dataIndex: 'basicAmount',
             key: 'basicAmount',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.basicAmount)
+            )
         },
         {
             title: 'Note',
@@ -98,7 +102,7 @@ export default function SalaryGrade() {
     return (
         <Card title="Grade">
             <Row>
-                <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24, offset:2 }} xl={{ span: 24, offset:2}}>
+                <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24, offset: 2 }} xl={{ span: 24, offset: 2 }}>
                     <Form
                         layout="vertical"
                         id="sessionInfo"
@@ -127,7 +131,7 @@ export default function SalaryGrade() {
                                         { required: true, message: "Please input amount" },
                                     ]}
                                 >
-                                    <Input placeholder="Basic Amount" />
+                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
                                 </Form.Item>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
@@ -213,7 +217,7 @@ export default function SalaryGrade() {
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <Input placeholder="Basic Amount" />
+                                <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>

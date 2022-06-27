@@ -3,6 +3,7 @@ import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, 
 import { DeleteOutlined, EditOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
+import { moneyFormat } from '../../../../utils/utils';
 
 const cleanObject = (input) => {
     if (typeof input === 'object' && input !== null) {
@@ -65,7 +66,10 @@ export default function SalaryProcess() {
             dataIndex: 'basicSalary',
             key: 'netSalary',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.basicSalary)
+            )
         },
 
         salarySheetViews?.salaryHeadAdditionName1 !== "" && {
@@ -73,70 +77,100 @@ export default function SalaryProcess() {
             dataIndex: 'salaryHeadAdditionAmount1',
             key: 'salaryHeadAdditionAmount1',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount1)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName2 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName2,
             dataIndex: 'salaryHeadAdditionAmount2',
             key: 'salaryHeadAdditionAmount2',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount2)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName3 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName3,
             dataIndex: 'salaryHeadAdditionAmount3',
             key: 'salaryHeadAdditionAmount3',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount3)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName4 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName4,
             dataIndex: 'salaryHeadAdditionAmount4',
             key: 'salaryHeadAdditionAmount4',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount4)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName5 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName5,
             dataIndex: 'salaryHeadAdditionAmount5',
             key: 'salaryHeadAdditionAmount5',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount5)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName6 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName6,
             dataIndex: 'salaryHeadAdditionAmount6',
             key: 'salaryHeadAdditionAmount6',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount6)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName7 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName7,
             dataIndex: 'salaryHeadAdditionAmount7',
             key: 'salaryHeadAdditionAmount7',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount7)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName8 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName8,
             dataIndex: 'salaryHeadAdditionAmount8',
             key: 'salaryHeadAdditionAmount8',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount8)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName9 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName9,
             dataIndex: 'salaryHeadAdditionAmount9',
             key: 'salaryHeadAdditionAmount9',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount9)
+            )
         },
         salarySheetViews?.salaryHeadAdditionName10 !== "" && {
             title: salarySheetViews?.salaryHeadAdditionName10,
             dataIndex: 'salaryHeadAdditionAmount10',
             key: 'salaryHeadAdditionAmount10',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount10)
+            )
         },
         salarySheetViews?.salaryHeadDeductionName1 !== "" && {
             title: salarySheetViews?.salaryHeadDeductionName1,
@@ -146,7 +180,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} value={record?.salaryHeadDeductionAmount1} onChange={onchangeValue("salaryHeadDeductionAmount1", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount1} onChange={onchangeValue("salaryHeadDeductionAmount1", record, index)}></InputNumber>
                 )
             }
         },
@@ -158,7 +192,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} value={record?.salaryHeadDeductionAmount2} onChange={onchangeValue("salaryHeadDeductionAmount2", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount2} onChange={onchangeValue("salaryHeadDeductionAmount2", record, index)}></InputNumber>
                 )
             }
         },
@@ -170,7 +204,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} value={record?.salaryHeadDeductionAmount3} onChange={onchangeValue("salaryHeadDeductionAmount3", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount3} onChange={onchangeValue("salaryHeadDeductionAmount3", record, index)}></InputNumber>
                 )
             }
         },
@@ -182,7 +216,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} value={record?.salaryHeadDeductionAmount4} onChange={onchangeValue("salaryHeadDeductionAmount4", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount4} onChange={onchangeValue("salaryHeadDeductionAmount4", record, index)}></InputNumber>
                 )
             }
         },
@@ -194,7 +228,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} value={record?.salaryHeadDeductionAmount5} onChange={onchangeValue("salaryHeadDeductionAmount5", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount5} onChange={onchangeValue("salaryHeadDeductionAmount5", record, index)}></InputNumber>
                 )
             }
         },
@@ -204,14 +238,20 @@ export default function SalaryProcess() {
             dataIndex: 'grossSalary',
             key: 'grossSalary',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.grossSalary)
+            )
         },
         {
             title: 'Net Salary',
             dataIndex: 'netSalary',
             key: 'netSalary',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.netSalary)
+            )
         },
 
     ];
@@ -357,7 +397,6 @@ export default function SalaryProcess() {
             "salaryYear": value.salaryYear,
         }
 
-        console.log(finalPayLoad);
         saveSalaryProcess(finalPayLoad);
         form.resetFields();
         setselectedRowKeys([]);
