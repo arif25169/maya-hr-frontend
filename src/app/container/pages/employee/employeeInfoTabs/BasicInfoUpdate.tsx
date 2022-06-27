@@ -250,8 +250,8 @@ export default function BasicInfoUpdate() {
                                 <p>{employeeData?.personalMbile}</p>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                <Title level={5}>Corporate Mobile</Title>
-                                <p>{employeeData?.personalMbile}</p>
+                                <Title level={5}>Company Mobile</Title>
+                                <p>{employeeData?.corporateMobile}</p>
                             </Col>                            
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Personal Email</Title>
@@ -460,13 +460,13 @@ export default function BasicInfoUpdate() {
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="corporateMobile"
-                                label="Corporate Mobile"
+                                label="Company Mobile"
                                 className="title-Text"
                                 rules={[
-                                    { required: true, message: "Please write corporate mobile" },
+                                    { required: true, message: "Please write company mobile" },
                                 ]}
                             >
-                                <InputNumber placeholder='Employee corporate mobile' />
+                                <InputNumber placeholder='Employee company mobile' />
                             </Form.Item>
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>

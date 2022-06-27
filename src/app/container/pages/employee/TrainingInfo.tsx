@@ -349,7 +349,7 @@ export default function TrainingInfo() {
                                             { required: true, message: "Please Write Duration" },
                                         ]}
                                     >
-                                        <InputNumber placeholder="Write Duration" />
+                                        <Input placeholder="Write Duration" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
@@ -479,7 +479,7 @@ export default function TrainingInfo() {
                                         { required: true, message: "Please Write Duration" },
                                     ]}
                                 >
-                                    <InputNumber placeholder="Write Duration" />
+                                    <Input placeholder="Write Duration" />
                                 </Form.Item>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
