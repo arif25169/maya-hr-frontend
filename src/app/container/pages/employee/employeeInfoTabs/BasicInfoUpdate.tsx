@@ -1,12 +1,21 @@
-import { EditOutlined, SaveOutlined } from '@ant-design/icons';
-import { Button, Card,   Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Popconfirm, Tabs, Checkbox, Typography, Divider, Modal} from 'antd'
+import { EditOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Card, Col, message, Row, Steps, Form, Input, DatePicker, Select, InputNumber, Table, Space, Tooltip, Popconfirm, Tabs, Checkbox, Typography, Divider, Modal, Avatar, notification } from 'antd'
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { v4 as uuidv4 } from "uuid";
 import moment from 'moment';
 
-
+async function getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
 
 export default function BasicInfoUpdate() {
 
@@ -21,7 +30,7 @@ export default function BasicInfoUpdate() {
 
     const updateBasicInfo = (value) => {
         let id = localStorage.getItem('employeeId');
-        let dataList:any = {
+        let dataList: any = {
             bloodGroup: value.bloodGroup,
             corporateMobile: value.corporateMobile,
             dateOfBirth: moment(value.dateofBirth).format('YYYY-MM-DD'),
@@ -40,28 +49,35 @@ export default function BasicInfoUpdate() {
             numberOfChild: value.numberOfChild,
             personalMbile: value.personalMbile,
             photoName: employeeData.photoName,
-            relationWithEmergencyContact: value.relationWithEmergencyContact
-          }
-          updateEmployeeBasicInfo(dataList);
-          updateForm.resetFields();
-          let postData:any = {
-            department:"",
+            relationWithEmergencyContact: value.relationWithEmergencyContact,
+            "employeePhoto":employeePhoto,
+            "employeePhotoContent":employeePhotoContent,
+            "employeePhotoFileSave": employeePhotoFileSave,
+        }
+        updateEmployeeBasicInfo(dataList);
+        updateForm.resetFields();
+        let postData: any = {
+            department: "",
             designation: "",
             employeeType: ""
         }
         fetchEmployeeList(postData);
         fetchEmployeeById(id);
+        clearFileInput(document.getElementById("upload-file"));
+        setIsFile(false);
+        setattachmentFileName('');
+        setattachmentFileName('');
         setIsModalVisible(false);
     }
-    
+
     useEffect(() => {
-        let postData:any = {
-            department:"",
+        let postData: any = {
+            department: "",
             designation: "",
             employeeType: ""
         }
         fetchEmployeeList(postData);
-    },[]);
+    }, []);
 
     useEffect(() => {
         let id = localStorage.getItem('employeeId');
@@ -71,7 +87,7 @@ export default function BasicInfoUpdate() {
     const fetchEmployeeById = (id) => {
         employeeList.map((item, index) => {
             if (item.employeeId == id) {
-                let dataList:any = {
+                let dataList: any = {
                     bloodGroup: item.bloodGroup,
                     corporateMobile: item.corporateMobile,
                     dateOfBirth: item.dateOfBirth,
@@ -90,12 +106,13 @@ export default function BasicInfoUpdate() {
                     personalMbile: item.personalMbile,
                     photoName: item.photoName,
                     relationWithEmergencyContact: item.relationWithEmergencyContact,
-                    employeeId: item.employeeId
-                }     
-                setEmployeeData(dataList);        
+                    employeeId: item.employeeId,
+                    employeePhoto: item.employeePhoto,
+                }
+                setEmployeeData(dataList);
             }
         });
-        
+
     }
 
     const editBasicInfoMadal = (value) => {
@@ -122,97 +139,132 @@ export default function BasicInfoUpdate() {
     const closeModalMethod = (val) => {
         setIsModalVisible(false);
     }
-    
- 
-  return (
-    <>
-        <Card title="Basic Information">
-            <Row>
-                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24}} lg={{ span: 24}} xl={{ span: 24}} >
-                    <Row>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={3}>{employeeData?.employeeName}</Title>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6, offset:12}} lg={{ span: 6, offset:12}} xl={{ span: 6, offset:12}}>
-                            <div style={{ float:"right" }}>
-                                <Tooltip title="Edit">
-                                    <Button type='primary'  icon={<EditOutlined />} onClick={() => editBasicInfoMadal(employeeData?.employeeId)}/>
-                                </Tooltip>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Divider style={{ marginTop: 0, }}/>
-                    <Row>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Employee Custom ID</Title>
-                            <p>{employeeData?.employeeCustomId}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Father Name </Title>
-                            <p>{employeeData?.fatherName}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Mother Name </Title>
-                            <p>{employeeData?.motherName}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Date of Birth</Title>
-                            <p>{employeeData?.dateOfBirth}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Blood Group</Title>
-                            <p>{employeeData?.bloodGroup}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Employee Status</Title>
-                            <p>{employeeData?.employeeStatus}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Gender</Title>
-                            <p>{employeeData?.gender}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Marital Status</Title>
-                            <p>{employeeData?.maritalStatus}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>National ID No</Title>
-                            <p>{employeeData?.nationalIdNo}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Nationality</Title>
-                            <p>{employeeData?.nationality}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Number Of Child</Title>
-                            <p>{employeeData?.numberOfChild}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Personal Mobile</Title>
-                            <p>{employeeData?.personalMbile}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Corporate Mobile</Title>
-                            <p>{employeeData?.personalMbile}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Emergency Contact No</Title>
-                            <p>{employeeData?.emergencyContactNo}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Relation With Emergency Contact</Title>
-                            <p>{employeeData?.relationWithEmergencyContact}</p>
-                        </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6}} lg={{ span: 6}} xl={{ span: 6}}>
-                            <Title level={5}>Joining Date</Title>
-                            <p>{employeeData?.joiningDate}</p>
-                        </Col>
-                    </Row>
-                    
-                </Col>
-            </Row>
-        </Card>
-        <Modal
+
+
+    const [employeePhotoFileSave, setIsFile] = useState<boolean>(false);
+    const [employeePhotoContent, setfileContent] = useState<any>('');
+    const [employeePhoto, setattachmentFileName] = useState<any>('');
+
+    function clearFileInput(ctrl) {
+        try {
+            ctrl.value = null;
+        } catch (ex) { }
+        if (ctrl.value) {
+            ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
+        }
+    }
+    const uploadPdf = (file: any) => {
+        if (file.target.files[0]?.size > 2000000) {
+            notification.error({ message: 'PDF size should be less than 2MB' })
+            // file.target.value = null;
+            clearFileInput(document.getElementById("upload-file"));
+            setIsFile(false);
+            setfileContent('');
+            setattachmentFileName('');
+            return;
+        };
+
+        getBase64(file.target.files[0], (imageUrl) => {
+            setattachmentFileName(file.target.files[0].name);
+            setfileContent(imageUrl.split(',')[1]);
+            setIsFile(true);
+        })
+
+    }
+
+    return (
+        <>
+            <Card title="Basic Information">
+                <Row>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} >
+                        <Row>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', alignContent: "center" }}>
+                                    <Avatar size={64}  src={"data:image/png;base64," + employeeData?.employeePhoto} />
+                                    <Title style={{ marginLeft: 10 }} level={3}>{employeeData?.employeeName}</Title>
+                                </div>
+
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6, offset: 12 }} lg={{ span: 6, offset: 12 }} xl={{ span: 6, offset: 12 }}>
+                                <div style={{ float: "right" }}>
+                                    <Tooltip title="Edit">
+                                        <Button type='primary' icon={<EditOutlined />} onClick={() => editBasicInfoMadal(employeeData?.employeeId)} />
+                                    </Tooltip>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Divider style={{ marginTop: 0, }} />
+                        <Row>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Employee Custom ID</Title>
+                                <p>{employeeData?.employeeCustomId}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Father Name </Title>
+                                <p>{employeeData?.fatherName}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Mother Name </Title>
+                                <p>{employeeData?.motherName}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Date of Birth</Title>
+                                <p>{employeeData?.dateOfBirth}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Blood Group</Title>
+                                <p>{employeeData?.bloodGroup}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Employee Status</Title>
+                                <p>{employeeData?.employeeStatus}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Gender</Title>
+                                <p>{employeeData?.gender}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Marital Status</Title>
+                                <p>{employeeData?.maritalStatus}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>National ID No</Title>
+                                <p>{employeeData?.nationalIdNo}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Nationality</Title>
+                                <p>{employeeData?.nationality}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Number Of Child</Title>
+                                <p>{employeeData?.numberOfChild}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Personal Mobile</Title>
+                                <p>{employeeData?.personalMbile}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Corporate Mobile</Title>
+                                <p>{employeeData?.personalMbile}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Emergency Contact No</Title>
+                                <p>{employeeData?.emergencyContactNo}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Relation With Emergency Contact</Title>
+                                <p>{employeeData?.relationWithEmergencyContact}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Joining Date</Title>
+                                <p>{employeeData?.joiningDate}</p>
+                            </Col>
+                        </Row>
+
+                    </Col>
+                </Row>
+            </Card>
+            <Modal
                 title="Update Basic Information"
                 visible={isModalVisible}
                 //  onOk={handleOk}
@@ -231,7 +283,7 @@ export default function BasicInfoUpdate() {
                     form={updateForm}
                 >
                     <Row>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="employeeName"
                                 label="Employee Name"
@@ -243,7 +295,7 @@ export default function BasicInfoUpdate() {
                                 <Input placeholder="Write employee name" />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="fatherName"
                                 label="Father Name"
@@ -255,7 +307,7 @@ export default function BasicInfoUpdate() {
                                 <Input placeholder="Write employee father name" />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="motherName"
                                 label="Mother Name"
@@ -267,7 +319,7 @@ export default function BasicInfoUpdate() {
                                 <Input placeholder="Write employee mother name" />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="dateofBirth"
                                 label="Date of Birth"
@@ -279,7 +331,7 @@ export default function BasicInfoUpdate() {
                                 <DatePicker format={'YYYY-MM-DD'} style={{ width: "100%" }} />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="bloodGroup"
                                 label="Blood Group"
@@ -300,7 +352,7 @@ export default function BasicInfoUpdate() {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="gender"
                                 label="Gender"
@@ -316,7 +368,7 @@ export default function BasicInfoUpdate() {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="maritalStatus"
                                 label="Marital Status"
@@ -331,7 +383,7 @@ export default function BasicInfoUpdate() {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="nationality"
                                 label="Nationality"
@@ -343,7 +395,7 @@ export default function BasicInfoUpdate() {
                                 <Input placeholder="Write nationality" />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="nationalIdNo"
                                 label="National ID No"
@@ -355,8 +407,8 @@ export default function BasicInfoUpdate() {
                                 <Input placeholder="Write employee NID number" />
                             </Form.Item>
                         </Col>
-                        
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="numberOfChild"
                                 label="Number Of Child"
@@ -368,7 +420,7 @@ export default function BasicInfoUpdate() {
                                 <InputNumber placeholder="Write employee number of child" />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="personalMbile"
                                 label="Personal Mobile"
@@ -379,9 +431,9 @@ export default function BasicInfoUpdate() {
                             >
                                 <InputNumber placeholder='Employee personal number' />
                             </Form.Item>
-                            
+
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="corporateMobile"
                                 label="Corporate Mobile"
@@ -392,9 +444,9 @@ export default function BasicInfoUpdate() {
                             >
                                 <InputNumber placeholder='Employee corporate mobile' />
                             </Form.Item>
-                            
+
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="emergencyContactNo"
                                 label="Emergency Contact No"
@@ -405,9 +457,9 @@ export default function BasicInfoUpdate() {
                             >
                                 <InputNumber placeholder='Employee emergency number' />
                             </Form.Item>
-                            
+
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="relationWithEmergencyContact"
                                 label="Relation With Emergency Contact"
@@ -419,7 +471,7 @@ export default function BasicInfoUpdate() {
                                 <Input placeholder='write relation' />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8}} lg={{ span: 8}} xl={{ span: 8}}>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                             <Form.Item
                                 name="joiningDate"
                                 label="Joining Date"
@@ -431,9 +483,15 @@ export default function BasicInfoUpdate() {
                                 <DatePicker format={'YYYY-MM-DD'} style={{ width: "100%" }} />
                             </Form.Item>
                         </Col>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
+                            <div >
+                                <div className="ant-col ant-form-item-label"><label className="ant-form-item-required" >Upload Photo</label></div>
+                                <input style={{ borderColor: "#03D665" }} className='ant-input' type="file" accept="image/jpeg,image/gif,image/png," id="upload-file" onChange={uploadPdf} />
+                            </div>
+                        </Col>
                     </Row>
                 </Form>
             </Modal>
-    </>
-  );
+        </>
+    );
 };

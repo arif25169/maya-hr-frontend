@@ -117,7 +117,7 @@ export default function CreateShift() {
         <>
             <Card title="Create Shift">
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} >
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24, offset:2 }} xl={{ span: 24, offset:2 }} >
                         <Form
                             layout="vertical"
                             

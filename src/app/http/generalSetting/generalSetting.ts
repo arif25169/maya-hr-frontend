@@ -40,6 +40,7 @@ export const deleteLeaveConfig = (payload) => del("/leave/config/delete?leaveCon
 export const employeeListByDepartmentIdUrl = (payload) => get("/employee/list?departmentId="+payload);
 export const leaveConfigListByDepartmentIdUrl = (payload) => get("/leave/config/list/by/departmentId?departmentId="+payload);
 export const createLeaveAssignSaveUrl = (payload) => post("/leave/assign/save",payload);
+export const leaveApply = (payload) => post("/leave/application/save",payload);
 
 export const fetchCompanyInfoUrl = () => get('/company/info');
 export const updateCompanyInfoUrl = (payload) => post("/company/update",payload);
@@ -54,3 +55,4 @@ export const employeeAttendanceConfigListUrl = () => get('/attendance/time/confi
 export const fetchleaveAssignListByDepartment = (payload) => get("/leave/assign/list/department-id?departmentId="+payload.departmentId+"&year="+payload.year);
 export const fetchattendanceTimeConfigurationListByDepartmentWise = (payload) => get("/attendance/time/configuration/list/by/departmentid?departmentId="+payload.departmentId);
 export const deleteAttendanceTimeConfiguration = (payload) => del("/attendance/time/configuration/delete?attendnaceTimeConfigurationIds="+payload);
+export const fetchapplicantApplyList = (payload) => get('/leave/application/applicant/apply/list?year='+payload);

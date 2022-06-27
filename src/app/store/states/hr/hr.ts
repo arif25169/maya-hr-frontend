@@ -1,18 +1,26 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteEmployeeInformation, deleteTrainingInfoUrl, educationInfoUpdateUrl, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
-
+import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteEmployeeInformation, deleteTrainingInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
+import FileSaver from 'file-saver'
 
 export interface Hr {
 	
 	employeeList : any;
 	fetchEmployeeList : Thunk<Hr>;
-	setEmployeeList:  Action<Hr, any>;
+	setEmployeeList:  Action<Hr, any>;	
+	
+	allemployeeList : any;
+	fetchAllEmployeeList : Thunk<Hr>;
+	setAllEmployeeList:  Action<Hr, any>;
 
 	employeeListByDepartment : any;
 	fetchEmployeeByDepartment : Thunk<Hr>;
-	setEmployeeListByDepartment:  Action<Hr, any>;	
+	setEmployeeListByDepartment:  Action<Hr, any>;		
+	
+	attachmentList : any;
+	fetchattachmentList : Thunk<Hr, any>;
+	setattachmentList:  Action<Hr, any>;	
 	
 	employeeListByDepartment2 : any;
 	fetchEmployeeByDepartment2 : Thunk<Hr>;
@@ -40,11 +48,14 @@ export interface Hr {
 	updateEmployeeBankInfo: Thunk<Hr, any>;
 
 	updateEmployeeBasicInfo: Thunk<Hr, any>;
+	saveEmployeeAttachmentInfo: Thunk<Hr, any>;
+	downloadHrTraining: Thunk<Hr, any>;
 
 }
 
 export const hrStore: Hr = {
 	employeeList:[],
+	allemployeeList:[],
 	employeeEducationList:[],
 	employeeTrainingInfoList:[],
 	passingYearUpdateDataStore: '',
@@ -84,6 +95,24 @@ export const hrStore: Hr = {
 
 	setEmployeeList: action((state, payload) => {
 		state.employeeList = payload;
+	}),	
+	fetchAllEmployeeList: thunk(async (actions, payload) => {
+		const response = await fetchAllEmployeeList();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				
+				actions.setAllEmployeeList(body.item)
+			}else{
+				actions.setAllEmployeeList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setAllEmployeeList: action((state, payload) => {
+		state.allemployeeList = payload;
 	}),
 
 	saveEmployeeEducationInfo:thunk(async (actions, payload) => {
@@ -245,6 +274,21 @@ export const hrStore: Hr = {
 		} else {
 			notification.error({ message: 'Something Wrong' });
 		}
+	}),	
+	
+	saveEmployeeAttachmentInfo:thunk(async (actions, payload) => {
+		const response = await saveEmployeeAttachmentInfo(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message });
+				actions.fetchattachmentList(payload.employeeId)
+			}else{
+				notification.error({ message: body.message });
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
 	}),
 	
 	employeeListByDepartment:[],
@@ -267,6 +311,28 @@ export const hrStore: Hr = {
 	setEmployeeListByDepartment: action((state, payload) => {
 		state.employeeListByDepartment = payload;
 	}),	
+		
+	
+	attachmentList:[],
+	
+	fetchattachmentList: thunk(async (actions, payload) => {
+		const response = await fetchattachmentList(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				
+				actions.setattachmentList(body.item)
+			}else{
+				actions.setattachmentList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setattachmentList: action((state, payload) => {
+		state.attachmentList = payload;
+	}),	
 	
 	employeeListByDepartment2:[],
 	
@@ -288,5 +354,26 @@ export const hrStore: Hr = {
 	setEmployeeListByDepartment2: action((state, payload) => {
 		state.employeeListByDepartment2 = payload;
 	}),
+
+	downloadHrTraining: thunk(async (actions, payload) => {
+        const response = await downloadHrTraining(payload);
+        if (response.status === 201 || response.status === 200) {
+          const body = await response.json();
+		  const blobPdfFromBase64String = base64String => {
+			const byteArray = Uint8Array.from(
+			  atob(base64String)
+				.split('')
+				.map(char => char.charCodeAt(0))
+			);
+		   return new Blob([byteArray], { type: 'application/pdf' });
+		 };
+            var blob =blobPdfFromBase64String(body?.item);
+            var fileName = "TRAINING_DOCUMENT.pdf";
+            FileSaver.saveAs(blob, fileName);
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.message })
+        }
+    }),
 
 }

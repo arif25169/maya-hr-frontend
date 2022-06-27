@@ -8,6 +8,7 @@ import EducationAndTraning from './employeeInfoTabs/EducationInformation';
 import TrainingInfo from './TrainingInfo';
 import BankInfoUpdate from './employeeInfoTabs/BankInfoUpdate';
 import BasicInfoUpdate from './employeeInfoTabs/BasicInfoUpdate';
+import EmployeeAtachments from './employeeInfoTabs/EmployeeAtachments';
 
 export default function EmployeeInformation() {
 
@@ -32,16 +33,11 @@ export default function EmployeeInformation() {
                             </TabPane>
                             <TabPane tab="Training" key="4">
                                 {activeTab === "4" && <TrainingInfo /> }
+                            </TabPane>                    
+                            <TabPane tab="Attachments" key="5">
+                                {activeTab === "5" && <EmployeeAtachments /> }
                             </TabPane>
-                            {/* <TabPane tab="Employment" key="5">
-                                Content of Tab Pane 5
-                            </TabPane>
-                            <TabPane tab="Other Information" key="6">
-                                Content of Tab Pane 6
-                            </TabPane>
-                            <TabPane tab="Photograph" key="7">
-                                Content of Tab Pane 7
-                            </TabPane> */}
+
                         </Tabs>
                     </Col>
                 </Row>

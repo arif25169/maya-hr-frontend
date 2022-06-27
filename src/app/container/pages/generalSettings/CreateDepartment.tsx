@@ -85,7 +85,7 @@ export default function CreateDepartment() {
         <>
             <Card title="Create Department">
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 16, offset: 4  }} lg={{ span: 16, offset: 4  }} xl={{ span: 16, offset: 4  }} >
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 16, offset: 4  }} lg={{ span: 16, offset: 6  }} xl={{ span: 16, offset: 6  }} >
                         <Form
                             layout="vertical"
                             onFinish={createDepartmentForm}

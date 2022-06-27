@@ -1,7 +1,7 @@
 import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { AuditOutlined, CalculatorOutlined, DashboardTwoTone, DeleteOutlined, DollarCircleOutlined, FileTextOutlined, FundProjectionScreenOutlined, FundViewOutlined, PartitionOutlined, SolutionOutlined, UserAddOutlined, ContainerOutlined } from '@ant-design/icons/lib';
+import { AuditOutlined, CalculatorOutlined, DashboardTwoTone, DeleteOutlined, DollarCircleOutlined, FileTextOutlined, FundProjectionScreenOutlined, FundViewOutlined, PartitionOutlined, SolutionOutlined, UserAddOutlined, ContainerOutlined, UserOutlined } from '@ant-design/icons/lib';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { useStoreActions, useStoreState } from '../../store/hooks/easyPeasy';
 import { ROUTES } from "../../contents/routes";
@@ -58,6 +58,12 @@ export function Sidebar() {
 	}, [])
 
 	const setbankAdviseListView2 = useStoreActions((state) => state.payroll.setbankAdviseListView2);
+	const fetchCompanyInfo = useStoreActions((state) => state.generalSetting.fetchCompanyInfo);
+	const companyInfo = useStoreState((state) => state.generalSetting.companyInfo);
+
+	useEffect(() => {
+		fetchCompanyInfo();
+	}, []);
 
 	return <> {view && <Menu
 		theme="dark"
@@ -74,145 +80,162 @@ export function Sidebar() {
 		<Menu.Item key="1" icon={<DashboardTwoTone />}>
 			<Link to={ROUTES.DEFAULT} className="nav-text">Dashboard</Link>
 		</Menu.Item>
-		<SubMenu key={"generalSetting"} icon={<PartitionOutlined />} title="General Settings" >
-			{/* <Menu.Item key={ROUTES.CREATE_COMPANY} icon={<ContainerOutlined  />}>
+		{companyInfo?.roleList?.includes('ROLE_ADMIN') &&
+			<>
+				<SubMenu key={"generalSetting"} icon={<PartitionOutlined />} title="General Settings" >
+					{/* <Menu.Item key={ROUTES.CREATE_COMPANY} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.CREATE_COMPANY} className="nav-text">Create Company</Link>
 			</Menu.Item> */}
-			<Menu.Item key={ROUTES.UPDATE_COMPANY} icon={<ContainerOutlined />}>
-				<Link to={ROUTES.UPDATE_COMPANY} className="nav-text">Update Company</Link>
-			</Menu.Item>
-			{/* <Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<ContainerOutlined  />}>
+					<Menu.Item key={ROUTES.UPDATE_COMPANY} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.UPDATE_COMPANY} className="nav-text">Update Company</Link>
+					</Menu.Item>
+					{/* <Menu.Item key={ROUTES.CREATE_FINANCIAL_YEAR} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.CREATE_FINANCIAL_YEAR} className="nav-text">Financial Year</Link>
 			</Menu.Item> */}
-			{/* <Menu.Item key={ROUTES.CREATE_DEDUCTION} icon={<ContainerOutlined  />}>
+					{/* <Menu.Item key={ROUTES.CREATE_DEDUCTION} icon={<ContainerOutlined  />}>
 				<Link to={ROUTES.CREATE_DEDUCTION} className="nav-text">Create Deduction</Link>
 			</Menu.Item> */}
-		</SubMenu>
-		<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="Employee Profile" >
-			<SubMenu key={"employeeSetting"} icon={<PartitionOutlined />} title="Settings" >
-				<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_DEPARTMENT} className="nav-text">Department</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_DESIGNATION} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_DESIGNATION} className="nav-text">Designation</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Employee Type</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
-				</Menu.Item>
-			</SubMenu>
-			<SubMenu key={"employee"} icon={<PartitionOutlined />} title="Registration" >
-				{/* <Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<ContainerOutlined  />}>
+				</SubMenu>
+				<SubMenu key={"hRAndPayroll"} icon={<PartitionOutlined />} title="Employee Profile" >
+					<SubMenu key={"employeeSetting"} icon={<PartitionOutlined />} title="Settings" >
+						<Menu.Item key={ROUTES.CREATE_DEPARTMENT} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_DEPARTMENT} className="nav-text">Department</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.CREATE_DESIGNATION} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_DESIGNATION} className="nav-text">Designation</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Employee Type</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"employee"} icon={<PartitionOutlined />} title="Registration" >
+						{/* <Menu.Item key={ROUTES.CREATE_EMPLOYEE} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.CREATE_EMPLOYEE} className="nav-text">Single</Link>
 				</Menu.Item> */}
-				<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.EMPLOYEE_BANK_INFO} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.EMPLOYEE_BANK_INFO} className="nav-text">Bank Info</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
-				</Menu.Item>
+						<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.EMPLOYEE_BANK_INFO} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.EMPLOYEE_BANK_INFO} className="nav-text">Bank Info</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
+						</Menu.Item>
 
-				<Menu.Item key={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} className="nav-text">Assign Designation</Link>
-				</Menu.Item>
-				{/* <Menu.Item key={ROUTES.EMPLOYEE_INFORMATION} icon={<ContainerOutlined  />}>
+						<Menu.Item key={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} className="nav-text">Assign Designation</Link>
+						</Menu.Item>
+						{/* <Menu.Item key={ROUTES.EMPLOYEE_INFORMATION} icon={<ContainerOutlined  />}>
 					<Link to={ROUTES.EMPLOYEE_INFORMATION} className="nav-text">Emloyee Information</Link>
 				</Menu.Item> */}
-			</SubMenu>
-		</SubMenu>
-		<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
+					</SubMenu>
+				</SubMenu>
+				<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
 
-			<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
+					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
 
-				<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
-				</Menu.Item>
+						<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
 
+						<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"attendanceInput"} icon={<PartitionOutlined />} title="Input" >
+						<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.TAKE_ATTENDANCE} className="nav-text">Manual</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.UPDATE_ATTENDANCE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.UPDATE_ATTENDANCE} className="nav-text">Update</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"attendanceReport"} icon={<PartitionOutlined />} title="Report" >
+						<Menu.Item key={ROUTES.HR_REPORT_DATE_WISE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.HR_REPORT_DATE_WISE} className="nav-text">Daily Details</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.HR_REPORT_MONTH_WISE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Monthly Details</Link>
+						</Menu.Item>
+					</SubMenu>
+				</SubMenu>
+
+				<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >
+					<SubMenu key={"payrollSetiings"} icon={<PartitionOutlined />} title="Settings" >
+						<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SETTINGS_PAYROLL_GRADE} className="nav-text">Grade</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.SETTINGS_PAYROLL_ADDITION} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SETTINGS_PAYROLL_ADDITION} className="nav-text">Addition</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.SETTINGS_PAYROLL_DEDUCTION} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SETTINGS_PAYROLL_DEDUCTION} className="nav-text">Deduction</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"payrollConfigure"} icon={<PartitionOutlined />} title="Configure" >
+						<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CONFIGURE_EMPLOYEE_GRADE} className="nav-text">Grade Assign</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"salaryProcessMenu"} icon={<PartitionOutlined />} title="Salary Process" >
+						<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text"> Save</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.SALARY_PROCESS_LIST} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SALARY_PROCESS_LIST} className="nav-text"> View</Link>
+						</Menu.Item>
+					</SubMenu>
+					<Menu.Item key={ROUTES.SALARY_SLIP} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.SALARY_SLIP} className="nav-text"> Salary Slip</Link>
+					</Menu.Item>
+					<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.BANK_ADVISE_CONTENT} className="nav-text"> Bank Advise Content</Link>
+					</Menu.Item>
+					<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined />} onClick={() => setbankAdviseListView2()}>
+						<Link to={ROUTES.BANK_ADVISE_VIEW} className="nav-text"> Bank Advise View</Link>
+					</Menu.Item>
+
+				</SubMenu>
+			</>
+		}
+
+		<SubMenu key={"leaveMenuItem"} icon={<PartitionOutlined />} title="Leave" >
+			{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
 				<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Leave Category</Link>
 				</Menu.Item>
 				<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
 				</Menu.Item>
-				<Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
-				</Menu.Item>
 				<Menu.Item key={ROUTES.LEAVE_ASSIGN} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.LEAVE_ASSIGN} className="nav-text">Leave Assign</Link>
 				</Menu.Item>
-			</SubMenu>
-			<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
-
-				<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
-				</Menu.Item>
-			</SubMenu>
-			<SubMenu key={"attendanceInput"} icon={<PartitionOutlined />} title="Input" >
-				<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.TAKE_ATTENDANCE} className="nav-text">Manual</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.UPDATE_ATTENDANCE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.UPDATE_ATTENDANCE} className="nav-text">Update</Link>
-				</Menu.Item>
-			</SubMenu>
-			<SubMenu key={"attendanceReport"} icon={<PartitionOutlined />} title="Report" >
-				<Menu.Item key={ROUTES.HR_REPORT_DATE_WISE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.HR_REPORT_DATE_WISE} className="nav-text">Daily Details</Link>
-				</Menu.Item>				
-				<Menu.Item key={ROUTES.HR_REPORT_MONTH_WISE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Monthly Details</Link>
-				</Menu.Item>
-			</SubMenu>
+			</>
+			}
+			<Menu.Item key={ROUTES.APPLY_LEAVE} icon={<ContainerOutlined />}>
+				<Link to={ROUTES.APPLY_LEAVE} className="nav-text">Apply Leave</Link>
+			</Menu.Item>
 		</SubMenu>
-
-		<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >
-			<SubMenu key={"payrollSetiings"} icon={<PartitionOutlined />} title="Settings" >
-				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.SETTINGS_PAYROLL_GRADE} className="nav-text">Grade</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_ADDITION} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.SETTINGS_PAYROLL_ADDITION} className="nav-text">Addition</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.SETTINGS_PAYROLL_DEDUCTION} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.SETTINGS_PAYROLL_DEDUCTION} className="nav-text">Deduction</Link>
-				</Menu.Item>
-			</SubMenu>
-			<SubMenu key={"payrollConfigure"} icon={<PartitionOutlined />} title="Configure" >
-				<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CONFIGURE_EMPLOYEE_GRADE} className="nav-text">Grade Assign</Link>
-				</Menu.Item>
-			</SubMenu>
-			<SubMenu key={"salaryProcessMenu"} icon={<PartitionOutlined />} title="Salary Process" >
-				<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.SALARY_PROCESS_PAYROLL} className="nav-text"> Save</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.SALARY_PROCESS_LIST} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.SALARY_PROCESS_LIST} className="nav-text"> View</Link>
-				</Menu.Item>
-			</SubMenu>
-			<Menu.Item key={ROUTES.SALARY_SLIP} icon={<ContainerOutlined />}>
-				<Link to={ROUTES.SALARY_SLIP} className="nav-text"> Salary Slip</Link>
+		{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
+			<Menu.Item key={ROUTES.USER_LIST} icon={<UserOutlined />}>
+				<Link to={ROUTES.USER_LIST} className="nav-text">Users</Link>
 			</Menu.Item>
-			<Menu.Item key={ROUTES.BANK_ADVISE_CONTENT} icon={<ContainerOutlined />}>
-				<Link to={ROUTES.BANK_ADVISE_CONTENT} className="nav-text"> Bank Advise Content</Link>
-			</Menu.Item>
-			<Menu.Item key={ROUTES.BANK_ADVISE_VIEW} icon={<ContainerOutlined />} onClick={() => setbankAdviseListView2()}>
-				<Link to={ROUTES.BANK_ADVISE_VIEW} className="nav-text"> Bank Advise View</Link>
-			</Menu.Item>
-
-		</SubMenu>
-
+		</>
+		}
 	</Menu>
 	}
 	</>

@@ -4,6 +4,7 @@ import Modal from 'antd/lib/modal/Modal';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
+
 const { Option } = Select;
 
 export default function Users(props) {
@@ -14,6 +15,13 @@ export default function Users(props) {
     const createUser = useStoreActions((state) => state.user.createUser);
     const updateUser = useStoreActions((state) => state.user.updateUser);
     const deleteUser = useStoreActions((state) => state.user.deleteUser);
+    const fetchAllEmployeeList = useStoreActions((state) => state.hr.fetchAllEmployeeList);
+    const allemployeeList = useStoreState((state) => state.hr.allemployeeList);
+
+
+    useEffect(() => {
+        fetchAllEmployeeList();
+    }, []);
 
     useEffect(() => {
         fetchuserList();
@@ -56,11 +64,26 @@ export default function Users(props) {
             title: 'User Name',
             dataIndex: 'username',
             key: 'username',
+        }, 
+        {
+            title: 'Nick Name',
+            dataIndex: 'nickName',
+            key: 'nickName',
+        },
+        {
+            title: 'Mobile No',
+            dataIndex: 'mobileNo',
+            key: 'mobileNo',
+        },     
+        {
+            title: 'Employee Name',
+            dataIndex: 'employeeName',
+            key: 'employeeName',
         },
         {
             title: 'User Roles',
             render: (text: any, record: any, index) => (
-                <span>{record?.userRoles?.toString()}</span>
+                <span>{record.userRoles.toString()}</span>
             )
         },
         {
@@ -72,8 +95,8 @@ export default function Users(props) {
                             setIsModalVisible(true);
                             setuserId(record.userId);
                             userUpdateForm.setFieldsValue({
-                                nickName: '',
-                                mobileNo: '',
+                                nickName: record.nickName,
+                                mobileNo: record.mobileNo,
                                 userRoles: record.userRoles,
                             });
                         }}
@@ -109,6 +132,38 @@ export default function Users(props) {
                 >
 
                     <Row>
+                        <Col xs={24} sm={24} md={24} lg={5} xl={5}></Col>
+                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                            <Form.Item
+                                name="employeeId"
+                                label="Employee:"
+                                className="title-Text"
+
+                            >
+                                <Select
+                                    placeholder="Select Employee"
+                                    className="sessionYearName"
+                                    onChange={(value) =>{
+                                        let data= allemployeeList?.find((item)=>item.employeeId==value);
+                                        usersaveForm.setFieldsValue({
+                                            username:data?.mobileNumber,
+                                            nickName:data?.employeeName,
+                                            mobileNo:data?.personalMbile,
+                                        })
+                                    }}
+                                >
+                                    {allemployeeList ? (
+                                        allemployeeList.map((type, idx) => (
+                                            <Option key={type.employeeId} value={type.employeeId}>
+                                                {type.employeeName}
+                                            </Option>
+                                        ))
+                                    ) : (
+                                        <Option value="fetching">Fetching Employee</Option>
+                                    )}
+                                </Select>
+                            </Form.Item>
+                        </Col>
                         <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                             <Form.Item
                                 name="username"
@@ -134,6 +189,8 @@ export default function Users(props) {
                                 <Input type="text" placeholder='Nick Name' />
                             </Form.Item>
                         </Col>
+                        <Col xs={24} sm={24} md={24} lg={5} xl={5}></Col>
+                        <Col xs={24} sm={24} md={24} lg={5} xl={5}></Col>
                         <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                             <Form.Item
                                 name="password"
@@ -155,7 +212,7 @@ export default function Users(props) {
                                     { required: true, message: "Please input mobile no" },
                                 ]}
                             >
-                                <Input type="number" placeholder='Mobile No' />
+                                <Input type="text" placeholder='Mobile No' />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={4} xl={4}>
@@ -169,14 +226,16 @@ export default function Users(props) {
                             >
                                 <Select placeholder='User Roles' style={{ width: "100%" }} allowClear mode="multiple">
                                     <Option value="ROLE_ADMIN">ROLE_ADMIN</Option>
-                                    <Option value="ROLE_OPERATOR">ROLE_OPERATOR</Option>
+                                    <Option value="ROLE_EMPLOYEE">ROLE_EMPLOYEE</Option>
                                 </Select>
                             </Form.Item>
                         </Col>
-
+                        <Col xs={24} sm={24} md={24} lg={5} xl={5}></Col>
+                        <Col xs={24} sm={24} md={24} lg={5} xl={5}></Col>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}></Col>
                         <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                            <Space size="small" >
-                                <Button type="primary" htmlType="submit" style={{ marginTop: 30, height: 40 }} icon={<SaveOutlined />} >
+                            <Space size="small" style={{float:"right"}}>
+                                <Button type="primary" htmlType="submit" style={{ marginTop:-40, marginBottom:20  }} icon={<SaveOutlined />} >
                                     Save
                                 </Button>
                             </Space>
@@ -241,7 +300,7 @@ export default function Users(props) {
                     >
                         <Select placeholder='User Roles' style={{ width: "100%" }} allowClear mode="multiple">
                             <Option value="ROLE_ADMIN">ROLE_ADMIN</Option>
-                            <Option value="ROLE_OPERATOR">ROLE_OPERATOR</Option>
+                            <Option value="ROLE_EMPLOYEE">ROLE_EMPLOYEE</Option>
                         </Select>
                     </Form.Item>
 

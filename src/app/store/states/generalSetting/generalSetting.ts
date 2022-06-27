@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveApply, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -66,6 +66,7 @@ export interface GeneralSetting {
 	setLeavelListByDepartmentId: Action<GeneralSetting, any>;
 	fetchLeavelListByDepartmentId: Thunk<GeneralSetting>;
 	saveLeaveAssign: Thunk<GeneralSetting, any>;
+	leaveApply: Thunk<GeneralSetting, any>;
 
 	companyInfo: any;
 	fetchCompanyInfo: Thunk<GeneralSetting>;
@@ -100,6 +101,10 @@ export interface GeneralSetting {
 
 	loading: boolean;
 	setLoading: Action<GeneralSetting, boolean>;
+
+	applicantApplyList: any;
+	setapplicantApplyList: Action<GeneralSetting, any>;
+	fetchapplicantApplyList: Thunk<GeneralSetting, any>;
 
 }
 
@@ -677,6 +682,21 @@ export const generalSettingStore: GeneralSetting = {
 		}
 	}),
 
+	leaveApply: thunk(async (actions, payload) => {
+		const response = await leaveApply(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			const body = await response.json();
+			notification.error({ message: body.message })
+		}
+	}),
+
 	fetchCompanyInfo: thunk(async (actions, payload) => {
 		const response = await fetchCompanyInfoUrl();
 		if (response.status === 201 || response.status === 200) {
@@ -876,6 +896,32 @@ export const generalSettingStore: GeneralSetting = {
 					message: 'No data found',
 				});
 				actions.setleaveAssignListByDepartment(body.item);
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+
+	applicantApplyList: [],
+
+	setapplicantApplyList: action((state, payload) => {
+		state.applicantApplyList = payload;
+	}),
+
+	fetchapplicantApplyList: thunk(async (actions, payload) => {
+		const response = await fetchapplicantApplyList(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body?.item?.length > 0) {
+				actions.setapplicantApplyList(body.item);
+			} else {
+				notification['warning']({
+					message: 'No data found',
+				});
+				actions.setapplicantApplyList(body.item);
 			}
 		} else {
 			const body = await response.json();
