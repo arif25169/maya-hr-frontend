@@ -27,6 +27,7 @@ export const ROUTES = {
   EMPLOYEE_BANK_INFO: "employee-bank-info",
   EMPLOYEE_INFORMATION: "employee-information",
   LEAVE_ASSIGN: "leave-assign",
+  LEAVE_PENDING: "leave-pending",
   EMPLOYEE_ATTENDANCE_CONFIG:"employee-attemdance-config",
   TAKE_ATTENDANCE:"take-attendantance",
   UPDATE_ATTENDANCE:"update-attendantance",

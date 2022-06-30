@@ -229,6 +229,12 @@ export function Sidebar() {
 			<Menu.Item key={ROUTES.APPLY_LEAVE} icon={<ContainerOutlined />}>
 				<Link to={ROUTES.APPLY_LEAVE} className="nav-text">Apply Leave</Link>
 			</Menu.Item>
+			{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
+				<Menu.Item key={ROUTES.LEAVE_PENDING} icon={<UserOutlined />}>
+					<Link to={ROUTES.LEAVE_PENDING} className="nav-text">Leave Pending</Link>
+				</Menu.Item>
+			</>
+			}
 		</SubMenu>
 		{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
 			<Menu.Item key={ROUTES.USER_LIST} icon={<UserOutlined />}>

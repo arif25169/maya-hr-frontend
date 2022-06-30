@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveApply, leaveConfigListByDepartmentIdUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -105,6 +105,13 @@ export interface GeneralSetting {
 	applicantApplyList: any;
 	setapplicantApplyList: Action<GeneralSetting, any>;
 	fetchapplicantApplyList: Thunk<GeneralSetting, any>;
+	deleteLeaveApplication: Thunk<GeneralSetting, any>;
+
+	leaveApplicationPendingList: any;
+	setleaveApplicationPendingList: Action<GeneralSetting, any>;
+	fetchleaveApplicationPendingList: Thunk<GeneralSetting>;
+	approveLeaveApplication: Thunk<GeneralSetting, any>;
+	rejectLeaveApplication: Thunk<GeneralSetting, any>;
 
 }
 
@@ -922,6 +929,83 @@ export const generalSettingStore: GeneralSetting = {
 					message: 'No data found',
 				});
 				actions.setapplicantApplyList(body.item);
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),	
+	deleteLeaveApplication: thunk(async (actions, payload) => {
+		const response = await deleteLeaveApplication(payload.delid);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({message:body.message})
+				actions.fetchapplicantApplyList(payload.year)
+			} else {
+				notification.error({message:body.message})
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+
+	leaveApplicationPendingList: [],
+
+	setleaveApplicationPendingList: action((state, payload) => {
+		state.leaveApplicationPendingList = payload;
+	}),
+
+	fetchleaveApplicationPendingList: thunk(async (actions, payload) => {
+		const response = await fetchleaveApplicationPendingList();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body?.item?.length > 0) {
+				actions.setleaveApplicationPendingList(body.item);
+			} else {
+				notification['warning']({
+					message: 'No data found',
+				});
+				actions.setleaveApplicationPendingList(body.item);
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),	
+	approveLeaveApplication: thunk(async (actions, payload) => {
+		const response = await approveLeaveApplication(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({message:body.message})
+				actions.fetchleaveApplicationPendingList(payload)
+			} else {
+				notification.error({message:body.message})
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),	
+	rejectLeaveApplication: thunk(async (actions, payload) => {
+		const response = await rejectLeaveApplication(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({message:body.message})
+				actions.fetchleaveApplicationPendingList(payload)
+			} else {
+				notification.error({message:body.message})
 			}
 		} else {
 			const body = await response.json();
