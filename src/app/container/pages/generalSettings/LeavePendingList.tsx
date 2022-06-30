@@ -34,7 +34,7 @@ export default function LeavePendingList() {
                 <Space size="middle">
 
                     <Popconfirm
-                        title="Are you sure to rehect this?"
+                        title="Are you sure to reject this?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => rejectLeaveApplication(record.applyId)}
@@ -60,7 +60,7 @@ export default function LeavePendingList() {
     ];
     return (
         <>
-            <div>
+            <Card title="Pending Leave List">
 
                 {leaveApplicationPendingList?.length > 0 &&
                     <TableView
@@ -76,7 +76,7 @@ export default function LeavePendingList() {
                         mobileBreakPoint={768}
                     />
                 }
-            </div>
+            </Card>
         </>
     )
 

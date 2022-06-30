@@ -72,11 +72,11 @@ export default function TopNavBar(props: any) {
               <img src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/028d394ffb00cb7a4b2ef9915a384fd9.png" alt="" />
           </div>
           <div className="user-name text-center">
-              <h4>Name</h4>
-              <span>Email</span>
+              <h4>{companyInfo?.userName}</h4>
+              {/* <span>Email</span> */}
           </div>
           <ul>
-            <li className="headerDrop"><Link to="/test" style={{ display:'flex', justifyContent:'flex-start', alignItems: 'center' }} ><KeyOutlined /> <div>Change Password</div></Link></li>
+            <li className="headerDrop"><Link to="/profile" style={{ display:'flex', justifyContent:'flex-start', alignItems: 'center' }} ><KeyOutlined /> <div>Change Password</div></Link></li>
             <li className="headerDrop" onClick={onLogout}><div><LogoutOutlined /> <span>Logout</span></div></li>
           </ul>
       </div>

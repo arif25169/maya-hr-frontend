@@ -111,6 +111,21 @@ export default function UpdateAttendance() {
             setTableData(newData);
         }, [tableData]);
 
+
+    const [selectedRowKeys, setselectedRowKeys] = useState<any>([]);
+    const [selectedValue, setselectedValue] = useState<any>([]);
+
+    const onSelectChange = (selectedRowKeys, value) => {
+        setselectedRowKeys(selectedRowKeys);
+        setselectedValue(value);
+        // console.log(value)
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    }
+
     return (
         <>
             <Card title="Update Staff Attendance">
@@ -135,20 +150,29 @@ export default function UpdateAttendance() {
                                         columns,
                                         dataSource: tableData,
                                         filterData: tableData,
-                                        pagination: true,
+                                        pagination: false,
                                         bordered: true,
-                                        rowKey: "staffId",
+                                        rowKey: "employeeId",
+                                        rowSelection: rowSelection,
 
                                     }}
                                     mobileBreakPoint={768}
                                 />
                             </div>
-                            <Space style={{ float: "right" }} size={'middle'}>
+                            <Space style={{ float: "right", marginTop:10 }} size={'middle'}>
                                 <Button type="primary" onClick={() => {
-                                    updateAttendance(tableData?.map(item => ({ attendanceId: item?.attendanceId, attendanceStatus: item?.attendanceStatus, inTime: item?.inTime === null ? '' : item?.inTime, outTime: item?.outTime === null ? '' : item?.outTime, })));
+                                    if (selectedRowKeys.length === 0) {
+                                        message.error('Select employee first');
+                                        return
+                                    };
+
+                                    updateAttendance(selectedValue?.map(item => ({ attendanceId: item?.attendanceId, attendanceStatus: item?.attendanceStatus, inTime: item?.inTime === null ? '' : item?.inTime, outTime: item?.outTime === null ? '' : item?.outTime, })));
+                                    setselectedRowKeys([]);
+                                    setselectedValue([])
                                     setTimeout(() => {
                                         fetchemployeeAtttendanceListForUpdate(moment(attendanceDate).format('YYYY-MM-DD'))
-                                    }, 1000);
+                                    }, 1200);
+
                                 }}>Update</Button>
                             </Space>
                         </Col>

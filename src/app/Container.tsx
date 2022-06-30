@@ -55,6 +55,9 @@ import EmployeeAttendanceDateWiseReport from "./container/pages/attendance/Emplo
 import EmployeeAttendanceMonthWiseReport from "./container/pages/attendance/EmployeeAttendanceMonthWiseReport";
 import LeaveApply from "./container/pages/generalSettings/LeaveApply";
 import LeavePendingList from "./container/pages/generalSettings/LeavePendingList";
+import EmployeeSelfAttendanceDetails from "./container/pages/generalSettings/EmployeeSelfAttendanceDetails";
+import RemarksList from "./container/pages/generalSettings/RemarksList";
+import Profile from './container/pages/signup/Profile.page';
 import Users from "./container/pages/user/Users";
 
 const { Header, Content, Sider } = Layout;
@@ -128,6 +131,7 @@ export default function Container() {
         {/* <Content className="p-15"> */}
           <Switch>
             <Route exact path="/" component={Dashboard} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE} component={CreateEmployee} />
             <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_GRADE} component={SalaryGrade} />
             <Route exact path={'/' +ROUTES.SETTINGS_PAYROLL_ADDITION} component={HeadAddition} />
@@ -165,6 +169,8 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.HR_REPORT_MONTH_WISE} component={EmployeeAttendanceMonthWiseReport} />
             <Route exact path={'/' + ROUTES.APPLY_LEAVE} component={LeaveApply} />
             <Route exact path={'/' + ROUTES.LEAVE_PENDING} component={LeavePendingList} />
+            <Route exact path={'/' + ROUTES.EOMPLOYEE_ATTENDNACE} component={EmployeeSelfAttendanceDetails} />
+            <Route exact path={'/' + ROUTES.EOMPLOYEE_REMARKS} component={RemarksList} />
             <Route exact path={'/' + ROUTES.USER_LIST} component={Users} />
           </Switch>
         </Content>

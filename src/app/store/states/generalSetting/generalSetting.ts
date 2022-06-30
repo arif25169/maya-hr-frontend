@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchShiftUrl, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -112,6 +112,12 @@ export interface GeneralSetting {
 	fetchleaveApplicationPendingList: Thunk<GeneralSetting>;
 	approveLeaveApplication: Thunk<GeneralSetting, any>;
 	rejectLeaveApplication: Thunk<GeneralSetting, any>;
+	approveLateAttendance: Thunk<GeneralSetting, any>;
+	approveAbsentAttendance: Thunk<GeneralSetting, any>;
+
+	remarksLits: any;
+	setRemarksList: Action<GeneralSetting, any>;
+	fetchRemarksList: Thunk<GeneralSetting>;
 
 }
 
@@ -1004,6 +1010,67 @@ export const generalSettingStore: GeneralSetting = {
 			if (body.messageType == 1) {
 				notification.success({message:body.message})
 				actions.fetchleaveApplicationPendingList(payload)
+			} else {
+				notification.error({message:body.message})
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+
+	remarksLits: [],
+
+	setRemarksList: action((state, payload) => {
+		state.remarksLits = payload;
+	}),
+
+	fetchRemarksList: thunk(async (actions, payload) => {
+		const response = await fetchRemarksList();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body?.item?.length > 0) {
+				actions.setRemarksList(body.item);
+			} else {
+				notification['warning']({
+					message: 'No data found',
+				});
+				actions.setRemarksList(body.item);
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),	
+
+	approveLateAttendance: thunk(async (actions, payload) => {
+		const response = await approveLateAttendance(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({message:body.message})
+				actions.fetchRemarksList()
+			} else {
+				notification.error({message:body.message})
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),	
+	approveAbsentAttendance: thunk(async (actions, payload) => {
+		const response = await approveAbsentAttendance(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({message:body.message})
+				actions.fetchRemarksList()
 			} else {
 				notification.error({message:body.message})
 			}

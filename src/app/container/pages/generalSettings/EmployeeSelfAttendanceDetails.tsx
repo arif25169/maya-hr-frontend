@@ -1,4 +1,4 @@
-import { Button, Card, Col, DatePicker, Descriptions, Form, Input, Modal, Popconfirm, Row, Select, Space, Table, Tooltip } from 'antd'
+import { Button, Card, Col, DatePicker, Descriptions, Form, Input, Modal, Popconfirm, Row, Space, Table, Tooltip } from 'antd'
 import moment from 'moment';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
@@ -7,34 +7,28 @@ import { DeleteOutlined, EditOutlined, FilePdfOutlined, PlusCircleOutlined, Save
 import TableView from '../../../contents/AntTableResponsive';
 
 
-const { Option } = Select;
 
-export default function EmployeeAttendanceMonthWiseSingleReport(props) {
 
-    const attendanceDetailssinglefEmployee = useStoreState((state) => state.attendance.attendanceDetailssinglefEmployee);
-    const fetchattendanceDetailssingleEmployee = useStoreActions((state) => state.attendance.fetchattendanceDetailssingleEmployee);
-    const fetchAllEmployeeList = useStoreActions((state) => state.hr.fetchAllEmployeeList);
-    const allemployeeList = useStoreState((state) => state.hr.allemployeeList);
+export default function EmployeeSelfAttendanceDetails(props) {
 
-    useEffect(() => {
-        fetchAllEmployeeList();
-    }, []);
+    const attendanceDetailsselfEmployee = useStoreState((state) => state.attendance.attendanceDetailsselfEmployee);
+    const fetchattendanceDetailsselfEmployee = useStoreActions((state) => state.attendance.fetchattendanceDetailsselfEmployee);
+    const updateEmployeeAttendanceRemark = useStoreActions((state) => state.attendance.updateEmployeeAttendanceRemark);
 
     const [createForm] = Form.useForm();
 
     const saveFormSubmit = (value) => {
         let postData = {
-            employeeId: value?.employeeId,
             fromDate: moment(value?.fromDate).format("YYYY-MM-DD"),
             toDate: moment(value?.toDate).format("YYYY-MM-DD")
         };
-        fetchattendanceDetailssingleEmployee(postData)
+        fetchattendanceDetailsselfEmployee(postData)
         // createForm.resetFields();
     };
 
+    const [isModalVisible, setIsModalVisible] = useState<any>(false);
 
-
-
+    const [attendanceId, setattendanceId] = useState<any>(null)
 
     const columns = [
 
@@ -94,15 +88,50 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
             showOnResponse: true,
             showOnDesktop: true
         },
+        {
+            title: 'Action', dataIndex: '', key: '', showOnResponse: true, showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                <Space size="middle">
+                    <Tooltip title="Add Remarks">
+                        <Button type='primary'
+                            onClick={() => {
+                                updateForm.setFieldsValue({employeeRemark:record.employeeRemarks})
+                                setattendanceId(record.attendanceId)
+                                setIsModalVisible(true);
 
+                            }}
+                            icon={<PlusCircleOutlined />}
+
+                        />
+                    </Tooltip>
+
+
+                </Space>
+            ),
+        },
     ];
 
+    const [updateForm] = Form.useForm();
+
+    const updateSubmitForm = (val) => {
+        let payload = {
+            "attendanceId": attendanceId,
+            "employeeRemark": val.employeeRemark
+        };
+        updateEmployeeAttendanceRemark(payload);
+        setIsModalVisible(false);
+        updateForm.resetFields();
+        setTimeout(() => {
+            createForm.submit();
+        }, 1200);
+
+    }
 
 
 
     return (
         <>
-            <div>
+            <Card title="Employee Attendance Report" >
                 <Form
                     layout="vertical"
                     onFinish={saveFormSubmit}
@@ -110,33 +139,8 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                     form={createForm}
                 >
                     <Row gutter={8}>
-                        <Col xs={24} sm={24} md={24} lg={2} xl={2}> </Col>
-                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                                    <Form.Item
-                                        name="employeeId"
-                                        label="Select Employee:"
-                                        className="title-Text"
-                                    >
-                                        <Select
-                                            placeholder="Select Employee"
-                                            id="employeess"
-                                            filterOption={(input, option:any) =>
-                                                option !== undefined &&
-                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                              }
-                                        >
-                                            {allemployeeList ? (
-                                                allemployeeList.map((type, idx) => (
-                                                    <Option key={type.employeeId} value={type.employeeId}>
-                                                        {type.employeeName}
-                                                    </Option>
-                                                ))
-                                            ) : (
-                                                <Option value="fetching">Fetching Employee</Option>
-                                            )}
-                                        </Select>
-                                    </Form.Item>
-                                </Col>
+                        <Col xs={24} sm={24} md={24} lg={4} xl={4}> </Col>
+
 
                         <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Form.Item
@@ -164,7 +168,7 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                                 <DatePicker style={{ width: '100%' }} placeholder="Select Date" format={"DD/MM/YYYY"} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={2} xl={2}>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Button type="primary" htmlType="submit" style={{ height: 40, marginTop: 30 }} icon={<SearchOutlined />}>
                                 Search
                             </Button>
@@ -172,7 +176,7 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                         </Col>
                     </Row>
                 </Form>
-                {attendanceDetailssinglefEmployee?.details?.length > 0 &&
+                {attendanceDetailsselfEmployee?.details?.length > 0 &&
                     <Row className='mt-30'>
                         <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                             <Descriptions
@@ -181,10 +185,10 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                                 column={{ xxl: 1, xl: 1, lg: 3, md: 1, sm: 1, xs: 1 }}
                                 style={{ marginBottom: 10, }}
                             >
-                                <Descriptions.Item label={<strong>ID</strong>}>{attendanceDetailssinglefEmployee?.customEmployeeId}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Name</strong>}>{attendanceDetailssinglefEmployee?.employeeName}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Designation</strong>}>{attendanceDetailssinglefEmployee?.designation}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Department</strong>}>{attendanceDetailssinglefEmployee?.department}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>ID</strong>}>{attendanceDetailsselfEmployee?.customEmployeeId}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Name</strong>}>{attendanceDetailsselfEmployee?.employeeName}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Designation</strong>}>{attendanceDetailsselfEmployee?.designation}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Department</strong>}>{attendanceDetailsselfEmployee?.department}</Descriptions.Item>
                             </Descriptions>
                         </Col>
                         <Col span={24}>
@@ -193,8 +197,8 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                                     showHeader: true,
                                     columns: columns,
                                     rowKey: "holidayId",
-                                    dataSource: attendanceDetailssinglefEmployee.details,
-                                    filterData: attendanceDetailssinglefEmployee.details,
+                                    dataSource: attendanceDetailsselfEmployee.details,
+                                    filterData: attendanceDetailsselfEmployee.details,
                                     pagination: false,
                                     bordered: true,
                                 }}
@@ -208,19 +212,52 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                                 column={{ xxl: 1, xl: 1, lg: 3, md: 1, sm: 1, xs: 1 }}
                                 style={{ marginTop: 10 }}
                             >
-                                <Descriptions.Item label={<strong>Total Late Count</strong>}>{attendanceDetailssinglefEmployee?.totalLate}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Total Approved Late Count</strong>}>{attendanceDetailssinglefEmployee?.totalApprovedLate}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Total Working Day Count</strong>}>{attendanceDetailssinglefEmployee?.totalWorkingDay}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Total Absent Count</strong>}>{attendanceDetailssinglefEmployee?.totalAbsent}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Total Holiday Count</strong>}>{attendanceDetailssinglefEmployee?.totalHolyday}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Total Leave Count</strong>}>{attendanceDetailssinglefEmployee?.totalLeave}</Descriptions.Item>
-                                <Descriptions.Item label={<strong>Total Day Count</strong>}>{attendanceDetailssinglefEmployee?.totalDay}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Late Count</strong>}>{attendanceDetailsselfEmployee?.totalLate}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Approved Late Count</strong>}>{attendanceDetailsselfEmployee?.totalApprovedLate}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Approved Absent Count</strong>}>{attendanceDetailsselfEmployee?.totalApprovedAbsent}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Working Day Count</strong>}>{attendanceDetailsselfEmployee?.totalWorkingDay}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Absent Count</strong>}>{attendanceDetailsselfEmployee?.totalAbsent}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Holiday Count</strong>}>{attendanceDetailsselfEmployee?.totalHolyday}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Leave Count</strong>}>{attendanceDetailsselfEmployee?.totalLeave}</Descriptions.Item>
+                                <Descriptions.Item label={<strong>Total Day Count</strong>}>{attendanceDetailsselfEmployee?.totalDay}</Descriptions.Item>
                             </Descriptions>
                         </Col>
                     </Row>
                 }
-            </div>
-
+            </Card>
+            <Modal
+                title="Add Remarks"
+                visible={isModalVisible}
+                //  onOk={handleOk}
+                okButtonProps={{ form: 'update', htmlType: 'submit' }}
+                onCancel={() => setIsModalVisible(false)}
+                cancelText="Close"
+                okText="Submit"
+                centered
+                maskClosable={false}
+            >
+                <Form
+                    layout="vertical"
+                    id="update"
+                    onFinish={updateSubmitForm}
+                    form={updateForm}
+                >
+                    <Row>
+                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+                            <Form.Item
+                                name="employeeRemark"
+                                label="Employee Reamrks"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please write remarks" },
+                                ]}
+                            >
+                                <Input.TextArea placeholder="Employee Remarks"  style={{height:100}}> </Input.TextArea>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
+            </Modal>
         </>
     )
 }

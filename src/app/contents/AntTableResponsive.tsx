@@ -8,10 +8,11 @@
  import Divider from "antd/lib/divider";
  import Pagination from "antd/lib/pagination";
  import Spin from "antd/lib/spin";
- import { Input, Table } from "antd";
+ import { Table } from "ant-table-extensions-extended";
  import * as React from "react";
  import { style, media, getStyles } from "typestyle";
- import { ColumnProps, TableProps } from "antd/lib/table";
+import { ColumnProps, TableProps} from "antd/lib/table";
+import { SearchOutlined } from "@ant-design/icons";
  
  if (typeof window !== "undefined" && typeof document !== "undefined") {
    const head = document.head || document.getElementsByTagName("head")[0];
@@ -92,137 +93,115 @@
    mobileBreakPoint: number;
  };
  
- export default function TableView(props: any) {
-   const desktopTableProps = props.antTableProps;
-   // @ts-ignore
-   desktopTableProps.columns = desktopTableProps.columns.filter(
-     (col: additionalCols) => col.showOnDesktop
-   );
- 
-   const [filterTable, setfilterTable] = React.useState<any>(null);
- 
-   const [searchv, setsearchv] = React.useState<any>('');
- 
-   const search = (value) => {
-     const result = props.antTableProps?.filterData?.filter(o =>
-       Object.keys(o).some(k =>
-         String(o[k])
-           .toLowerCase()
-           .includes(value.toLowerCase())
-       )
+ export default function TableView(props:any) {
+     const desktopTableProps = props.antTableProps;
+     // @ts-ignore
+     desktopTableProps.columns = desktopTableProps.columns.filter(
+       (col: additionalCols) => col.showOnDesktop
      );
-     setfilterTable(result)
-   }
- 
-   desktopTableProps.dataSource = searchv === '' ? props.antTableProps.dataSource : filterTable;
-   return (
-     <div>
-       <div
-         className={ResponsiveTableStyle.hideOnBreakPoint(
-           props.mobileBreakPoint
-         )}
-       >
-         
-         <div className="globalSearch" style={{ display: "flex", justifyContent: "space-between", alignContent: "center", alignItems: "center", background: '#b8d7cd' }}>
-           <span style={{ marginLeft: 10 }}>Total Found: {(props.antTableProps.dataSource !== null || props.antTableProps.dataSource !== undefined) ? props.antTableProps.dataSource?.length : 0}</span>
-           <Input
-             style={{ margin: "10px 10px 10px 0", width: 250 }}
-             placeholder="Search by..."
-             value={searchv}
-             // allowClear
-             onChange={(e) => { search(e.target.value); setsearchv(e.target.value) }}
-           />
+     desktopTableProps.searchable=true;
+     desktopTableProps.headerBackground="#b8d7cd";
+     desktopTableProps.searchableProps={
+      // dataSource,
+      // setDataSource: setSearchDataSource,
+      inputProps: {
+        placeholder: "Search this table...",
+        prefix: <SearchOutlined />,
+        
+      },
+    };
+     return (
+       <div>
+         <div
+           className={ResponsiveTableStyle.hideOnBreakPoint(
+             props.mobileBreakPoint
+           )}
+         >
+           <Table {...desktopTableProps} />
          </div>
  
-         <Table
-           {...desktopTableProps}
- 
-         />
-       </div>
- 
-       <div
-         className={ResponsiveTableStyle.showOnBreakPoint(
-           props.mobileBreakPoint
-         )}
-       >
          <div
-           className={
-             props.antTableProps.loading
-               ? ResponsiveTableStyle.spinBlur
-               : ""
-           }
+           className={ResponsiveTableStyle.showOnBreakPoint(
+             props.mobileBreakPoint
+           )}
          >
-           {props.antTableProps.loading ? (
-             <div className={ResponsiveTableStyle.spinContainer}>
-               <Spin className={ResponsiveTableStyle.spin} />
-             </div>
-           ) : null}
-           {!props.antTableProps.dataSource ? (
-             <Table />
-           ) : (
-             props.antTableProps.dataSource.map((rowData: any, index: any) => {
-               const onRow = props.antTableProps.onRow
-                 ? { ...props.antTableProps.onRow(rowData, index) }
-                 : undefined;
+           <div
+             className={
+               props.antTableProps.loading
+                 ? ResponsiveTableStyle.spinBlur
+                 : ""
+             }
+           >
+             {props.antTableProps.loading ? (
+               <div className={ResponsiveTableStyle.spinContainer}>
+                 <Spin className={ResponsiveTableStyle.spin} />
+               </div>
+             ) : null}
+             {!props.antTableProps.dataSource ? (
+               <Table />
+             ) : (
+               props.antTableProps.dataSource.map((rowData:any, index:any) => {
+                 const onRow = props.antTableProps.onRow
+                   ? { ...props.antTableProps.onRow(rowData, index) }
+                   : undefined;
  
-               return (
-     
-                   <Card key={rowData.key} {...props.cardProps} {...onRow} style={{ marginTop: 10 }}>
+                 return (
+                   <div style={{marginTop:10}}>
+                   <Card key={rowData.key} {...props.cardProps} {...onRow}>
                      {props.antTableProps.columns
                        ? props.antTableProps.columns.map(
-                         (colData: additionalCols, index: any) => {
-                           return colData.showOnResponse ? (
-                             <div  key={index+3}>
-                               <div style={{ display: "flex" }}  key={index+4}>
-                                 <div
-                                   style={{
-                                     width: "35%",
-                                     paddingRight: 5,
-                                     //  textAlign: "right"
-                                   }}
-                                   key={index+5}
-                                 >
-                                   {colData.title ? (
-                                     <b>{colData.title}:</b>
-                                   ) : null}
+                           (colData: additionalCols, index:any) => {
+                             return colData.showOnResponse ? (
+                               <div key={`${rowData.key}${colData.key}`}>
+                                 <div style={{ display: "flex" }}>
+                                   <div
+                                     style={{
+                                       width: "35%",
+                                       paddingRight: 5,
+                                      //  textAlign: "right"
+                                     }}
+                                   >
+                                     {colData.title ? (
+                                       <b>{colData.title}:</b>
+                                     ) : null}
+                                   </div>
+                                   <div style={{ width: "65%", paddingLeft: 5 }}>
+                                     {colData.key
+                                       ? colData.render
+                                         ? colData.render(
+                                             rowData[colData.key],
+                                             rowData,
+                                             index
+                                           )
+                                         : rowData[colData.key]
+                                       : null}
+                                   </div>
                                  </div>
-                                 <div style={{ width: "65%", paddingLeft: 5 }}  key={index+6}>
-                                   {colData.key
-                                     ? colData.render
-                                       ? colData.render(
-                                         rowData[colData.key],
-                                         rowData,
-                                         index
-                                       )
-                                       : rowData[colData.key]
-                                     : null}
-                                 </div>
-                               </div>
-                               {props.antTableProps.columns ? (
-                                 index + 1 ===
+                                 {props.antTableProps.columns ? (
+                                   index + 1 ===
                                    props.antTableProps.columns
                                      .length ? null : (
-                                   <Divider />
-                                 )
-                               ) : null}
-                             </div>
-                           ) : null;
-                         }
-                       )
+                                     <Divider />
+                                   )
+                                 ) : null}
+                               </div>
+                             ) : null;
+                           }
+                         )
                        : null}
                    </Card>
-          
-               );
-             })
-           )}
-           {props.antTableProps.pagination ? (
-             <Pagination {...props.antTableProps.pagination} />
-           ) : null}
+                   </div>
+                 );
+               })
+             )}
+             {props.antTableProps.pagination ? (
+               <Pagination {...props.antTableProps.pagination} />
+             ) : null}
+           </div>
          </div>
        </div>
-     </div>
-   );
- }
+     );
+   }
  
  
-  //  export default ResponsiveTable;
+//  export default ResponsiveTable;

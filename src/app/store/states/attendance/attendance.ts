@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchdisabledEmployee, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -32,6 +32,7 @@ export interface Attendance {
     deletegovtHolidayList: Thunk<Attendance, any>;
     govtHolidayList: any;
     setgovtHolidayList: Action<Attendance, any>;
+    updateEmployeeAttendanceRemark: Thunk<Attendance, any>;
 
     employeeDateWiseAttReport: any;
     setemployeeDateWiseAttReport: Action<Attendance, any>;
@@ -44,6 +45,19 @@ export interface Attendance {
     attendanceDetailsAllEmployee: any;
     setattendanceDetailsAllEmployee: Action<Attendance, any>;
     fetchattendanceDetailsAllEmployee: Thunk<Attendance, any>
+
+    attendanceDetailsselfEmployee: any;
+    setattendanceDetailsselfEmployee: Action<Attendance, any>;
+    fetchattendanceDetailsselfEmployee: Thunk<Attendance, any>
+
+    attendanceDetailssinglefEmployee: any;
+    setattendanceDetailssingleEmployee: Action<Attendance, any>;
+    fetchattendanceDetailssingleEmployee: Thunk<Attendance, any>
+
+    attendanceDetailsAllEmployee2: any;
+    setattendanceDetailsAllEmployee2: Action<Attendance, any>;
+    fetchattendanceDetailsAllEmployee2: Thunk<Attendance, any>
+    
 }
 
 export const attendanceStore: Attendance = {
@@ -367,5 +381,100 @@ export const attendanceStore: Attendance = {
         state.attendanceDetailsAllEmployee = payload;
     }),
 
+    attendanceDetailsselfEmployee: [],
+    fetchattendanceDetailsselfEmployee: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchattendanceDetailsselfEmployee(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body.item?.details?.length > 0) {
+                actions.setattendanceDetailsselfEmployee(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setattendanceDetailsselfEmployee([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
 
+    setattendanceDetailsselfEmployee: action((state, payload) => {
+        state.attendanceDetailsselfEmployee = payload;
+    }),
+
+    updateEmployeeAttendanceRemark: thunk(async (actions, payload) => {
+        const response = await updateEmployeeAttendanceRemark(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body.messageType == 1) {
+                notification.success({ message: body.message })
+                //actions.fetchgovtHolidayList();
+            } else {
+                notification.error({ message: body.message })
+            }
+        } else {
+            const body = await response.json();
+            notification.error({ message: body.message })
+        }
+    }),
+
+    attendanceDetailssinglefEmployee: [],
+    fetchattendanceDetailssingleEmployee: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchattendanceDetailssingleEmployee(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body.item?.details?.length > 0) {
+                actions.setattendanceDetailssingleEmployee(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setattendanceDetailssingleEmployee([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setattendanceDetailssingleEmployee: action((state, payload) => {
+        state.attendanceDetailssinglefEmployee = payload;
+    }),
+
+    attendanceDetailsAllEmployee2: [],
+    fetchattendanceDetailsAllEmployee2: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchattendanceDetailsAllEmployee2(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body.item?.staffList?.length > 0) {
+                actions.setattendanceDetailsAllEmployee2(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setattendanceDetailsAllEmployee2([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setattendanceDetailsAllEmployee2: action((state, payload) => {
+        state.attendanceDetailsAllEmployee2 = payload;
+    }),
 }

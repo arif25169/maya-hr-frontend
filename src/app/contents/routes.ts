@@ -40,5 +40,7 @@ export const ROUTES = {
   HR_REPORT_MONTH_WISE: "hr-report-month-wise",
   APPLY_LEAVE: "apply-leave",
   EOMPLOYEE_ATACHEMENTS: "employee-atachmenmts",
+  EOMPLOYEE_ATTENDNACE: "employee-attendance",
+  EOMPLOYEE_REMARKS: "employee-remarks",
   USER_LIST: "user-list",
 };

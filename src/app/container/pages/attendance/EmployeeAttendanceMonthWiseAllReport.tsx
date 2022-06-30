@@ -4,6 +4,7 @@ import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import TableView from '../../../contents/AntTableResponsive';
 import { DeleteOutlined, DownloadOutlined, EditOutlined, FileExcelOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { Excel } from 'antd-table-saveas-excel';
+import moment from 'moment';
 
 var year = (new Date().getFullYear()) * 1;
 
@@ -13,13 +14,17 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
     const { Option } = Select;
     const [form] = Form.useForm();
 
-    const attendanceDetailsAllEmployee = useStoreState((state) => state.attendance.attendanceDetailsAllEmployee);
-    const fetchattendanceDetailsAllEmployee = useStoreActions((state) => state.attendance.fetchattendanceDetailsAllEmployee);
+    const attendanceDetailsAllEmployee2 = useStoreState((state) => state.attendance.attendanceDetailsAllEmployee2);
+    const fetchattendanceDetailsAllEmployee2 = useStoreActions((state) => state.attendance.fetchattendanceDetailsAllEmployee2);
     const loading = useStoreState((state) => state.attendance.loading);
 
 
     const onsearch = (value) => {
-        fetchattendanceDetailsAllEmployee(value);
+        let postData = {
+            fromDate: moment(value?.fromDate).format("YYYY-MM-DD"),
+            toDate: moment(value?.toDate).format("YYYY-MM-DD")
+        };
+        fetchattendanceDetailsAllEmployee2(postData)
     }
 
 
@@ -32,37 +37,37 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
         { title: 'Leave', dataIndex: 'totalLeave', key: 'totalLeave', showOnResponse: true, showOnDesktop: true },
         { title: 'Delay', dataIndex: 'totalDelay', key: 'totalDelay', showOnResponse: true, showOnDesktop: true },
         { title: 'Early Leave', dataIndex: 'totalEarlyLeave', key: 'totalEarlyLeave', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.firstDay, dataIndex: 'firstDay', key: 'firstDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.secondDay, dataIndex: 'secondDay', key: 'secondDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.thirdDay, dataIndex: 'thirdDay', key: 'thirdDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fourthDay, dataIndex: 'fourthDay', key: 'fourthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fifthDay, dataIndex: 'fifthDay', key: 'fifthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.sixthDay, dataIndex: 'sixthDay', key: 'sixthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.seventhDay, dataIndex: 'seventhDay', key: 'seventhDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.eighthDay, dataIndex: 'eighthDay', key: 'eighthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.ninethDay, dataIndex: 'ninethDay', key: 'ninethDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.tenthDay, dataIndex: 'tenthDay', key: 'tenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.eleventhDay, dataIndex: 'eleventhDay', key: 'eleventhDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twelvethDay, dataIndex: 'twelvethDay', key: 'twelvethDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.thirteenthDay, dataIndex: 'thirteenthDay', key: 'thirteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fourteenthDay, dataIndex: 'fourteenthDay', key: 'fourteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fifteenthDay, dataIndex: 'fifteenthDay', key: 'fifteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.sixteenthDay, dataIndex: 'sixteenthDay', key: 'sixteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.seventeenthDay, dataIndex: 'seventeenthDay', key: 'seventeenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.eighteenthDay, dataIndex: 'eighteenthDay', key: 'eighteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.nineteenthDay, dataIndex: 'nineteenthDay', key: 'nineteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentythDay, dataIndex: 'twentythDay', key: 'twentythDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyFirstDay, dataIndex: 'twentyFirstDay', key: 'twentyFirstDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentySecondDay, dataIndex: 'twentySecondDay', key: 'twentySecondDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyThirdDay, dataIndex: 'twentyThirdDay', key: 'twentyThirdDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyFourthDay, dataIndex: 'twentyFourthDay', key: 'twentyFourthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyFifthDay, dataIndex: 'twentyFifthDay', key: 'twentyFifthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentySixthDay, dataIndex: 'twentySixthDay', key: 'twentySixthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentySeventhDay, dataIndex: 'twentySeventhDay', key: 'twentySeventhDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyEighthDay, dataIndex: 'twentyEighthDay', key: 'twentyEighthDay', showOnResponse: true, showOnDesktop: true },
-        attendanceDetailsAllEmployee?.twentyNinethDay!==''&&  { title: attendanceDetailsAllEmployee?.twentyNinethDay, dataIndex: 'twentyNinethDay', key: 'twentyNinethDay', showOnResponse: true, showOnDesktop: true },
-        attendanceDetailsAllEmployee?.thirtythDay!==''&&  { title: attendanceDetailsAllEmployee?.thirtythDay, dataIndex: 'thirtythDay', key: 'thirtythDay', showOnResponse: true, showOnDesktop: true },
-        attendanceDetailsAllEmployee?.thirtyFirstDay!==''&&  { title: attendanceDetailsAllEmployee?.thirtyFirstDay, dataIndex: 'thirtyFirstDay', key: 'thirtyFirstDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.firstDay, dataIndex: 'firstDay', key: 'firstDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.secondDay, dataIndex: 'secondDay', key: 'secondDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.thirdDay, dataIndex: 'thirdDay', key: 'thirdDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fourthDay, dataIndex: 'fourthDay', key: 'fourthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fifthDay, dataIndex: 'fifthDay', key: 'fifthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.sixthDay, dataIndex: 'sixthDay', key: 'sixthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.seventhDay, dataIndex: 'seventhDay', key: 'seventhDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.eighthDay, dataIndex: 'eighthDay', key: 'eighthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.ninethDay, dataIndex: 'ninethDay', key: 'ninethDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.tenthDay, dataIndex: 'tenthDay', key: 'tenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.eleventhDay, dataIndex: 'eleventhDay', key: 'eleventhDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twelvethDay, dataIndex: 'twelvethDay', key: 'twelvethDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.thirteenthDay, dataIndex: 'thirteenthDay', key: 'thirteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fourteenthDay, dataIndex: 'fourteenthDay', key: 'fourteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fifteenthDay, dataIndex: 'fifteenthDay', key: 'fifteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.sixteenthDay, dataIndex: 'sixteenthDay', key: 'sixteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.seventeenthDay, dataIndex: 'seventeenthDay', key: 'seventeenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.eighteenthDay, dataIndex: 'eighteenthDay', key: 'eighteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.nineteenthDay, dataIndex: 'nineteenthDay', key: 'nineteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentythDay, dataIndex: 'twentythDay', key: 'twentythDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyFirstDay, dataIndex: 'twentyFirstDay', key: 'twentyFirstDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentySecondDay, dataIndex: 'twentySecondDay', key: 'twentySecondDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyThirdDay, dataIndex: 'twentyThirdDay', key: 'twentyThirdDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyFourthDay, dataIndex: 'twentyFourthDay', key: 'twentyFourthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyFifthDay, dataIndex: 'twentyFifthDay', key: 'twentyFifthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentySixthDay, dataIndex: 'twentySixthDay', key: 'twentySixthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentySeventhDay, dataIndex: 'twentySeventhDay', key: 'twentySeventhDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyEighthDay, dataIndex: 'twentyEighthDay', key: 'twentyEighthDay', showOnResponse: true, showOnDesktop: true },
+        attendanceDetailsAllEmployee2?.twentyNinethDay !== '' && { title: attendanceDetailsAllEmployee2?.twentyNinethDay, dataIndex: 'twentyNinethDay', key: 'twentyNinethDay', showOnResponse: true, showOnDesktop: true },
+        attendanceDetailsAllEmployee2?.thirtythDay !== '' && { title: attendanceDetailsAllEmployee2?.thirtythDay, dataIndex: 'thirtythDay', key: 'thirtythDay', showOnResponse: true, showOnDesktop: true },
+        attendanceDetailsAllEmployee2?.thirtyFirstDay !== '' && { title: attendanceDetailsAllEmployee2?.thirtyFirstDay, dataIndex: 'thirtyFirstDay', key: 'thirtyFirstDay', showOnResponse: true, showOnDesktop: true },
     ];
 
     const columns2 = [
@@ -74,37 +79,37 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
         { title: 'Total Delay', dataIndex: 'totalDelay', key: 'totalDelay', showOnResponse: true, showOnDesktop: true },
         { title: 'Total Early Leave', dataIndex: 'totalEarlyLeave', key: 'totalEarlyLeave', showOnResponse: true, showOnDesktop: true },
         { title: 'Total Leave', dataIndex: 'totalLeave', key: 'totalLeave', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.firstDay, dataIndex: 'firstDay', key: 'firstDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.secondDay, dataIndex: 'secondDay', key: 'secondDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.thirdDay, dataIndex: 'thirdDay', key: 'thirdDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fourthDay, dataIndex: 'fourthDay', key: 'fourthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fifthDay, dataIndex: 'fifthDay', key: 'fifthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.sixthDay, dataIndex: 'sixthDay', key: 'sixthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.seventhDay, dataIndex: 'seventhDay', key: 'seventhDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.eighthDay, dataIndex: 'eighthDay', key: 'eighthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.ninethDay, dataIndex: 'ninethDay', key: 'ninethDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.tenthDay, dataIndex: 'tenthDay', key: 'tenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.eleventhDay, dataIndex: 'eleventhDay', key: 'eleventhDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twelvethDay, dataIndex: 'twelvethDay', key: 'twelvethDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.thirteenthDay, dataIndex: 'thirteenthDay', key: 'thirteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fourteenthDay, dataIndex: 'fourteenthDay', key: 'fourteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.fifteenthDay, dataIndex: 'fifteenthDay', key: 'fifteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.sixteenthDay, dataIndex: 'sixteenthDay', key: 'sixteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.seventeenthDay, dataIndex: 'seventeenthDay', key: 'seventeenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.eighteenthDay, dataIndex: 'eighteenthDay', key: 'eighteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.nineteenthDay, dataIndex: 'nineteenthDay', key: 'nineteenthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentythDay, dataIndex: 'twentythDay', key: 'twentythDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyFirstDay, dataIndex: 'twentyFirstDay', key: 'twentyFirstDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentySecondDay, dataIndex: 'twentySecondDay', key: 'twentySecondDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyThirdDay, dataIndex: 'twentyThirdDay', key: 'twentyThirdDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyFourthDay, dataIndex: 'twentyFourthDay', key: 'twentyFourthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyFifthDay, dataIndex: 'twentyFifthDay', key: 'twentyFifthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentySixthDay, dataIndex: 'twentySixthDay', key: 'twentySixthDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentySeventhDay, dataIndex: 'twentySeventhDay', key: 'twentySeventhDay', showOnResponse: true, showOnDesktop: true },
-        { title: attendanceDetailsAllEmployee?.twentyEighthDay, dataIndex: 'twentyEighthDay', key: 'twentyEighthDay', showOnResponse: true, showOnDesktop: true },
-        attendanceDetailsAllEmployee?.twentyNinethDay!==''?  { title: attendanceDetailsAllEmployee?.twentyNinethDay, dataIndex: 'twentyNinethDay', key: 'twentyNinethDay', showOnResponse: true, showOnDesktop: true } :  { title: '', dataIndex: 'twentyNinethDay', key: 'twentyNinethDay', showOnResponse: true, showOnDesktop: true },
-        attendanceDetailsAllEmployee?.thirtythDay!==''?  { title: attendanceDetailsAllEmployee?.thirtythDay, dataIndex: 'thirtythDay', key: 'thirtythDay', showOnResponse: true, showOnDesktop: true } : { title: '', dataIndex: 'thirtythDay', key: 'thirtythDay', showOnResponse: true, showOnDesktop: true },
-        attendanceDetailsAllEmployee?.thirtyFirstDay!==''?  { title: attendanceDetailsAllEmployee?.thirtyFirstDay, dataIndex: 'thirtyFirstDay', key: 'thirtyFirstDay', showOnResponse: true, showOnDesktop: true } : { title: '', dataIndex: 'thirtyFirstDay', key: 'thirtyFirstDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.firstDay, dataIndex: 'firstDay', key: 'firstDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.secondDay, dataIndex: 'secondDay', key: 'secondDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.thirdDay, dataIndex: 'thirdDay', key: 'thirdDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fourthDay, dataIndex: 'fourthDay', key: 'fourthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fifthDay, dataIndex: 'fifthDay', key: 'fifthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.sixthDay, dataIndex: 'sixthDay', key: 'sixthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.seventhDay, dataIndex: 'seventhDay', key: 'seventhDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.eighthDay, dataIndex: 'eighthDay', key: 'eighthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.ninethDay, dataIndex: 'ninethDay', key: 'ninethDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.tenthDay, dataIndex: 'tenthDay', key: 'tenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.eleventhDay, dataIndex: 'eleventhDay', key: 'eleventhDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twelvethDay, dataIndex: 'twelvethDay', key: 'twelvethDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.thirteenthDay, dataIndex: 'thirteenthDay', key: 'thirteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fourteenthDay, dataIndex: 'fourteenthDay', key: 'fourteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.fifteenthDay, dataIndex: 'fifteenthDay', key: 'fifteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.sixteenthDay, dataIndex: 'sixteenthDay', key: 'sixteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.seventeenthDay, dataIndex: 'seventeenthDay', key: 'seventeenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.eighteenthDay, dataIndex: 'eighteenthDay', key: 'eighteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.nineteenthDay, dataIndex: 'nineteenthDay', key: 'nineteenthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentythDay, dataIndex: 'twentythDay', key: 'twentythDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyFirstDay, dataIndex: 'twentyFirstDay', key: 'twentyFirstDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentySecondDay, dataIndex: 'twentySecondDay', key: 'twentySecondDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyThirdDay, dataIndex: 'twentyThirdDay', key: 'twentyThirdDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyFourthDay, dataIndex: 'twentyFourthDay', key: 'twentyFourthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyFifthDay, dataIndex: 'twentyFifthDay', key: 'twentyFifthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentySixthDay, dataIndex: 'twentySixthDay', key: 'twentySixthDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentySeventhDay, dataIndex: 'twentySeventhDay', key: 'twentySeventhDay', showOnResponse: true, showOnDesktop: true },
+        { title: attendanceDetailsAllEmployee2?.twentyEighthDay, dataIndex: 'twentyEighthDay', key: 'twentyEighthDay', showOnResponse: true, showOnDesktop: true },
+        attendanceDetailsAllEmployee2?.twentyNinethDay !== '' ? { title: attendanceDetailsAllEmployee2?.twentyNinethDay, dataIndex: 'twentyNinethDay', key: 'twentyNinethDay', showOnResponse: true, showOnDesktop: true } : { title: '', dataIndex: 'twentyNinethDay', key: 'twentyNinethDay', showOnResponse: true, showOnDesktop: true },
+        attendanceDetailsAllEmployee2?.thirtythDay !== '' ? { title: attendanceDetailsAllEmployee2?.thirtythDay, dataIndex: 'thirtythDay', key: 'thirtythDay', showOnResponse: true, showOnDesktop: true } : { title: '', dataIndex: 'thirtythDay', key: 'thirtythDay', showOnResponse: true, showOnDesktop: true },
+        attendanceDetailsAllEmployee2?.thirtyFirstDay !== '' ? { title: attendanceDetailsAllEmployee2?.thirtyFirstDay, dataIndex: 'thirtyFirstDay', key: 'thirtyFirstDay', showOnResponse: true, showOnDesktop: true } : { title: '', dataIndex: 'thirtyFirstDay', key: 'thirtyFirstDay', showOnResponse: true, showOnDesktop: true },
     ];
 
 
@@ -121,53 +126,38 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
                             onFinish={onsearch}
                             form={form}
                         >
-                            <Row>
+                            <Row gutter={8}>
+                                <Col xs={24} sm={24} md={24} lg={4} xl={4}> </Col>
 
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+
+                                <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                                     <Form.Item
-                                        name="month"
-                                        label="Select Month"
+                                        name="fromDate"
+                                        label="Start Date"
                                         className="title-Text"
                                         rules={[
-                                            { required: true, message: "Please select month" },
-                                        ]}
-                                    >
-                                        <Select placeholder="Select month">
-                                            <Option key="1" value="January">January</Option>
-                                            <Option key="2" value="February">February</Option>
-                                            <Option key="3" value="March">March</Option>
-                                            <Option key="4" value="April">April</Option>
-                                            <Option key="5" value="May">May</Option>
-                                            <Option key="6" value="June">June</Option>
-                                            <Option key="7" value="July">July</Option>
-                                            <Option key="8" value="August">August</Option>
-                                            <Option key="9" value="September">September</Option>
-                                            <Option key="10" value="October">October</Option>
-                                            <Option key="11" value="November">November</Option>
-                                            <Option key="12" value="December">December</Option>
-                                        </Select>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 8 }} xl={{ span: 8 }}>
-                                    <Form.Item
-                                        name="year"
-                                        label="Year"
-                                        className="title-Text"
-                                        rules={[
-                                            { required: true, message: "Please select year" },
+                                            { required: true, message: "Please enter from date" },
                                         ]}
                                     >
 
-                                        <Select placeholder="Select Year" allowClear>
-                                            <Option value={year - 1}>{year - 1}</Option>
-                                            <Option value={year}>{year}</Option>
-                                            <Option value={year + 1}>{year + 1}</Option>
-                                        </Select>
+                                        <DatePicker style={{ width: '100%' }} placeholder="Select Date" format={"DD/MM/YYYY"} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                                <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                                    <Form.Item
+                                        name="toDate"
+                                        label="End Date"
+                                        className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please enter to date" },
+                                        ]}
+                                    >
 
-                                    <Button type="primary" htmlType="submit" icon={<SearchOutlined />} >
+                                        <DatePicker style={{ width: '100%' }} placeholder="Select Date" format={"DD/MM/YYYY"} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                                    <Button type="primary" htmlType="submit" style={{ height: 40, marginTop: 30 }} icon={<SearchOutlined />}>
                                         Search
                                     </Button>
 
@@ -177,7 +167,7 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
                     </Col>
                 </Row>
                 <Skeleton loading={loading} paragraph={{ rows: 10 }} />
-                {attendanceDetailsAllEmployee?.staffList?.length >0 &&
+                {attendanceDetailsAllEmployee2?.staffList?.length > 0 &&
                     <Row >
 
 
@@ -187,8 +177,8 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
                                     showHeader: true,
                                     columns: columns,
                                     rowKey: "customEmployeeId",
-                                    dataSource: attendanceDetailsAllEmployee?.staffList,
-                                    filterData: attendanceDetailsAllEmployee?.staffList,
+                                    dataSource: attendanceDetailsAllEmployee2?.staffList,
+                                    filterData: attendanceDetailsAllEmployee2?.staffList,
                                     pagination: true,
                                     bordered: true
                                 }}
@@ -196,22 +186,22 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
                             />
                             <br />
                             <Space size={'large'} style={{ float: "right" }}>
-                            < Button
-                                type='primary'
-                
-                                icon={<FileExcelOutlined />}
-                                onClick={() => {
-                                    const excel: any = new Excel();
-                                    excel
-                                        .addSheet(`${form.getFieldValue("year")}-${form.getFieldValue("month")}`)
-                                        .addColumns(columns2)
-                                        .addDataSource(attendanceDetailsAllEmployee?.staffList)
-                                        .saveAs(`${form.getFieldValue("year")}-${form.getFieldValue("month")}.xlsx`);
-                                }}
-                            >
-                                Download Excel
-                            </ Button >
-                        </Space>
+                                < Button
+                                    type='primary'
+
+                                    icon={<FileExcelOutlined />}
+                                    onClick={() => {
+                                        const excel: any = new Excel();
+                                        excel
+                                            .addSheet(`${form.getFieldValue("year")}-${form.getFieldValue("month")}`)
+                                            .addColumns(columns2)
+                                            .addDataSource(attendanceDetailsAllEmployee2?.staffList)
+                                            .saveAs(`${form.getFieldValue("year")}-${form.getFieldValue("month")}.xlsx`);
+                                    }}
+                                >
+                                    Download Excel
+                                </ Button >
+                            </Space>
                         </Col>
                     </Row>
                 }

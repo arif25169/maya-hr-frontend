@@ -166,7 +166,7 @@ export function Sidebar() {
 							<Link to={ROUTES.HR_REPORT_DATE_WISE} className="nav-text">Daily Details</Link>
 						</Menu.Item>
 						<Menu.Item key={ROUTES.HR_REPORT_MONTH_WISE} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Monthly Details</Link>
+							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Date to Date</Link>
 						</Menu.Item>
 					</SubMenu>
 				</SubMenu>
@@ -210,36 +210,51 @@ export function Sidebar() {
 					</Menu.Item>
 
 				</SubMenu>
+				<SubMenu key={"leaveMenuItem"} icon={<PartitionOutlined />} title="Leave" >
+
+					<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Leave Category</Link>
+					</Menu.Item>
+					<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
+					</Menu.Item>
+					<Menu.Item key={ROUTES.LEAVE_ASSIGN} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.LEAVE_ASSIGN} className="nav-text">Leave Assign</Link>
+					</Menu.Item>
+					<Menu.Item key={ROUTES.LEAVE_PENDING} icon={<UserOutlined />}>
+						<Link to={ROUTES.LEAVE_PENDING} className="nav-text">Leave Pending</Link>
+					</Menu.Item>					
+					<Menu.Item key={ROUTES.EOMPLOYEE_REMARKS} icon={<UserOutlined />}>
+						<Link to={ROUTES.EOMPLOYEE_REMARKS} className="nav-text">Remarks List</Link>
+					</Menu.Item>
+
+				</SubMenu>
 			</>
 		}
 
-		<SubMenu key={"leaveMenuItem"} icon={<PartitionOutlined />} title="Leave" >
-			{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
-				<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_LEAVE_CATEGORY} className="nav-text">Leave Category</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.CREATE_LEAVE_CONFIG} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.CREATE_LEAVE_CONFIG} className="nav-text">Leave Config</Link>
-				</Menu.Item>
-				<Menu.Item key={ROUTES.LEAVE_ASSIGN} icon={<ContainerOutlined />}>
-					<Link to={ROUTES.LEAVE_ASSIGN} className="nav-text">Leave Assign</Link>
-				</Menu.Item>
-			</>
-			}
-			<Menu.Item key={ROUTES.APPLY_LEAVE} icon={<ContainerOutlined />}>
-				<Link to={ROUTES.APPLY_LEAVE} className="nav-text">Apply Leave</Link>
-			</Menu.Item>
-			{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
-				<Menu.Item key={ROUTES.LEAVE_PENDING} icon={<UserOutlined />}>
-					<Link to={ROUTES.LEAVE_PENDING} className="nav-text">Leave Pending</Link>
-				</Menu.Item>
-			</>
-			}
-		</SubMenu>
+
+
 		{companyInfo?.roleList?.includes('ROLE_ADMIN') && <>
 			<Menu.Item key={ROUTES.USER_LIST} icon={<UserOutlined />}>
 				<Link to={ROUTES.USER_LIST} className="nav-text">Users</Link>
 			</Menu.Item>
+		</>
+		}
+		{(companyInfo?.roleList?.includes('ROLE_ADMIN') && companyInfo?.roleList?.includes('ROLE_EMPLOYEE')) && <>
+			<hr style={{ width: "80%", marginTop: 30 }} />
+			<Menu.Item key={'employeeMenu'}>
+				Employee Menu
+			</Menu.Item>
+		</>}
+		{companyInfo?.roleList?.includes('ROLE_EMPLOYEE') && <>
+			<Menu.Item key={ROUTES.EOMPLOYEE_ATTENDNACE} icon={<ContainerOutlined />}>
+				<Link to={ROUTES.EOMPLOYEE_ATTENDNACE} className="nav-text">Attendance</Link>
+			</Menu.Item>
+			<SubMenu key={"leaveMenuItemEm"} icon={<PartitionOutlined />} title="Leave" >
+				<Menu.Item key={ROUTES.APPLY_LEAVE + 'em'} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.APPLY_LEAVE} className="nav-text">Apply Leave</Link>
+				</Menu.Item>
+			</SubMenu>
 		</>
 		}
 	</Menu>

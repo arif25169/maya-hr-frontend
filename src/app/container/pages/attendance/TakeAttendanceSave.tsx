@@ -11,6 +11,19 @@ export default function TakeAttendanceSave() {
     const enabledEmployeeListTakeAttendance = useStoreState((state) => state.generalSetting.enabledEmployeeListTakeAttendance);
     const loading = useStoreState((state) => state.generalSetting.loading);
 
+    const [selectedRowKeys, setselectedRowKeys] = useState<any>([]);
+    const [selectedValue, setselectedValue] = useState<any>([]);
+
+    const onSelectChange = (selectedRowKeys, value) => {
+        setselectedRowKeys(selectedRowKeys);
+        setselectedValue(value);
+        // console.log(value)
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    }
     useEffect(() => {
         fetchenabledEmployeeListTakeAttendance();
     }, []);
@@ -90,6 +103,8 @@ export default function TakeAttendanceSave() {
             setTableData(newData);
         }, [tableData]);
 
+
+
     return (
         <>
             <Card title="Staff Attendance Input">
@@ -112,19 +127,24 @@ export default function TakeAttendanceSave() {
                                     columns,
                                     dataSource: tableData,
                                     filterData: tableData,
-                                    pagination: true,
+                                    pagination: false,
                                     bordered: true,
-                                    rowKey: "staffId",
+                                    rowKey: "employeeId",
+                                    rowSelection: rowSelection,
 
                                 }}
                                 mobileBreakPoint={768}
                             />
                         </div>
-                        <Space style={{ float: "right" }} size={'middle'}>
+                        <Space style={{ float: "right", marginTop:10 }} size={'middle'}>
                             <Button type="primary" onClick={() => {
+                                if (selectedRowKeys.length === 0) {
+                                    message.error('Select employee first');
+                                    return
+                                };
                                 inputEmployeeAttendance({
                                     attendanceDate: moment(attendanceDate).format('YYYY-MM-DD'),
-                                    details: tableData.map(item => {
+                                    details: selectedValue.map(item => {
                                         return {
                                             attendanceStatus: item.attendanceStatus,
                                             employeeId: item.employeeId,
@@ -133,7 +153,8 @@ export default function TakeAttendanceSave() {
                                         }
                                     })
                                 });
-
+                                setselectedRowKeys([]);
+                                setselectedValue([]);
                             }}>Save</Button>
                         </Space>
                     </Col>
