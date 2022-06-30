@@ -143,6 +143,7 @@ export default function Users(props) {
                                 <Select
                                     placeholder="Select Employee"
                                     className="sessionYearName"
+                                    showSearch
                                     onChange={(value) =>{
                                         let data= allemployeeList?.find((item)=>item.employeeId==value);
                                         usersaveForm.setFieldsValue({
@@ -151,6 +152,10 @@ export default function Users(props) {
                                             mobileNo:data?.personalMbile,
                                         })
                                     }}
+                                    filterOption={(input, option:any) =>
+                                        option !== undefined &&
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
                                 >
                                     {allemployeeList ? (
                                         allemployeeList.map((type, idx) => (

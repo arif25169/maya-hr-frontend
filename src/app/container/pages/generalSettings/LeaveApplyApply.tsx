@@ -120,6 +120,11 @@ export default function LeaveApplyApply() {
                                         <Select
                                             placeholder="Select Employee"
                                             id="employeess"
+                                            showSearch
+                                            filterOption={(input, option:any) =>
+                                                option !== undefined &&
+                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                              }
                                         >
                                             {allemployeeList ? (
                                                 allemployeeList.map((type, idx) => (

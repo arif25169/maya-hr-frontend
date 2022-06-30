@@ -539,6 +539,7 @@ export default function BasicInfoUpdate() {
                                         <Select
                                             placeholder="Select Employee"
                                             id="employeess"
+                                            showSearch
                                             filterOption={(input, option:any) =>
                                                 option !== undefined &&
                                                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
