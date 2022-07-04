@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -56,7 +56,11 @@ export interface Attendance {
 
     attendanceDetailsAllEmployee2: any;
     setattendanceDetailsAllEmployee2: Action<Attendance, any>;
-    fetchattendanceDetailsAllEmployee2: Thunk<Attendance, any>
+    fetchattendanceDetailsAllEmployee2: Thunk<Attendance, any>    
+    
+    attendanceDetailsDepartmentEmployee: any;
+    setattendanceDetailsDepartmentEmployee: Action<Attendance, any>;
+    fetchattendanceDetailsDepartmentEmployee: Thunk<Attendance, any>
     
 }
 
@@ -458,6 +462,11 @@ export const attendanceStore: Attendance = {
         if (response.status === 201 || response.status === 200) {
             actions.setLoading(false);
             const body = await response.json();
+            if (body?.messageType===0){
+                notification.error({message:body.message});
+                actions.setattendanceDetailsAllEmployee2([]);
+                return;
+            }
             if (body.item?.staffList?.length > 0) {
                 actions.setattendanceDetailsAllEmployee2(body?.item);
             } else {
@@ -476,5 +485,36 @@ export const attendanceStore: Attendance = {
 
     setattendanceDetailsAllEmployee2: action((state, payload) => {
         state.attendanceDetailsAllEmployee2 = payload;
+    }),
+    attendanceDetailsDepartmentEmployee: [],
+    fetchattendanceDetailsDepartmentEmployee: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchattendanceDetailsDepartmentEmployee(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body?.messageType===0){
+                notification.error({message:body.message});
+                actions.setattendanceDetailsDepartmentEmployee([]);
+                return;
+            }
+            if (body.item?.staffList?.length > 0) {
+                actions.setattendanceDetailsDepartmentEmployee(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setattendanceDetailsDepartmentEmployee([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setattendanceDetailsDepartmentEmployee: action((state, payload) => {
+        state.attendanceDetailsDepartmentEmployee = payload;
     }),
 }

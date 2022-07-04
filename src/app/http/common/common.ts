@@ -31,3 +31,6 @@ export const selectDepartmentListUrl =() => get("/department/list");
 export const selectDesignationListUrl =() => get("/designation/list");
 export const selectEmployeeTypeListUrl =() => get("/employee-type/list");
 export const selectShiftListUrl =() => get("/shift/list");
+
+export const fetchallCompanyView = () => get("/company/all/view");
+

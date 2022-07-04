@@ -42,6 +42,7 @@ export const SelectDepartment = ({
       // loading={loading}
       showSearch
       allowClear
+      className="depSelect"
       defaultValue={defaultSelected}
       value={selected}
       style={style}

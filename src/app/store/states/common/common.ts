@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete, selectDepartmentListUrl, selectDesignationListUrl, selectEmployeeTypeListUrl, selectShiftListUrl } from '../../../http/common/common';
+import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete, selectDepartmentListUrl, selectDesignationListUrl, selectEmployeeTypeListUrl, selectShiftListUrl, fetchallCompanyView } from '../../../http/common/common';
 
 export interface Common {
 	districtList: any,
@@ -95,7 +95,12 @@ export interface Common {
 
 	companyShiftList: any;
 	setCompanyShiftList: Action<Common, any>;
-	fetchCompanyShiftList: Thunk<Common>;
+	fetchCompanyShiftList: Thunk<Common>;	
+	
+	allCompanyView: any;
+	setallCompanyView: Action<Common, any>;
+	fetchallCompanyView: Thunk<Common>;
+
 
 }
 
@@ -107,6 +112,7 @@ export const commonStore: Common = {
 	companyDesignationList:[],
 	companyEmployeeList:[],
 	companyShiftList:[],
+	allCompanyView:[],
 	districtListFetch: thunk(async (actions) => {
 		const response = await fetchDistrictList();
 		if (response.status === 201 || response.status === 200) {
@@ -549,6 +555,25 @@ export const commonStore: Common = {
 	}),
 	setCompanyShiftList: action((state, payload) => {
 		state.companyShiftList = payload;
+	}),
+
+	fetchallCompanyView:  thunk(async (actions) => {
+		const response = await fetchallCompanyView();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				//notification.success({ message: body.message })
+				actions.setallCompanyView(body?.item);
+			} else {
+				actions.setallCompanyView([]);
+			}
+
+		} else {
+
+		}
+	}),
+	setallCompanyView: action((state, payload) => {
+		state.allCompanyView = payload;
 	}),
 
 }

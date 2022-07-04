@@ -21,3 +21,4 @@ export const fetchresetPassword = (payload: any) => {
 };
 
 export const instituteInfo = () => get("/institute/view");
+export const goToCompany = (payload) => get("/company/jump?companyId="+payload);

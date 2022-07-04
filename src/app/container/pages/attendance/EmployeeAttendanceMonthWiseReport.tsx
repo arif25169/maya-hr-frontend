@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Tabs } from 'antd';
 import EmployeeAttendanceMonthWiseSingleReport from './EmployeeAttendanceMonthWiseSingleReport';
 import EmployeeAttendanceMonthWiseAllReport from './EmployeeAttendanceMonthWiseAllReport';
+import EmployeeAttendanceDepartmentWiseAllReport from './EmployeeAttendanceDepartmentWiseAllReport';
 
 
 export default function EmployeeAttendanceMonthWiseReport(props) {
@@ -18,7 +19,9 @@ export default function EmployeeAttendanceMonthWiseReport(props) {
                     <TabPane tab="Single" key="2">
                         <EmployeeAttendanceMonthWiseSingleReport />
                     </TabPane>
-
+                    <TabPane tab="Department" key="3">
+                        <EmployeeAttendanceDepartmentWiseAllReport />
+                    </TabPane>
                 </Tabs>
             </Card>
         </>

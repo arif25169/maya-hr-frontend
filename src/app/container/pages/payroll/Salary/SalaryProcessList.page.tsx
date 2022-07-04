@@ -60,8 +60,7 @@ export default function SalaryProcessList() {
                 moneyFormat(record.basicSalary)
             )
         },
-
-        salaryProcessList?.salaryHeadAdditionName1 !== "" && {
+        ...salaryProcessList?.salaryHeadAdditionName1 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName1,
             dataIndex: 'salaryHeadAdditionAmount1',
             key: 'salaryHeadAdditionAmount1',
@@ -70,153 +69,147 @@ export default function SalaryProcessList() {
             render: (text: any, record: any, index) => (
                 moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName2 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName2 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName2,
             dataIndex: 'salaryHeadAdditionAmount2',
             key: 'salaryHeadAdditionAmount2',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount2)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName3 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName3 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName3,
             dataIndex: 'salaryHeadAdditionAmount3',
             key: 'salaryHeadAdditionAmount3',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount3)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName4 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName4 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName4,
             dataIndex: 'salaryHeadAdditionAmount4',
             key: 'salaryHeadAdditionAmount4',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount4)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName5 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName5 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName5,
             dataIndex: 'salaryHeadAdditionAmount5',
             key: 'salaryHeadAdditionAmount5',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount5)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName6 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName6 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName6,
             dataIndex: 'salaryHeadAdditionAmount6',
             key: 'salaryHeadAdditionAmount6',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount6)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName7 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName7 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName7,
             dataIndex: 'salaryHeadAdditionAmount7',
             key: 'salaryHeadAdditionAmount7',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount7)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName8 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName8 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName8,
             dataIndex: 'salaryHeadAdditionAmount8',
             key: 'salaryHeadAdditionAmount8',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount8)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName9 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName9 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName9,
             dataIndex: 'salaryHeadAdditionAmount9',
             key: 'salaryHeadAdditionAmount9',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount9)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadAdditionName10 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadAdditionName10 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName10,
             dataIndex: 'salaryHeadAdditionAmount10',
             key: 'salaryHeadAdditionAmount10',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount10)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-        },
-        salaryProcessList?.salaryHeadDeductionName1 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadDeductionName1 !== "" ? [{
             title: salaryProcessList?.salaryHeadDeductionName1,
             dataIndex: 'salaryHeadDeductionAmount1',
             key: 'salaryHeadDeductionAmount1',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadDeductionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-
-        },
-        salaryProcessList?.salaryHeadDeductionName2 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadDeductionName2 !== "" ? [{
             title: salaryProcessList?.salaryHeadDeductionName2,
             dataIndex: 'salaryHeadDeductionAmount2',
             key: 'salaryHeadDeductionAmount2',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadDeductionAmount2)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-
-        },
-        salaryProcessList?.salaryHeadDeductionName3 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadDeductionName3 !== "" ? [{
             title: salaryProcessList?.salaryHeadDeductionName3,
             dataIndex: 'salaryHeadDeductionAmount3',
             key: 'salaryHeadDeductionAmount3',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadDeductionAmount3)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-
-        },
-        salaryProcessList?.salaryHeadDeductionName4 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadDeductionName4 !== "" ? [{
             title: salaryProcessList?.salaryHeadDeductionName4,
             dataIndex: 'salaryHeadDeductionAmount4',
             key: 'salaryHeadDeductionAmount4',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadDeductionAmount4)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-
-        },
-        salaryProcessList?.salaryHeadDeductionName5 !== "" && {
+        }] : [],
+        ...salaryProcessList?.salaryHeadDeductionName5 !== "" ? [{
             title: salaryProcessList?.salaryHeadDeductionName5,
             dataIndex: 'salaryHeadDeductionAmount5',
             key: 'salaryHeadDeductionAmount5',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadDeductionAmount5)
+                moneyFormat(record.salaryHeadAdditionAmount1)
             )
-
-        },
-
+        }] : [],
         {
             title: 'Gross Salary',
             dataIndex: 'grossSalary',
@@ -331,15 +324,16 @@ export default function SalaryProcessList() {
                                         mobileBreakPoint={768}
                                     />
 
-                                    <Space style={{float:"right"}}>
+                                    <Space style={{ float: "right" }}>
                                         <Button
                                             style={{
                                                 marginBottom: 20,
                                             }}
+                                            type="primary"
                                             onClick={() => {
                                                 const excel = new Excel();
                                                 excel
-                                                    .addSheet('test')
+                                                    .addSheet('Salary Process')
                                                     .addColumns(columns)
                                                     .addDataSource(tableData, {
                                                         str2Percent: true,

@@ -3,7 +3,6 @@ import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, 
 import { DeleteOutlined, EditOutlined, EyeOutlined, PrinterOutlined, SaveOutlined, SearchOutlined, SettingOutlined, UngroupOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
-import { Excel } from 'antd-table-saveas-excel';
 import moment from 'moment';
 import ReactToPrint from 'react-to-print';
 import { moneyFormat } from '../../../../utils/utils';

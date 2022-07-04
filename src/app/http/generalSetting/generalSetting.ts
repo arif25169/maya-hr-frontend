@@ -64,3 +64,9 @@ export const rejectLeaveApplication = (payload) => post("/leave/application/reje
 
 export const approveLateAttendance = (payload) => post("/employee/attendance/approve/late/attendance?attendanceId="+payload);
 export const approveAbsentAttendance = (payload) => post("/employee/attendance/approve/absent/attendance?attendanceId="+payload);
+export const goToCompany = (payload) => get("/company/jump?companyId="+payload);
+
+export const savedutyStation = (payload) => post("/duty-station/save", payload);
+export const updatedutyStation = (payload) => post("/duty-station/update", payload);
+export const fetchdutyStationList = () => get("/duty-station/list");
+export const deletedutyStation = (payload) => del("/duty-station/delete?dutyStationId="+payload);

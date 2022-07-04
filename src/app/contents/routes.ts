@@ -4,6 +4,7 @@ export const ROUTES = {
   CREATE_EMPLOYEE: "create-employee",
   CREATE_DESIGNATION: "create-designation",
   CREATE_EMPLOYEE_ADD: "create-employee-add",
+  CREATE_DUTY_STATION: "create-duty-station",
   CREATE_SHIFT: "create-shift",
   CREATE_LEAVE_CATEGORY: "create-leave-category",
   CREATE_LEAVE_CONFIG: "create-leave-config",
@@ -42,5 +43,7 @@ export const ROUTES = {
   EOMPLOYEE_ATACHEMENTS: "employee-atachmenmts",
   EOMPLOYEE_ATTENDNACE: "employee-attendance",
   EOMPLOYEE_REMARKS: "employee-remarks",
+  COMPANY_LIST: "company-list",
+  JUMP_COMPANY:"jump-company",
   USER_LIST: "user-list",
 };

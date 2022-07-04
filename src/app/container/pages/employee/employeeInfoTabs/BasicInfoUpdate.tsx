@@ -29,9 +29,12 @@ export default function BasicInfoUpdate() {
     const updateEmployeeBasicInfo = useStoreActions((state) => state.hr.updateEmployeeBasicInfo);
     const fetchAllEmployeeList = useStoreActions((state) => state.hr.fetchAllEmployeeList);
     const allemployeeList = useStoreState((state) => state.hr.allemployeeList);
+    const dutyStationList = useStoreState((state) => state.generalSetting.dutyStationList);
+    const fetchdutyStationList = useStoreActions((state) => state.generalSetting.fetchdutyStationList);
 
     useEffect(() => {
         fetchAllEmployeeList();
+        fetchdutyStationList();
     }, []);
 
     const updateBasicInfo = (value) => {
@@ -59,8 +62,9 @@ export default function BasicInfoUpdate() {
             photoName: employeeData.photoName,
             relationWithEmergencyContact: value.relationWithEmergencyContact,
             employeeHod: value.employeeHodId,
-            "employeePhoto":employeePhoto,
-            "employeePhotoContent":employeePhotoContent,
+            dutyStationId: value.dutyStationId,
+            "employeePhoto": employeePhoto,
+            "employeePhotoContent": employeePhotoContent,
             "employeePhotoFileSave": employeePhotoFileSave,
         }
         updateEmployeeBasicInfo(dataList);
@@ -121,6 +125,8 @@ export default function BasicInfoUpdate() {
                     companyEmail: item.companyEmail,
                     employeeHodName: item.employeeHodName,
                     employeeHodId: item.employeeHodId,
+                    dutyStationName: item.dutyStationName,
+                    dutyStationId: item.dutyStationId,
                 }
                 setEmployeeData(dataList);
             }
@@ -149,6 +155,7 @@ export default function BasicInfoUpdate() {
             personalEmail: employeeData.personalEmail,
             companyEmail: employeeData.companyEmail,
             employeeHodId: employeeData.employeeHodId,
+            dutyStationId: employeeData.dutyStationId,
         })
     }
 
@@ -196,7 +203,7 @@ export default function BasicInfoUpdate() {
                         <Row>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <div style={{ display: 'flex', alignItems: 'center', alignContent: "center" }}>
-                                    <Avatar size={64}  src={"data:image/png;base64," + employeeData?.employeePhoto} />
+                                    <Avatar size={64} src={"data:image/png;base64," + employeeData?.employeePhoto} />
                                     <Title style={{ marginLeft: 10 }} level={3}>{employeeData?.employeeName}</Title>
                                 </div>
 
@@ -262,12 +269,12 @@ export default function BasicInfoUpdate() {
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Company Mobile</Title>
                                 <p>{employeeData?.corporateMobile}</p>
-                            </Col>                            
+                            </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Personal Email</Title>
                                 <p>{employeeData?.personalEmail}</p>
-                            </Col>                           
-                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Company Email</Title>
                                 <p>{employeeData?.companyEmail}</p>
                             </Col>
@@ -282,8 +289,12 @@ export default function BasicInfoUpdate() {
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Joining Date</Title>
                                 <p>{employeeData?.joiningDate}</p>
-                            </Col>                           
-                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                <Title level={5}>Duty Station</Title>
+                                <p>{employeeData?.dutyStationName}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Employee HOD</Title>
                                 <p>{employeeData?.employeeHodName}</p>
                             </Col>
@@ -531,32 +542,64 @@ export default function BasicInfoUpdate() {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                    <Form.Item
-                                        name="employeeHodId"
-                                        label="Employee HOD:"
-                                        className="title-Text"
-                                    >
-                                        <Select
-                                            placeholder="Select Employee"
-                                            id="employeess"
-                                            showSearch
-                                            filterOption={(input, option:any) =>
-                                                option !== undefined &&
-                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                              }
-                                        >
-                                            {allemployeeList ? (
-                                                allemployeeList.map((type, idx) => (
-                                                    <Option key={type.employeeId} value={type.employeeId}>
-                                                        {type.employeeName}
-                                                    </Option>
-                                                ))
-                                            ) : (
-                                                <Option value="fetching">Fetching Employee</Option>
-                                            )}
-                                        </Select>
-                                    </Form.Item>
-                                </Col>
+                            <Form.Item
+                                name="dutyStationId"
+                                label="Duty Station:"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please select duty station" },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Select Duty Station"
+                                    id="employeessDuty"
+                                    showSearch
+                                    filterOption={(input, option: any) =>
+                                        option !== undefined &&
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
+                                >
+                                    {dutyStationList ? (
+                                        dutyStationList.map((type, idx) => (
+                                            <Option key={type.dutyStationId} value={type.dutyStationId}>
+                                                {type.dutyStationName}
+                                            </Option>
+                                        ))
+                                    ) : (
+                                        <Option value="fetching">Fetching Duty Station</Option>
+                                    )}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Form.Item
+                                name="employeeHodId"
+                                label="Employee HOD:"
+                                className="title-Text"
+
+                            >
+                                <Select
+                                    placeholder="Select Employee"
+                                    id="employeess"
+                                    showSearch
+                                    filterOption={(input, option: any) =>
+                                        option !== undefined &&
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
+                                >
+                                    {allemployeeList ? (
+                                        allemployeeList.map((type, idx) => (
+                                            <Option key={type.employeeId} value={type.employeeId}>
+                                                {type.employeeName}
+                                            </Option>
+                                        ))
+                                    ) : (
+                                        <Option value="fetching">Fetching Employee</Option>
+                                    )}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+
                         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
                             <div >
                                 <div className="ant-col ant-form-item-label"><label className="ant-form-item" >Upload Photo</label></div>

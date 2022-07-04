@@ -116,6 +116,9 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                                         name="employeeId"
                                         label="Select Employee:"
                                         className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please select employee" },
+                                        ]}
                                     >
                                         <Select
                                             placeholder="Select Employee"

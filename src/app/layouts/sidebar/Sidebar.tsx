@@ -109,6 +109,9 @@ export function Sidebar() {
 						</Menu.Item>
 						<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
+						</Menu.Item>						
+						<Menu.Item key={ROUTES.CREATE_DUTY_STATION} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_DUTY_STATION} className="nav-text">Duty Station</Link>
 						</Menu.Item>
 					</SubMenu>
 					<SubMenu key={"employee"} icon={<PartitionOutlined />} title="Registration" >
@@ -223,7 +226,7 @@ export function Sidebar() {
 					</Menu.Item>
 					<Menu.Item key={ROUTES.LEAVE_PENDING} icon={<UserOutlined />}>
 						<Link to={ROUTES.LEAVE_PENDING} className="nav-text">Leave Pending</Link>
-					</Menu.Item>					
+					</Menu.Item>
 					<Menu.Item key={ROUTES.EOMPLOYEE_REMARKS} icon={<UserOutlined />}>
 						<Link to={ROUTES.EOMPLOYEE_REMARKS} className="nav-text">Remarks List</Link>
 					</Menu.Item>
@@ -257,6 +260,17 @@ export function Sidebar() {
 			</SubMenu>
 		</>
 		}
+		{(companyInfo?.roleList?.includes('ROLE_SUPER_ADMIN')) && <>
+			<hr style={{ width: "80%", marginTop: 30 }} />
+			<SubMenu key={"superAdminMenu"} icon={<PartitionOutlined />} title="Super Admin" >
+				<Menu.Item key={ROUTES.COMPANY_LIST + 'em'} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.COMPANY_LIST} className="nav-text">Comapny List</Link>
+				</Menu.Item>
+				<Menu.Item key={ROUTES.JUMP_COMPANY + 'em'} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.JUMP_COMPANY} className="nav-text">Jump</Link>
+				</Menu.Item>
+			</SubMenu>
+		</>}
 	</Menu>
 	}
 	</>

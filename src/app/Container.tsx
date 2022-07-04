@@ -34,6 +34,7 @@ import CreateDeduction from "./container/pages/generalSettings/CreateDeduction";
 import CreateLeaveCategory from "./container/pages/generalSettings/CreateLeaveCategory";
 import CreateLeaveConfig from "./container/pages/generalSettings/CreateLeaveConfig";
 import CreateCompany from "./container/pages/generalSettings/CreateCompany";
+import CreateDutyStation from "./container/pages/generalSettings/CreateDutyStation";
 import CreateFinancialYear from "./container/pages/generalSettings/CreateFinancialYear";
 import CreateDepartment from "./container/pages/generalSettings/CreateDepartment";
 import CreateHoliday from "./container/pages/generalSettings/CreateHoliday";
@@ -57,6 +58,8 @@ import LeaveApply from "./container/pages/generalSettings/LeaveApply";
 import LeavePendingList from "./container/pages/generalSettings/LeavePendingList";
 import EmployeeSelfAttendanceDetails from "./container/pages/generalSettings/EmployeeSelfAttendanceDetails";
 import RemarksList from "./container/pages/generalSettings/RemarksList";
+import CompanyList from "./container/pages/superAdmin/CompanyList";
+import CompanyJump from "./container/pages/superAdmin/CompanyJump";
 import Profile from './container/pages/signup/Profile.page';
 import Users from "./container/pages/user/Users";
 
@@ -152,6 +155,7 @@ export default function Container() {
             <Route exact path={'/' +ROUTES.UPDATE_COMPANY} component={UpdateCompany} /> 
             <Route exact path={'/' +ROUTES.CREATE_DEPARTMENT} component={CreateDepartment} /> 
             <Route exact path={'/' +ROUTES.CREATE_HOLIDAY} component={CreateHoliday} /> 
+            <Route exact path={'/' +ROUTES.CREATE_DUTY_STATION} component={CreateDutyStation} /> 
             <Route exact path={'/' +ROUTES.CREATE_EMPLOYEE_EXCEL} component={CreateEmployeeByExcel} /> 
             <Route exact path={'/' +ROUTES.EMPLOYEE_INFORMATION} component={EmployeeInformation} /> 
             <Route exact path={'/' +ROUTES.LEAVE_ASSIGN} component={LeaveAssign} /> 
@@ -171,6 +175,8 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.LEAVE_PENDING} component={LeavePendingList} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_ATTENDNACE} component={EmployeeSelfAttendanceDetails} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_REMARKS} component={RemarksList} />
+            <Route exact path={'/' + ROUTES.COMPANY_LIST} component={CompanyList} />
+            <Route exact path={'/' + ROUTES.JUMP_COMPANY} component={CompanyJump} />
             <Route exact path={'/' + ROUTES.USER_LIST} component={Users} />
           </Switch>
         </Content>

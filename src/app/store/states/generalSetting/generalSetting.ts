@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -26,6 +26,13 @@ export interface GeneralSetting {
 	setEmployeeTypeList: Action<GeneralSetting, any>;
 	updateEmployeeType: Thunk<GeneralSetting, any>;
 	deleteEmployeeType: Thunk<GeneralSetting, any>;
+
+	savedutyStation: Thunk<GeneralSetting, any>;
+	dutyStationList: any;
+	fetchdutyStationList: Thunk<GeneralSetting>;
+	setdutyStationList: Action<GeneralSetting, any>;
+	updatedutyStation: Thunk<GeneralSetting, any>;
+	deletedutyStation: Thunk<GeneralSetting, any>;
 
 	saveShift: Thunk<GeneralSetting, any>;
 	shiftList: any;
@@ -118,6 +125,7 @@ export interface GeneralSetting {
 	remarksLits: any;
 	setRemarksList: Action<GeneralSetting, any>;
 	fetchRemarksList: Thunk<GeneralSetting>;
+	goToCompany: Thunk<GeneralSetting, any>;
 
 }
 
@@ -126,6 +134,7 @@ export const generalSettingStore: GeneralSetting = {
 	departmentList: [],
 	designationList: [],
 	employeeTypeList: [],
+	dutyStationList: [],
 	shiftList: [],
 	employeeListByDepartmentId: [],
 	leavelListByDepartmentId: [],
@@ -333,6 +342,69 @@ export const generalSettingStore: GeneralSetting = {
 			if (body.messageType == 1) {
 				notification.success({ message: body.message })
 				actions.fetchEmployeeTypeList();
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	savedutyStation: thunk(async (actions, payload) => {
+		const response = await savedutyStation(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchdutyStationList();
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	fetchdutyStationList: thunk(async (actions) => {
+		const response = await fetchdutyStationList();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				actions.setdutyStationList(body.item)
+			} else {
+				actions.setdutyStationList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setdutyStationList: action((state, payload) => {
+		state.dutyStationList = payload;
+	}),
+
+	updatedutyStation: thunk(async (actions, payload) => {
+		const response = await updatedutyStation(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchdutyStationList();
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	deletedutyStation: thunk(async (actions, payload) => {
+		const response = await deletedutyStation(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchdutyStationList();
 			} else {
 				notification.error({ message: body.message })
 			}
@@ -942,16 +1014,16 @@ export const generalSettingStore: GeneralSetting = {
 				message: 'Something went wrong',
 			});
 		}
-	}),	
+	}),
 	deleteLeaveApplication: thunk(async (actions, payload) => {
 		const response = await deleteLeaveApplication(payload.delid);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				notification.success({message:body.message})
+				notification.success({ message: body.message })
 				actions.fetchapplicantApplyList(payload.year)
 			} else {
-				notification.error({message:body.message})
+				notification.error({ message: body.message })
 			}
 		} else {
 			const body = await response.json();
@@ -985,16 +1057,16 @@ export const generalSettingStore: GeneralSetting = {
 				message: 'Something went wrong',
 			});
 		}
-	}),	
+	}),
 	approveLeaveApplication: thunk(async (actions, payload) => {
 		const response = await approveLeaveApplication(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				notification.success({message:body.message})
+				notification.success({ message: body.message })
 				actions.fetchleaveApplicationPendingList(payload)
 			} else {
-				notification.error({message:body.message})
+				notification.error({ message: body.message })
 			}
 		} else {
 			const body = await response.json();
@@ -1002,16 +1074,16 @@ export const generalSettingStore: GeneralSetting = {
 				message: 'Something went wrong',
 			});
 		}
-	}),	
+	}),
 	rejectLeaveApplication: thunk(async (actions, payload) => {
 		const response = await rejectLeaveApplication(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				notification.success({message:body.message})
+				notification.success({ message: body.message })
 				actions.fetchleaveApplicationPendingList(payload)
 			} else {
-				notification.error({message:body.message})
+				notification.error({ message: body.message })
 			}
 		} else {
 			const body = await response.json();
@@ -1045,17 +1117,17 @@ export const generalSettingStore: GeneralSetting = {
 				message: 'Something went wrong',
 			});
 		}
-	}),	
+	}),
 
 	approveLateAttendance: thunk(async (actions, payload) => {
 		const response = await approveLateAttendance(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				notification.success({message:body.message})
+				notification.success({ message: body.message })
 				actions.fetchRemarksList()
 			} else {
-				notification.error({message:body.message})
+				notification.error({ message: body.message })
 			}
 		} else {
 			const body = await response.json();
@@ -1063,22 +1135,50 @@ export const generalSettingStore: GeneralSetting = {
 				message: 'Something went wrong',
 			});
 		}
-	}),	
+	}),
 	approveAbsentAttendance: thunk(async (actions, payload) => {
 		const response = await approveAbsentAttendance(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
 			if (body.messageType == 1) {
-				notification.success({message:body.message})
+				notification.success({ message: body.message })
 				actions.fetchRemarksList()
 			} else {
-				notification.error({message:body.message})
+				notification.error({ message: body.message })
 			}
 		} else {
 			const body = await response.json();
 			notification['error']({
 				message: 'Something went wrong',
 			});
+		}
+	}),
+
+	goToCompany: thunk(async (actions, payload) => {
+		// console.log(payload)
+		const response = await goToCompany(payload);
+		if (response.status === 200) {
+			const body = await response.json();
+			if (body?.messageType === 1) {
+				const response2 = await fetchCompanyInfoUrl();
+				if (response2.status === 201 || response2.status === 200) {
+					const body2 = await response2.json();
+					actions.setCompanyInfo(body2.item);
+					localStorage.setItem("companyInfo", JSON.stringify(body.item));
+					localStorage.setItem('sideBarValuesKey', ('1'));
+					window.location.href = '/';
+				}
+			} else {
+
+				notification['error']({
+					message: 'Info',
+					description: body?.message,
+				});
+			}
+
+
+		} else {
+
 		}
 	}),
 
