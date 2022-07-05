@@ -136,44 +136,6 @@ export function Sidebar() {
 				</Menu.Item> */}
 					</SubMenu>
 				</SubMenu>
-				<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
-
-					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
-
-						<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
-						</Menu.Item>
-						<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
-						</Menu.Item>
-						<Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
-						</Menu.Item>
-					</SubMenu>
-					<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
-
-						<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
-						</Menu.Item>
-					</SubMenu>
-					<SubMenu key={"attendanceInput"} icon={<PartitionOutlined />} title="Input" >
-						<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.TAKE_ATTENDANCE} className="nav-text">Manual</Link>
-						</Menu.Item>
-						<Menu.Item key={ROUTES.UPDATE_ATTENDANCE} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.UPDATE_ATTENDANCE} className="nav-text">Update</Link>
-						</Menu.Item>
-					</SubMenu>
-					<SubMenu key={"attendanceReport"} icon={<PartitionOutlined />} title="Report" >
-						<Menu.Item key={ROUTES.HR_REPORT_DATE_WISE} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.HR_REPORT_DATE_WISE} className="nav-text">Daily Details</Link>
-						</Menu.Item>
-						<Menu.Item key={ROUTES.HR_REPORT_MONTH_WISE} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Date to Date</Link>
-						</Menu.Item>
-					</SubMenu>
-				</SubMenu>
-
 				<SubMenu key={"payrollMenu"} icon={<PartitionOutlined />} title="Payroll" >
 					<SubMenu key={"payrollSetiings"} icon={<PartitionOutlined />} title="Settings" >
 						<Menu.Item key={ROUTES.SETTINGS_PAYROLL_GRADE} icon={<ContainerOutlined />}>
@@ -213,6 +175,45 @@ export function Sidebar() {
 					</Menu.Item>
 
 				</SubMenu>
+				<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
+
+					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
+
+						<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
+
+						<Menu.Item key={ROUTES.DEVICE_PROCESS} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.DEVICE_PROCESS} className="nav-text">Process</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"attendanceInput"} icon={<PartitionOutlined />} title="Input" >
+						<Menu.Item key={ROUTES.TAKE_ATTENDANCE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.TAKE_ATTENDANCE} className="nav-text">Manual</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.UPDATE_ATTENDANCE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.UPDATE_ATTENDANCE} className="nav-text">Update</Link>
+						</Menu.Item>
+					</SubMenu>
+					<SubMenu key={"attendanceReport"} icon={<PartitionOutlined />} title="Report" >
+						<Menu.Item key={ROUTES.HR_REPORT_DATE_WISE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.HR_REPORT_DATE_WISE} className="nav-text">Daily Details</Link>
+						</Menu.Item>
+						<Menu.Item key={ROUTES.HR_REPORT_MONTH_WISE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Date to Date</Link>
+						</Menu.Item>
+					</SubMenu>
+				</SubMenu>
+
+
 				<SubMenu key={"leaveMenuItem"} icon={<PartitionOutlined />} title="Leave" >
 
 					<Menu.Item key={ROUTES.CREATE_LEAVE_CATEGORY} icon={<ContainerOutlined />}>

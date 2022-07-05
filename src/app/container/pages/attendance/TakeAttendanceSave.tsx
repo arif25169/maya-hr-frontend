@@ -47,8 +47,8 @@ export default function TakeAttendanceSave() {
         },
         {
             title: 'Name',
-            dataIndex: 'accountName',
-            key: 'accountName',
+            dataIndex: 'employeeName',
+            key: 'employeeName',
             showOnResponse: true,
             showOnDesktop: true
         },

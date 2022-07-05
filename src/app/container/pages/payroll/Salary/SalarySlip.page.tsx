@@ -128,7 +128,7 @@ const ComponentToPrint = React.forwardRef((props: any, ref: any) => {
                     </tr>
                     <tr style={{ border: '1px solid', paddingLeft: 2 }}>
                         <td style={{ width: "25%" }}>Payment Type: {details?.paymentType} </td>
-                        <td style={{ width: "25%", textAlign: 'center', }}>{details?.paymentType === "Cash" ? <span style={{ color: "#fff" }}>Dummy</span> : <>{details?.paymentType} No. {details?.paymentNo}</>}</td>
+                        <td style={{ width: "25%", textAlign: 'center', }}>{details?.paymentType === "Cash" ? <span style={{ color: "#fff" }}>x</span> : <>{details?.paymentType} No. {details?.paymentNo}</>}</td>
                         <td style={{ width: "25%" }}>{details?.paymentType} Date</td>
                         <td style={{ textAlign: 'center', width: "25%" }}>{details?.paymentDate}</td>
                     </tr>
@@ -609,7 +609,7 @@ export default function SalarySlip() {
                         >
                             <Select placeholder='Payment Type' value={paymentType} onChange={(e) => setPaymentType(e)} >
                                 <Select.Option value="Cheque">Cheque</Select.Option>
-                                <Select.Option value="Payment Advise">Payment Advise</Select.Option>
+                                <Select.Option value="Bank Advise">Bank Advise</Select.Option>
                                 <Select.Option value="Cash">Cash</Select.Option>
                             </Select>
                         </Form.Item>
@@ -678,7 +678,7 @@ export default function SalarySlip() {
                             >
                                 <Select placeholder='Payment Type' value={paymentType} onChange={(e) => setPaymentType(e)} >
                                     <Select.Option value="Cheque">Cheque</Select.Option>
-                                    <Select.Option value="Payment Advise">Payment Advise</Select.Option>
+                                    <Select.Option value="Bank Advise">Bank Advise</Select.Option>
                                     <Select.Option value="Cash">Cash</Select.Option>
                                 </Select>
                             </Form.Item>
