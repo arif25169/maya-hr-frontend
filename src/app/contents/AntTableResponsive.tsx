@@ -102,8 +102,6 @@ import { SearchOutlined } from "@ant-design/icons";
      desktopTableProps.searchable=true;
      desktopTableProps.headerBackground="#b8d7cd";
      desktopTableProps.searchableProps={
-      // dataSource,
-      // setDataSource: setSearchDataSource,
       inputProps: {
         placeholder: "Search this table...",
         prefix: <SearchOutlined />,

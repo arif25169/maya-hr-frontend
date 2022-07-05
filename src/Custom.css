@@ -1,5 +1,22 @@
 @import url('https://themes.googleusercontent.com/fonts/css?kit=fpjTOVmNbO4Lz34iLyptLXSPJVVvS7pivFi9a_v_830O_kPjaewOT7xyLjus2-9PB6GDs-01xiojPuFmmAe3kg');
 
+.atterror {
+  background: #F7771D;
+}
+.atterror :hover {
+  background: #F7771D !important;
+}
+tr:hover .atterror  {
+  background: #F7771D !important;
+}
+.attpresent {
+  background: #fff;
+}
+
+.ant-descriptions-bordered .ant-descriptions-item-label, .ant-descriptions-bordered .ant-descriptions-item-content {
+  padding: 5px 5px !important;
+}
+
 .c23 {
   border-right-style: solid;
   padding: 0pt 5.8pt 0pt 5.8pt;

@@ -1,10 +1,10 @@
-import { Button, Card, Col, DatePicker, Descriptions, Form, Input, Modal, Popconfirm, Row, Select, Space, Table, Tooltip } from 'antd'
+import { Button, Card, Col, DatePicker, Descriptions, Form, Input, Modal, Popconfirm, Row, Select, Space, Tooltip } from 'antd'
 import moment from 'moment';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import { DeleteOutlined, EditOutlined, FilePdfOutlined, PlusCircleOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
-import TableView from '../../../contents/AntTableResponsive';
+import { Table } from "ant-table-extensions-extended";
 
 
 const { Option } = Select;
@@ -50,7 +50,16 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
             dataIndex: 'attendanceStatus',
             key: 'attendanceStatus',
             showOnResponse: true,
-            showOnDesktop: true
+            showOnDesktop: true,
+            render: (text, record) => {
+                return {
+                  props: {
+                    className:
+                      text === "P" || text === "P(L)"|| text === "P (L)" ? "attpresent" : "atterror", // there it is!
+                  },
+                  children: text,
+                };
+              },
         },
         {
             title: 'Late',
@@ -178,7 +187,7 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                 </Form>
                 {attendanceDetailssinglefEmployee?.details?.length > 0 &&
                     <Row className='mt-30'>
-                        <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+                        <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
                             <Descriptions
                                 title="Employee Info"
                                 bordered
@@ -192,7 +201,7 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                             </Descriptions>
                         </Col>
                         <Col span={24}>
-                            <TableView
+                            {/* <TableView
                                 antTableProps={{
                                     showHeader: true,
                                     columns: columns,
@@ -203,7 +212,13 @@ export default function EmployeeAttendanceMonthWiseSingleReport(props) {
                                     bordered: true,
                                 }}
                                 mobileBreakPoint={768}
-                            />
+                            /> */}
+                                          <Table
+                dataSource={attendanceDetailssinglefEmployee.details}
+                bordered
+                pagination={false}
+                columns={columns}
+              />
                         </Col>
                         <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                             <Descriptions
