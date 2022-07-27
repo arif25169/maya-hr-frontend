@@ -44,7 +44,9 @@ export const ROUTES = {
   EOMPLOYEE_ATTENDNACE: "employee-attendance",
   EOMPLOYEE_REMARKS: "employee-remarks",
   SHIFT_CONFIG: "shift-config",
+  SHIFT_REPORT: "shift-report",
   COMPANY_LIST: "company-list",
   JUMP_COMPANY:"jump-company",
   USER_LIST: "user-list",
+  ATTENDANCE_FINE: "attendance-fine"
 };

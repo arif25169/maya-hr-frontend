@@ -58,11 +58,13 @@ import LeaveApply from "./container/pages/generalSettings/LeaveApply";
 import LeavePendingList from "./container/pages/generalSettings/LeavePendingList";
 import EmployeeSelfAttendanceDetails from "./container/pages/generalSettings/EmployeeSelfAttendanceDetails";
 import EmployeeShiftConfig from "./container/pages/attendance/EmployeeShiftConfig";
+import EmployeeShiftReport from "./container/pages/attendance/EmployeeShiftReport";
 import RemarksList from "./container/pages/generalSettings/RemarksList";
 import CompanyList from "./container/pages/superAdmin/CompanyList";
 import CompanyJump from "./container/pages/superAdmin/CompanyJump";
 import Profile from './container/pages/signup/Profile.page';
 import Users from "./container/pages/user/Users";
+import AttendanceFine from "./container/pages/generalSettings/AttendanceFine";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -177,9 +179,11 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.EOMPLOYEE_ATTENDNACE} component={EmployeeSelfAttendanceDetails} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_REMARKS} component={RemarksList} />
             <Route exact path={'/' + ROUTES.SHIFT_CONFIG} component={EmployeeShiftConfig} />
+            <Route exact path={'/' + ROUTES.SHIFT_REPORT} component={EmployeeShiftReport} />
             <Route exact path={'/' + ROUTES.COMPANY_LIST} component={CompanyList} />
             <Route exact path={'/' + ROUTES.JUMP_COMPANY} component={CompanyJump} />
             <Route exact path={'/' + ROUTES.USER_LIST} component={Users} />
+            <Route exact path={'/' + ROUTES.ATTENDANCE_FINE} component={AttendanceFine} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeAttendanceShiftConfigurationList, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchshiftList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveShiftConfiguration, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeAttendanceShiftConfigurationList, fetchemployeeAttendanceShiftConfigurationReport, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchshiftList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveShiftConfiguration, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -64,7 +64,11 @@ export interface Attendance {
 
     employeeAttendanceShiftConfigurationList: any;
     setemployeeAttendanceShiftConfigurationList: Action<Attendance, any>;
-    fetchemployeeAttendanceShiftConfigurationList: Thunk<Attendance, any>
+    fetchemployeeAttendanceShiftConfigurationList: Thunk<Attendance, any>    
+    
+    employeeAttendanceShiftConfigurationReport: any;
+    setemployeeAttendanceShiftConfigurationReport: Action<Attendance, any>;
+    fetchemployeeAttendanceShiftConfigurationReport: Thunk<Attendance, any>
 
     saveShiftConfiguration: Thunk<Attendance, any>
 
@@ -558,6 +562,38 @@ export const attendanceStore: Attendance = {
 
     setemployeeAttendanceShiftConfigurationList: action((state, payload) => {
         state.employeeAttendanceShiftConfigurationList = payload;
+    }),
+
+    employeeAttendanceShiftConfigurationReport: [],
+    fetchemployeeAttendanceShiftConfigurationReport: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchemployeeAttendanceShiftConfigurationReport(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body?.messageType === 0) {
+                notification.error({ message: body.message });
+                actions.setemployeeAttendanceShiftConfigurationReport([]);
+                return;
+            }
+            if (body.item?.employeeList?.length > 0) {
+                actions.setemployeeAttendanceShiftConfigurationReport(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setemployeeAttendanceShiftConfigurationReport([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setemployeeAttendanceShiftConfigurationReport: action((state, payload) => {
+        state.employeeAttendanceShiftConfigurationReport = payload;
     }),
 
     saveShiftConfiguration: thunk(async (actions, payload) => {

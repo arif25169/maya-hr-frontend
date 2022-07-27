@@ -176,13 +176,12 @@ export function Sidebar() {
 				<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
 
 					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
-{/* 
-						<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
+						{/* <Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
-						</Menu.Item> */}
+						</Menu.Item> 
 						<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
-						</Menu.Item>
+						</Menu.Item> */}
 						<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
 						</Menu.Item>	
@@ -190,10 +189,13 @@ export function Sidebar() {
 							<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
 						</Menu.Item> */}
 					</SubMenu>					
-					<SubMenu key={"attendanceConfig"} icon={<PartitionOutlined />} title="Config" >
+					<SubMenu key={"attendanceConfig"} icon={<PartitionOutlined />} title="Configuration" >
 
 						<Menu.Item key={ROUTES.SHIFT_CONFIG} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.SHIFT_CONFIG} className="nav-text">Shift</Link>
+						</Menu.Item>					
+						<Menu.Item key={ROUTES.SHIFT_REPORT} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SHIFT_REPORT} className="nav-text">Report</Link>
 						</Menu.Item>
 					</SubMenu>
 					<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >
@@ -218,6 +220,9 @@ export function Sidebar() {
 							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Date to Date</Link>
 						</Menu.Item>
 					</SubMenu>
+					<Menu.Item key={ROUTES.ATTENDANCE_FINE} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.ATTENDANCE_FINE} className="nav-text">Attendance Fine</Link>
+					</Menu.Item>
 				</SubMenu>
 
 

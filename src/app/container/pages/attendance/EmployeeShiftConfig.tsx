@@ -3,35 +3,20 @@ import {
   Button,
   Card,
   Col,
-  Divider,
   Form,
-  Input,
-  InputNumber,
-  Popconfirm,
   Row,
   Select,
-  Space,
-  Tooltip,
-  message,
-  Modal,
-  Checkbox,
-  notification,
-  Tabs,
   DatePicker,
   Skeleton,
-  Descriptions,
 } from "antd";
 import { useStoreActions, useStoreState } from "../../../store/hooks/easyPeasy";
 import { Table } from "ant-table-extensions-extended";
 import {
   SearchOutlined,
 } from "@ant-design/icons";
-import { Excel } from "antd-table-saveas-excel";
 import moment from "moment";
 import { SelectDepartment } from "../../select/SelectDepartment";
 
-
-import $ from "jquery";
 import { SelectShiftConfig } from "../../select/SelectShiftConfig";
 
 export default function EmployeeShiftConfig() {
@@ -540,7 +525,7 @@ export default function EmployeeShiftConfig() {
 
   return (
     <>
-      <Card title="Shift Config">
+      <Card title="Shift Configuration">
         <Row>
           <Col
             xs={{ span: 24, offset: 0 }}

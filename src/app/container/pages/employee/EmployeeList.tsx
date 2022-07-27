@@ -22,8 +22,9 @@ export default function EmployeeList() {
     const fetchEmployeeList = useStoreActions((state) => state.hr.fetchEmployeeList);
     const employeeList = useStoreState((state) => state.hr.employeeList);
     const tableColumn = [
+        {title : 'Employee ID', dataIndex: 'employeeCustomId', key: 'employeeCustomId', showOnResponse: true, showOnDesktop: true, width: 130,},
         {title : 'Employee Name', dataIndex: 'employeeName', key: 'employeeName', showOnResponse: true, showOnDesktop: true, width: 130,},
-        {title : 'Father Name', dataIndex: 'employeeCustomId', key: 'employeeCustomId', showOnResponse: true, showOnDesktop: true, width: 130,},
+        {title : 'Father Name', dataIndex: 'fatherName', key: 'fatherName', showOnResponse: true, showOnDesktop: true, width: 130,},
         {title : 'Mother Name', dataIndex: 'motherName', key: 'motherName', showOnResponse: true, showOnDesktop: true, width: 130,},
         {title : 'Gender', dataIndex: 'gender', key: 'gender', showOnResponse: true, showOnDesktop: true, width: 90,},
         {title : 'Marital Status', dataIndex: 'maritalStatus', key: 'maritalStatus', showOnResponse: true, showOnDesktop: true, width: 130,},

@@ -24,5 +24,6 @@ export const fetchattendanceDetailsAllEmployee2 = (payload) => get(`/employee/at
 export const fetchattendanceDetailssingleEmployee = (payload) => get(`/employee/attendance/report/single/employee/details?fromDate=${payload.fromDate}&toDate=${payload.toDate}&employeeId=${payload.employeeId}`);
 export const fetchattendanceDetailsDepartmentEmployee = (payload) => get(`/employee/attendance/report/department/employee/details?fromDate=${payload.fromDate}&toDate=${payload.toDate}&departmentId=${payload.departmentId}`);
 export const fetchemployeeAttendanceShiftConfigurationList = (payload) => get(`/employee/attendance/shift/configuration/list?fromDate=${payload.fromDate}&toDate=${payload.toDate}&departmentId=${payload.departmentId}`);
+export const fetchemployeeAttendanceShiftConfigurationReport = (payload) => get(`/employee/attendance/shift/configuration/report/list?fromDate=${payload.fromDate}&toDate=${payload.toDate}&departmentId=${payload.departmentId}`);
 export const fetchshiftList = () => get("/employee/attendance/shift/configuration/shift/list");
 export const saveShiftConfiguration = (payload) => post("/employee/attendance/shift/configuration/save", payload);

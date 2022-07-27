@@ -20,3 +20,8 @@ export const saveEmployeeAttachmentInfo = (payload) => post('/employee/attachmen
 
 export const fetchEmployeeByDepartment = (payload) => get('/employee/list/by/departmentId?departmentId='+payload);
 export const downloadHrTraining = (payload) => get('/employee/training/certificate/download?trainingId='+payload);
+
+export const saveWorkExperienceInfoUrl = (payload) => post('/employee/previous/work/info/save', payload);
+export const fetchWorkExperienceInfoListUrl = (payload) => get('/employee/previous/work/info/list?employeeId='+payload );
+export const deleteWorkExperienceInfoUrl = (payload) => del('/employee/previous/work/info/delete?previousWorkInfoId='+payload );
+export const workExperienceInfoUpdateUrl = (payload) => post('/employee/previous/work/info/update', payload);

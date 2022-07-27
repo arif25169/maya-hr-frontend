@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 import $ from 'jquery';
 import jsPDF from "jspdf";
 import { pdfDataL, ppowerdbypdf, pdatepdf, lpowerdbypdf, ldatepdf } from '../../utils/pdf';
-import { FilePdfOutlined } from '@ant-design/icons';
 import 'jspdf-autotable';
 
 export default function EmployeeAttendanceDateWiseReport() {

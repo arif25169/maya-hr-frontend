@@ -9,6 +9,8 @@ import TrainingInfo from './TrainingInfo';
 import BankInfoUpdate from './employeeInfoTabs/BankInfoUpdate';
 import BasicInfoUpdate from './employeeInfoTabs/BasicInfoUpdate';
 import EmployeeAtachments from './employeeInfoTabs/EmployeeAtachments';
+import EmployeeWorkExperience from './employeeInfoTabs/EmployeeWorkExperience';
+import AttendanceFine from '../generalSettings/AttendanceFine';
 
 export default function EmployeeInformation() {
 
@@ -33,11 +35,16 @@ export default function EmployeeInformation() {
                             </TabPane>
                             <TabPane tab="Training" key="4">
                                 {activeTab === "4" && <TrainingInfo /> }
-                            </TabPane>                    
-                            <TabPane tab="Attachments" key="5">
-                                {activeTab === "5" && <EmployeeAtachments /> }
+                            </TabPane>    
+                            <TabPane tab="Work Experience" key="5">
+                                {activeTab === "5" && <EmployeeWorkExperience /> }
+                            </TabPane>                 
+                            <TabPane tab="Attachments" key="6">
+                                {activeTab === "6" && <EmployeeAtachments /> }
                             </TabPane>
-
+                            <TabPane tab="Attendance Fine" key="7">
+                                {activeTab === "7" && <AttendanceFine /> }
+                            </TabPane>
                         </Tabs>
                     </Col>
                 </Row>

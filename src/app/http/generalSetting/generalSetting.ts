@@ -70,3 +70,8 @@ export const savedutyStation = (payload) => post("/duty-station/save", payload);
 export const updatedutyStation = (payload) => post("/duty-station/update", payload);
 export const fetchdutyStationList = () => get("/duty-station/list");
 export const deletedutyStation = (payload) => del("/duty-station/delete?dutyStationId="+payload);
+
+export const saveAttendanceFineUrl = (payload) => post("/attendance/fine/save", payload);
+export const updateAttendanceFineUrl = (payload) => post("/attendance/fine/update", payload);
+export const fetcAttendanceFineUrl = (payload) => get(`/attendance/fine/list?month=${payload.month}&year=${payload.year}`);
+export const deleteAttendanceFineUrl = (payload) => del(`/attendance/fine/delete?attendanceFineId=${payload}`);
