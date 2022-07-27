@@ -107,9 +107,7 @@ export function Sidebar() {
 						<Menu.Item key={ROUTES.CREATE_EMPLOYEE_ADD} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CREATE_EMPLOYEE_ADD} className="nav-text">Employee Type</Link>
 						</Menu.Item>
-						<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
-						</Menu.Item>						
+					
 						<Menu.Item key={ROUTES.CREATE_DUTY_STATION} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CREATE_DUTY_STATION} className="nav-text">Duty Station</Link>
 						</Menu.Item>
@@ -178,15 +176,24 @@ export function Sidebar() {
 				<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
 
 					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
-
+{/* 
 						<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
-						</Menu.Item>
+						</Menu.Item> */}
 						<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
 						</Menu.Item>
-						<Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
+						<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
+						</Menu.Item>	
+						{/* <Menu.Item key={ROUTES.HOLIDAY} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.HOLIDAY} className="nav-text">Holiday</Link>
+						</Menu.Item> */}
+					</SubMenu>					
+					<SubMenu key={"attendanceConfig"} icon={<PartitionOutlined />} title="Config" >
+
+						<Menu.Item key={ROUTES.SHIFT_CONFIG} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.SHIFT_CONFIG} className="nav-text">Shift</Link>
 						</Menu.Item>
 					</SubMenu>
 					<SubMenu key={"attendanceSettingDevice"} icon={<PartitionOutlined />} title="Devices" >

@@ -57,6 +57,7 @@ import EmployeeAttendanceMonthWiseReport from "./container/pages/attendance/Empl
 import LeaveApply from "./container/pages/generalSettings/LeaveApply";
 import LeavePendingList from "./container/pages/generalSettings/LeavePendingList";
 import EmployeeSelfAttendanceDetails from "./container/pages/generalSettings/EmployeeSelfAttendanceDetails";
+import EmployeeShiftConfig from "./container/pages/attendance/EmployeeShiftConfig";
 import RemarksList from "./container/pages/generalSettings/RemarksList";
 import CompanyList from "./container/pages/superAdmin/CompanyList";
 import CompanyJump from "./container/pages/superAdmin/CompanyJump";
@@ -175,6 +176,7 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.LEAVE_PENDING} component={LeavePendingList} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_ATTENDNACE} component={EmployeeSelfAttendanceDetails} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_REMARKS} component={RemarksList} />
+            <Route exact path={'/' + ROUTES.SHIFT_CONFIG} component={EmployeeShiftConfig} />
             <Route exact path={'/' + ROUTES.COMPANY_LIST} component={CompanyList} />
             <Route exact path={'/' + ROUTES.JUMP_COMPANY} component={CompanyJump} />
             <Route exact path={'/' + ROUTES.USER_LIST} component={Users} />

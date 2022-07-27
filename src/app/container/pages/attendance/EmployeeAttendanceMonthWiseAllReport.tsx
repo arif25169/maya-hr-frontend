@@ -694,6 +694,26 @@ export default function EmployeeAttendanceMonthWiseAllReport() {
                     },
                 },
             ]
+            : []),        
+            ...(attendanceDetailsAllEmployee2?.thirtythDay !== ""
+            ? [
+                {
+                    title: attendanceDetailsAllEmployee2?.thirtythDay,
+                    dataIndex: "thirtythDay",
+                    key: "thirtythDay",
+                    showOnResponse: true,
+                    showOnDesktop: true,
+                    render: (text, record) => {
+                        return {
+                            props: {
+                                className:
+                                    text === "P" || text === "P(L)" || text === "P (L)" ? "attpresent" : "atterror", // there it is!
+                            },
+                            children: text,
+                        };
+                    },
+                },
+            ]
             : []),
         ...(attendanceDetailsAllEmployee2?.thirtyFirstDay !== ""
             ? [

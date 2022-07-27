@@ -702,7 +702,27 @@ export default function EmployeeAttendanceDepartmentWiseAllReport() {
         },
       ]
       : []),
-    ...(attendanceDetailsDepartmentEmployee?.thirtyFirstDay !== ""
+    ...(attendanceDetailsDepartmentEmployee?.thirtythDay !== ""
+      ? [
+        {
+          title: attendanceDetailsDepartmentEmployee?.thirtythDay,
+          dataIndex: "thirtythDay",
+          key: "thirtythDay",
+          showOnResponse: true,
+          showOnDesktop: true,
+          render: (text, record) => {
+            return {
+              props: {
+                className:
+                  text === "P" || text === "P(L)" || text === "P (L)" ? "attpresent" : "atterror", // there it is!
+              },
+              children: text,
+            };
+          },
+        },
+      ]
+      : []),    
+      ...(attendanceDetailsDepartmentEmployee?.thirtyFirstDay !== ""
       ? [
         {
           title: attendanceDetailsDepartmentEmployee?.thirtyFirstDay,

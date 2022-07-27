@@ -3,26 +3,30 @@ import * as React from "react";
 import { useStoreActions, useStoreState } from "../../store/hooks/easyPeasy";
 const { Option } = Select;
 
-export interface SelectShift {
+export interface SelectShiftConfig {
   onChange?: any;
   selected?: any;
   defaultSelected?: any;
   style?: any
 }
 
-export const SelectShift = ({
+export const SelectShiftConfig = ({
   onChange,
   selected,
   defaultSelected,
   style
-}: SelectShift) => {
-  const companyShiftList = useStoreState((state) => state.common.companyShiftList);
-  
+}: SelectShiftConfig) => {
+  const shiftList = useStoreState((state) => state.attendance.shiftList);
+  const fetchshiftList = useStoreActions((state) => state.attendance.fetchshiftList);
+
+  React.useEffect(()=>{
+    fetchshiftList();
+  },[])
   
   const onSelect = (shiftId) => {
-    if (companyShiftList) {
-      const companyDepartment = companyShiftList.find((item) => item.shiftId === shiftId);
-      onChange(companyDepartment.shiftId);
+    if (shiftList) {
+      const items = shiftList.find((item) => item.shiftId === shiftId);
+      onChange(items.shiftId);
     }
   };
 
@@ -38,9 +42,9 @@ export const SelectShift = ({
       onChange={onSelect}
       // loading={loading}
       showSearch
-      allowClear
+      // allowClear
       defaultValue={defaultSelected}
-      value={selected}
+      // value={defaultSelected}
       style={style}
       placeholder="Select Shift"
       filterOption={(input, option:any) =>
@@ -48,8 +52,8 @@ export const SelectShift = ({
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
     >
-      {companyShiftList ? (
-        companyShiftList.map((type, idx) => (
+      {shiftList ? (
+        shiftList.map((type, idx) => (
           <Option key={type.shiftId} value={type.shiftId}>
             {type.shiftName}
           </Option>

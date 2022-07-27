@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeAttendanceShiftConfigurationList, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchshiftList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveShiftConfiguration, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -56,12 +56,22 @@ export interface Attendance {
 
     attendanceDetailsAllEmployee2: any;
     setattendanceDetailsAllEmployee2: Action<Attendance, any>;
-    fetchattendanceDetailsAllEmployee2: Thunk<Attendance, any>    
-    
+    fetchattendanceDetailsAllEmployee2: Thunk<Attendance, any>
+
     attendanceDetailsDepartmentEmployee: any;
     setattendanceDetailsDepartmentEmployee: Action<Attendance, any>;
     fetchattendanceDetailsDepartmentEmployee: Thunk<Attendance, any>
-    
+
+    employeeAttendanceShiftConfigurationList: any;
+    setemployeeAttendanceShiftConfigurationList: Action<Attendance, any>;
+    fetchemployeeAttendanceShiftConfigurationList: Thunk<Attendance, any>
+
+    saveShiftConfiguration: Thunk<Attendance, any>
+
+    shiftList: any;
+    setshiftList: Action<Attendance, any>;
+    fetchshiftList: Thunk<Attendance>
+
 }
 
 export const attendanceStore: Attendance = {
@@ -462,8 +472,8 @@ export const attendanceStore: Attendance = {
         if (response.status === 201 || response.status === 200) {
             actions.setLoading(false);
             const body = await response.json();
-            if (body?.messageType===0){
-                notification.error({message:body.message});
+            if (body?.messageType === 0) {
+                notification.error({ message: body.message });
                 actions.setattendanceDetailsAllEmployee2([]);
                 return;
             }
@@ -493,8 +503,8 @@ export const attendanceStore: Attendance = {
         if (response.status === 201 || response.status === 200) {
             actions.setLoading(false);
             const body = await response.json();
-            if (body?.messageType===0){
-                notification.error({message:body.message});
+            if (body?.messageType === 0) {
+                notification.error({ message: body.message });
                 actions.setattendanceDetailsDepartmentEmployee([]);
                 return;
             }
@@ -517,4 +527,68 @@ export const attendanceStore: Attendance = {
     setattendanceDetailsDepartmentEmployee: action((state, payload) => {
         state.attendanceDetailsDepartmentEmployee = payload;
     }),
+
+    employeeAttendanceShiftConfigurationList: [],
+    fetchemployeeAttendanceShiftConfigurationList: thunk(async (actions, payload) => {
+        actions.setLoading(true);
+        const response = await fetchemployeeAttendanceShiftConfigurationList(payload);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body?.messageType === 0) {
+                notification.error({ message: body.message });
+                actions.setemployeeAttendanceShiftConfigurationList([]);
+                return;
+            }
+            if (body.item?.employeeShiftList?.length > 0) {
+                actions.setemployeeAttendanceShiftConfigurationList(body?.item);
+            } else {
+                notification.error({
+                    message: "No data found"
+                })
+                actions.setemployeeAttendanceShiftConfigurationList([]);
+            }
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+            actions.setLoading(false);
+        }
+    }),
+
+    setemployeeAttendanceShiftConfigurationList: action((state, payload) => {
+        state.employeeAttendanceShiftConfigurationList = payload;
+    }),
+
+    saveShiftConfiguration: thunk(async (actions, payload) => {
+        const response = await saveShiftConfiguration(payload.saveData);
+        if (response.status === 201 || response.status === 200) {
+            actions.setLoading(false);
+            const body = await response.json();
+            if (body?.messageType === 0) {
+                notification.error({ message: body.message });
+                return;
+            }
+            notification.success({ message: body.message });
+            // actions.fetchemployeeAttendanceShiftConfigurationList(payload.search)
+        } else {
+            notification.error({
+                message: "Something went wrong"
+            })
+        }
+    }),
+    shiftList: [],
+    fetchshiftList: thunk(async (actions, payload) => {
+        const response = await fetchshiftList();
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            actions.setshiftList(body.item);
+        } else {
+            actions.setshiftList([]);
+        }
+    }),
+    setshiftList: action((state, payload) => {
+        state.shiftList = payload;
+    }),
+
 }
