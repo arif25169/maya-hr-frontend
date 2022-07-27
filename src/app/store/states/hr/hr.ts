@@ -1,14 +1,18 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl } from '../../../http/hr/hr';
+import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, deleteWorkExperienceInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, fetchWorkExperienceInfoListUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, saveWorkExperienceInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl, workExperienceInfoUpdateUrl } from '../../../http/hr/hr';
 import FileSaver from 'file-saver'
 
 export interface Hr {
 	
 	employeeList : any;
 	fetchEmployeeList : Thunk<Hr>;
-	setEmployeeList:  Action<Hr, any>;	
+	setEmployeeList:  Action<Hr, any>;
+	
+	employeeListForAttendanceFine : any;
+	fetchEmployeeListForAttendanceFine : Thunk<Hr>;
+	setEmployeeListForAttendanceFine:  Action<Hr, any>;
 	
 	allemployeeList : any;
 	fetchAllEmployeeList : Thunk<Hr>;
@@ -52,14 +56,23 @@ export interface Hr {
 	downloadHrTraining: Thunk<Hr, any>;
 	deleteAttachment : Thunk<Hr, any>;
 
+	saveWorkExperienceInfo : Thunk<Hr, any>;
+	workExperienceInfoList : any;
+	fetchWorkExperienceInfoList : Thunk<Hr, any>;
+	setWorkExperienceInfoList:  Action<Hr, any>;
+	deleteWorkExperienceInfo : Thunk<Hr, any>;
+	updateWorkExperienceInfo : Thunk<Hr, any>;
+
 }
 
 export const hrStore: Hr = {
 	employeeList:[],
+	employeeListForAttendanceFine:[],
 	allemployeeList:[],
 	employeeEducationList:[],
 	employeeTrainingInfoList:[],
 	passingYearUpdateDataStore: '',
+	workExperienceInfoList:[], 
 	setPassingYearUpdateDataStore: thunk((state, payload) => {
 		console.log(payload);
 		
@@ -99,6 +112,28 @@ export const hrStore: Hr = {
 	setEmployeeList: action((state, payload) => {
 		state.employeeList = payload;
 	}),	
+
+	fetchEmployeeListForAttendanceFine: thunk(async (actions, payload) => {
+		const response = await searchEmployeeListUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				if (body.item?.length===0){
+					notification.warn({message:"No Data Found"})
+				}
+				actions.setEmployeeListForAttendanceFine(body.item)
+			}else{
+				actions.setEmployeeListForAttendanceFine([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setEmployeeListForAttendanceFine: action((state, payload) => {
+		state.employeeListForAttendanceFine = payload;
+	}),
+
 	fetchAllEmployeeList: thunk(async (actions, payload) => {
 		const response = await fetchAllEmployeeList();
 		if (response.status === 201 || response.status === 200) {
@@ -389,6 +424,73 @@ export const hrStore: Hr = {
 				actions.fetchattachmentList(payload.employeeId);
 			}else{
 				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setWorkExperienceInfoList: action((state, payload) => {
+		state.workExperienceInfoList = payload;
+	}),
+
+	saveWorkExperienceInfo:thunk(async (actions, payload) => {
+		const response = await saveWorkExperienceInfoUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				let id = localStorage.getItem('employeeId')
+				actions.fetchWorkExperienceInfoList(id);
+			}else{
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+	
+	fetchWorkExperienceInfoList: thunk(async (actions, payload) => {
+		const response = await fetchWorkExperienceInfoListUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				
+				actions.setWorkExperienceInfoList(body.item)
+			}else{
+				actions.setWorkExperienceInfoList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	deleteWorkExperienceInfo: thunk(async (actions, payload) => {
+		const response = await deleteWorkExperienceInfoUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				let id = localStorage.getItem('employeeId')
+				actions.fetchWorkExperienceInfoList(id);
+			}else{
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	updateWorkExperienceInfo:thunk(async (actions, payload) => {
+		const response = await workExperienceInfoUpdateUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message });
+				let id = localStorage.getItem('employeeId')
+				actions.fetchWorkExperienceInfoList(id);
+			}else{
+				notification.error({ message: body.message });
 			}
 		} else {
 			notification.error({ message: 'Something Wrong' });

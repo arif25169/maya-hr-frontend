@@ -46,4 +46,5 @@ export const ROUTES = {
   COMPANY_LIST: "company-list",
   JUMP_COMPANY:"jump-company",
   USER_LIST: "user-list",
+  ATTENDANCE_FINE: "attendance-fine"
 };

@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceFineUrl, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetcAttendanceFineUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveAttendanceFineUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceFineUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -127,6 +127,13 @@ export interface GeneralSetting {
 	fetchRemarksList: Thunk<GeneralSetting>;
 	goToCompany: Thunk<GeneralSetting, any>;
 
+	attendanceFineList: any;
+	fetchAttendanceFineList: Thunk<GeneralSetting>;
+	setAttendanceFineList: Action<GeneralSetting, any>;
+	saveAttendanceFine: Thunk<GeneralSetting, any>;
+	updateAttendanceFine: Thunk<GeneralSetting, any>;
+	deleteAttendanceFine: Thunk<GeneralSetting, any>;
+
 }
 
 export const generalSettingStore: GeneralSetting = {
@@ -142,6 +149,7 @@ export const generalSettingStore: GeneralSetting = {
 	employeeListForattendanceTimeConfig: [],
 	employeeAttendanceTimeConfig: [],
 	attendanceTimeConfigurationListByDepartmentWise: [],
+	attendanceFineList: [],
 	loading: false,
 	setLoading: action((state, payload) => {
 		state.loading = payload;
@@ -1179,6 +1187,69 @@ export const generalSettingStore: GeneralSetting = {
 
 		} else {
 
+		}
+	}),
+
+	saveAttendanceFine: thunk(async (actions, payload) => {
+		const response = await saveAttendanceFineUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchAttendanceFineList();
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	fetchAttendanceFineList: thunk(async (actions, payload) => {
+		const response = await fetcAttendanceFineUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				actions.setAttendanceFineList(body.item)
+			} else {
+				actions.setAttendanceFineList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setAttendanceFineList: action((state, payload) => {
+		state.attendanceFineList = payload;
+	}),
+
+	updateAttendanceFine: thunk(async (actions, payload) => {
+		const response = await updateAttendanceFineUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchAttendanceFineList();
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	deleteAttendanceFine: thunk(async (actions, payload) => {
+		const response = await deleteAttendanceFineUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchAttendanceFineList();
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
 		}
 	}),
 

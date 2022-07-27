@@ -178,7 +178,6 @@ export function Sidebar() {
 				<SubMenu key={"attendance"} icon={<PartitionOutlined />} title="Attandance" >
 
 					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
-
 						<Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
 						</Menu.Item>
@@ -211,6 +210,9 @@ export function Sidebar() {
 							<Link to={ROUTES.HR_REPORT_MONTH_WISE} className="nav-text">Date to Date</Link>
 						</Menu.Item>
 					</SubMenu>
+					<Menu.Item key={ROUTES.ATTENDANCE_FINE} icon={<ContainerOutlined />}>
+						<Link to={ROUTES.ATTENDANCE_FINE} className="nav-text">Attendance Fine</Link>
+					</Menu.Item>
 				</SubMenu>
 
 
