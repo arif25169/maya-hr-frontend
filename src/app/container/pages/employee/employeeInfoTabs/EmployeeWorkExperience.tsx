@@ -163,16 +163,24 @@ export default function EmployeeWorkExperience() {
                                         <p>{item?.previousCompanyName}</p>
                                     </Col>
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                        <Title level={5}>Previous Company Address</Title>
+                                        <p>{item?.previousCompanyAddress}</p>
+                                    </Col>
+                                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                         <Title level={5}>Company Business</Title>
                                         <p>{item?.companyBusiness}</p>
+                                    </Col>
+                                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                        <Title level={5}>Department</Title>
+                                        <p>{item?.department}</p>
                                     </Col>
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                         <Title level={5}>Designation</Title>
                                         <p>{item?.designation}</p>
                                     </Col>
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                        <Title level={5}>Department</Title>
-                                        <p>{item?.department}</p>
+                                        <Title level={5}>Responsibility</Title>
+                                        <p>{item?.responsibility}</p>
                                     </Col>
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                         <Title level={5}>Employment Period From</Title>
@@ -181,14 +189,6 @@ export default function EmployeeWorkExperience() {
                                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                         <Title level={5}>Employment Period To</Title>
                                         <p>{item?.employmentPeriodTo}</p>
-                                    </Col>
-                                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                        <Title level={5}>Responsibility</Title>
-                                        <p>{item?.responsibility}</p>
-                                    </Col>
-                                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                        <Title level={5}>Previous Company Address</Title>
-                                        <p>{item?.previousCompanyAddress}</p>
                                     </Col>
                                 </Row>
                             </>
@@ -207,6 +207,30 @@ export default function EmployeeWorkExperience() {
                             onFinish={employeeWorkExperienceSubmit}
                         >
                             <Row>
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                    <Form.Item
+                                        name="previousCompanyName"
+                                        label="Previous Company Name"
+                                        className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please Write Previous Company Name" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Write Previous Company Name" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                    <Form.Item
+                                        name="previousCompanyAddress"
+                                        label="Previous Company Address"
+                                        className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please Write Previous Company Address" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Write Previous Company Address" />
+                                    </Form.Item>
+                                </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                     <Form.Item
                                         name="companyBusiness"
@@ -245,6 +269,18 @@ export default function EmployeeWorkExperience() {
                                 </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                     <Form.Item
+                                        name="responsibility"
+                                        label="Responsibility"
+                                        className="title-Text"
+                                        rules={[
+                                            { required: true, message: "Please Write Responsibility" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Write Responsibility" />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                                    <Form.Item
                                         name="employmentPeriodFrom"
                                         label="Employment Period From"
                                         className="title-Text"
@@ -265,42 +301,6 @@ export default function EmployeeWorkExperience() {
                                         ]}
                                     >
                                         <DatePicker style={{ width: "100%" }} format={dateFormat}/>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                    <Form.Item
-                                        name="previousCompanyName"
-                                        label="Previous Company Name"
-                                        className="title-Text"
-                                        rules={[
-                                            { required: true, message: "Please Write Previous Company Name" },
-                                        ]}
-                                    >
-                                        <Input placeholder="Write Previous Company Name" />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                    <Form.Item
-                                        name="previousCompanyAddress"
-                                        label="Previous Company Address"
-                                        className="title-Text"
-                                        rules={[
-                                            { required: true, message: "Please Write Previous Company Address" },
-                                        ]}
-                                    >
-                                        <Input placeholder="Write Previous Company Address" />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
-                                    <Form.Item
-                                        name="responsibility"
-                                        label="Responsibility"
-                                        className="title-Text"
-                                        rules={[
-                                            { required: true, message: "Please Write Responsibility" },
-                                        ]}
-                                    >
-                                        <Input placeholder="Write Responsibility" />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -344,6 +344,30 @@ export default function EmployeeWorkExperience() {
                         <Row>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                 <Form.Item
+                                    name="previousCompanyNameUpdate"
+                                    label="Previous Company Name"
+                                    className="title-Text"
+                                    rules={[
+                                        { required: true, message: "Please Write Previous Company Name" },
+                                    ]}
+                                >
+                                    <Input placeholder="Write Previous Company Name" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                                <Form.Item
+                                    name="previousCompanyAddressUpdate"
+                                    label="Previous Company Address"
+                                    className="title-Text"
+                                    rules={[
+                                        { required: true, message: "Please Write Previous Company Address" },
+                                    ]}
+                                >
+                                    <Input placeholder="Write Previous Company Address" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                                <Form.Item
                                     name="companyBusinessUpdate"
                                     label="Company Business"
                                     className="title-Text"
@@ -380,6 +404,18 @@ export default function EmployeeWorkExperience() {
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                                 <Form.Item
+                                    name="responsibilityUpdate"
+                                    label="Responsibility"
+                                    className="title-Text"
+                                    rules={[
+                                        { required: true, message: "Please Write Responsibility" },
+                                    ]}
+                                >
+                                    <Input placeholder="Write Responsibility" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
+                                <Form.Item
                                     name="employmentPeriodFromUpdate"
                                     label="Employment Period From"
                                     className="title-Text"
@@ -400,42 +436,6 @@ export default function EmployeeWorkExperience() {
                                     ]}
                                 >
                                     <DatePicker style={{ width: "100%" }} format={dateFormat}/>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
-                                <Form.Item
-                                    name="previousCompanyNameUpdate"
-                                    label="Previous Company Name"
-                                    className="title-Text"
-                                    rules={[
-                                        { required: true, message: "Please Write Previous Company Name" },
-                                    ]}
-                                >
-                                    <Input placeholder="Write Previous Company Name" />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
-                                <Form.Item
-                                    name="previousCompanyAddressUpdate"
-                                    label="Previous Company Address"
-                                    className="title-Text"
-                                    rules={[
-                                        { required: true, message: "Please Write Previous Company Address" },
-                                    ]}
-                                >
-                                    <Input placeholder="Write Previous Company Address" />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
-                                <Form.Item
-                                    name="responsibilityUpdate"
-                                    label="Responsibility"
-                                    className="title-Text"
-                                    rules={[
-                                        { required: true, message: "Please Write Responsibility" },
-                                    ]}
-                                >
-                                    <Input placeholder="Write Responsibility" />
                                 </Form.Item>
                             </Col>
                         </Row>

@@ -164,7 +164,10 @@ export default function AttendanceFine() {
 
     const deleteAttendanceFineSubmit = (value) => {
         deleteAttendanceFine(value);
-        attendanceFineSearchForm.submit();
+        setTimeout(() => {
+            fetchAttendanceFineList(searchData);
+        }, 1000);
+        
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false);
