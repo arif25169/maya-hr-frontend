@@ -47,7 +47,7 @@ export default function BasicInfoUpdate() {
             employeeCustomId: employeeData.employeeCustomId,
             employeeId: id,
             employeeName: value.employeeName,
-            employeeStatus: 0,
+            employeeStatus: value.employeeStatus == "Inactive" ? 0 : 1,
             fatherName: value.fatherName,
             gender: value.gender,
             joiningDate: moment(value.joiningDate).format('YYYY-MM-DD'),
@@ -156,6 +156,7 @@ export default function BasicInfoUpdate() {
             companyEmail: employeeData.companyEmail,
             employeeHodId: employeeData.employeeHodId,
             dutyStationId: employeeData.dutyStationId,
+            employeeStatus: employeeData.employeeStatus == 0 ? "Inactive" : "Active",
         })
     }
 
@@ -240,7 +241,7 @@ export default function BasicInfoUpdate() {
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Employee Status</Title>
-                                <p>{employeeData?.employeeStatus}</p>
+                                <p>{employeeData?.employeeStatus == 1 ? "Active" : "Inactive"}</p>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                                 <Title level={5}>Gender</Title>
@@ -599,8 +600,26 @@ export default function BasicInfoUpdate() {
                                 </Select>
                             </Form.Item>
                         </Col>
-
-                        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Form.Item
+                                name="employeeStatus"
+                                label="Employee Status:"
+                                className="title-Text"
+                                        rules={[
+                                        { required: true, message: "Please select Status" },
+                                    ]}
+                            >
+                                <Select
+                                    placeholder="Select Status"
+                                    id="employeess"
+                                    
+                                >
+                                    <Option value="Active">Active</Option>
+                                    <Option value="Inactive">Inactive</Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                             <div >
                                 <div className="ant-col ant-form-item-label"><label className="ant-form-item" >Upload Photo</label></div>
                                 <input style={{ borderColor: "#03D665" }} className='ant-input' type="file" accept="image/jpeg,image/gif,image/png," id="upload-file" onChange={uploadPdf} />
