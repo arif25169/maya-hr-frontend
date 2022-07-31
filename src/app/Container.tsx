@@ -65,6 +65,7 @@ import CompanyJump from "./container/pages/superAdmin/CompanyJump";
 import Profile from './container/pages/signup/Profile.page';
 import Users from "./container/pages/user/Users";
 import AttendanceFine from "./container/pages/generalSettings/AttendanceFine";
+import EmployeeDisableList from "./container/pages/employee/EmployeeDisableList";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -184,6 +185,7 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.JUMP_COMPANY} component={CompanyJump} />
             <Route exact path={'/' + ROUTES.USER_LIST} component={Users} />
             <Route exact path={'/' + ROUTES.ATTENDANCE_FINE} component={AttendanceFine} />
+            <Route exact path={'/' + ROUTES.EMPLOYEE_DISABLE_LIST} component={EmployeeDisableList} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>
