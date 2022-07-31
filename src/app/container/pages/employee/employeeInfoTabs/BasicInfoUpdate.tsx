@@ -136,8 +136,6 @@ export default function BasicInfoUpdate() {
 
     const editBasicInfoMadal = (value) => {
         setIsModalVisible(true);
-        console.log('employeeData', employeeData);
-        
         updateForm.setFieldsValue({
             employeeName: employeeData?.employeeName,
             fatherName: employeeData?.fatherName,
@@ -158,7 +156,7 @@ export default function BasicInfoUpdate() {
             companyEmail: employeeData.companyEmail,
             employeeHodId: employeeData.employeeHodId,
             dutyStationId: employeeData.dutyStationId,
-            employeeStatus: value.employeeData == 0 ? "Inactive" : "Active",
+            employeeStatus: employeeData.employeeStatus == 0 ? "Inactive" : "Active",
         })
     }
 
