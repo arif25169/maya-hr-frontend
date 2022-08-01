@@ -42,9 +42,9 @@ export default function EmployeeInformation() {
                             <TabPane tab="Attachments" key="6">
                                 {activeTab === "6" && <EmployeeAtachments /> }
                             </TabPane>
-                            <TabPane tab="Attendance Fine" key="7">
+                            {/* <TabPane tab="Attendance Fine" key="7">
                                 {activeTab === "7" && <AttendanceFine /> }
-                            </TabPane>
+                            </TabPane> */}
                         </Tabs>
                     </Col>
                 </Row>

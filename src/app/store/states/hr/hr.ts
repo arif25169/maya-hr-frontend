@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, deleteWorkExperienceInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, fetchWorkExperienceInfoListUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, saveWorkExperienceInfoUrl, searchEmployeeListUrl, traningInfoUpdateUrl, workExperienceInfoUpdateUrl } from '../../../http/hr/hr';
+import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, deleteWorkExperienceInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, fetchWorkExperienceInfoListUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, saveWorkExperienceInfoUrl, searchEmployeeDisableListUrl, searchEmployeeListUrl, traningInfoUpdateUrl, workExperienceInfoUpdateUrl } from '../../../http/hr/hr';
 import FileSaver from 'file-saver'
 
 export interface Hr {
@@ -63,6 +63,11 @@ export interface Hr {
 	deleteWorkExperienceInfo : Thunk<Hr, any>;
 	updateWorkExperienceInfo : Thunk<Hr, any>;
 
+	employeeDisableList : any;
+	fetchEmployeeDisableList : Thunk<Hr>;
+	setEmployeeDisableList:  Action<Hr, any>;
+	updateEmployeeDisableInfo: Thunk<Hr, any>;
+
 }
 
 export const hrStore: Hr = {
@@ -73,6 +78,7 @@ export const hrStore: Hr = {
 	employeeTrainingInfoList:[],
 	passingYearUpdateDataStore: '',
 	workExperienceInfoList:[], 
+	employeeDisableList:[],
 	setPassingYearUpdateDataStore: thunk((state, payload) => {
 		console.log(payload);
 		
@@ -496,5 +502,41 @@ export const hrStore: Hr = {
 			notification.error({ message: 'Something Wrong' });
 		}
 	}),
+
+	fetchEmployeeDisableList: thunk(async (actions, payload) => {
+		const response = await searchEmployeeDisableListUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				if (body.item?.length===0){
+					notification.warn({message:"No Data Found"})
+				}
+				actions.setEmployeeDisableList(body.item)
+			}else{
+				actions.setEmployeeDisableList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setEmployeeDisableList: action((state, payload) => {
+		state.employeeDisableList = payload;
+	}),	
+
+	updateEmployeeDisableInfo:thunk(async (actions, payload) => {
+		const response = await basicInfoUpdateUrl(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message });
+				actions.fetchEmployeeDisableList();
+			}else{
+				notification.error({ message: body.message });
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),	
 
 }

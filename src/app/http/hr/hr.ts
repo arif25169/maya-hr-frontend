@@ -25,3 +25,5 @@ export const saveWorkExperienceInfoUrl = (payload) => post('/employee/previous/w
 export const fetchWorkExperienceInfoListUrl = (payload) => get('/employee/previous/work/info/list?employeeId='+payload );
 export const deleteWorkExperienceInfoUrl = (payload) => del('/employee/previous/work/info/delete?previousWorkInfoId='+payload );
 export const workExperienceInfoUpdateUrl = (payload) => post('/employee/previous/work/info/update', payload);
+
+export const searchEmployeeDisableListUrl = (payload) => get(`/employee/disable/list`);

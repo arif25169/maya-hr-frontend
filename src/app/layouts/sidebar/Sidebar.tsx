@@ -125,6 +125,9 @@ export function Sidebar() {
 						<Menu.Item key={ROUTES.EMPLOYEE_LIST} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_LIST} className="nav-text">Employee List</Link>
 						</Menu.Item>
+						<Menu.Item key={ROUTES.EMPLOYEE_DISABLE_LIST} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.EMPLOYEE_DISABLE_LIST} className="nav-text">Employee Disable List</Link>
+						</Menu.Item>
 
 						<Menu.Item key={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_ASSIGN_DESIGNATION} className="nav-text">Assign Designation</Link>

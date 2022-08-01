@@ -51,9 +51,10 @@ export default function EmployeeSalaryGradeAssign() {
     const submitFrom = (value) => {
         //console.log('submitFrom', value);
         let postData: any = {
-            department: value.department,
-            designation: value.designation,
-            employeeType: value.employeeType
+           
+            department: value.department ? value.department : "",
+            designation: value.designation ? value.designation : "",
+            employeeType: value.employeeType ? value.employeeType : ""
         }
         setData(postData);
         fetchEmployeeList(postData);
@@ -116,9 +117,9 @@ export default function EmployeeSalaryGradeAssign() {
                                         name="designation"
                                         label="Designation"
                                         className="title-Text"
-                                        rules={[
-                                            { required: true, message: "Select designation" },
-                                        ]}
+                                        // rules={[
+                                        //     { required: true, message: "Select designation" },
+                                        // ]}
                                     >
                                         <SelectDesignation />
                                     </Form.Item>
@@ -128,9 +129,9 @@ export default function EmployeeSalaryGradeAssign() {
                                         name="employeeType"
                                         label="Employee Type"
                                         className="title-Text"
-                                        rules={[
-                                            { required: true, message: "Select employee type" },
-                                        ]}
+                                        // rules={[
+                                        //     { required: true, message: "Select employee type" },
+                                        // ]}
                                     >
                                         <SelectEmployeeType />
 
