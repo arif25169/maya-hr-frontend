@@ -4,6 +4,7 @@ import { DeleteOutlined, EditOutlined, SaveOutlined, SettingOutlined } from '@an
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
 import { moneyFormat } from '../../../../utils/utils';
+import Item from 'antd/lib/list/Item';
 
 const cleanObject = (input) => {
     if (typeof input === 'object' && input !== null) {
@@ -180,7 +181,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount1} onChange={onchangeValue("salaryHeadDeductionAmount1", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount1} onChange={onchangeValue("salaryHeadDeductionAmount1", record, record.index)}></InputNumber>
                 )
             }
         },
@@ -192,7 +193,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount2} onChange={onchangeValue("salaryHeadDeductionAmount2", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount2} onChange={onchangeValue("salaryHeadDeductionAmount2", record, record.index)}></InputNumber>
                 )
             }
         },
@@ -204,7 +205,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount3} onChange={onchangeValue("salaryHeadDeductionAmount3", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount3} onChange={onchangeValue("salaryHeadDeductionAmount3", record, record.index)}></InputNumber>
                 )
             }
         },
@@ -216,7 +217,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount4} onChange={onchangeValue("salaryHeadDeductionAmount4", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount4} onChange={onchangeValue("salaryHeadDeductionAmount4", record, record.index)}></InputNumber>
                 )
             }
         },
@@ -228,7 +229,7 @@ export default function SalaryProcess() {
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
                 return (
-                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount5} onChange={onchangeValue("salaryHeadDeductionAmount5", record, index)}></InputNumber>
+                    <InputNumber min={0} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} value={record?.salaryHeadDeductionAmount5} onChange={onchangeValue("salaryHeadDeductionAmount5", record, record.index)}></InputNumber>
                 )
             }
         },
@@ -258,14 +259,15 @@ export default function SalaryProcess() {
 
     const [tableData, setTableData] = useState<any>([]);
     useEffect(() => {
-        setTableData(salarySheetViews?.employeeList);
+        setTableData(salarySheetViews?.employeeList?.map((item, index)=>({...item, index:index })));
     }, [salarySheetViews]);
 
     const onchangeValue: any = useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
         const newData = [...tableData];
         newData[index][key] = e;
         let salaryHeadDeductionAmount = data?.salaryHeadDeductionAmount1 + data?.salaryHeadDeductionAmount2 + data?.salaryHeadDeductionAmount3 + data?.salaryHeadDeductionAmount4 + data?.salaryHeadDeductionAmount5;
-        newData[index]['grossSalary'] = data?.netSalary - salaryHeadDeductionAmount;
+       // newData[index]['grossSalary'] = data?.netSalary - salaryHeadDeductionAmount;
+        newData[index]['netSalary'] = data?.grossSalary - salaryHeadDeductionAmount;
         setTableData(newData);
     }, [tableData]);
 
