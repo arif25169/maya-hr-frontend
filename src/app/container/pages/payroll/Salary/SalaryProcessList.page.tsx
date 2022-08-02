@@ -77,7 +77,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount2)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName3 !== "" ? [{
@@ -87,7 +87,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount3)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName4 !== "" ? [{
@@ -97,7 +97,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount4)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName5 !== "" ? [{
@@ -107,7 +107,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount5)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName6 !== "" ? [{
@@ -117,7 +117,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount6)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName7 !== "" ? [{
@@ -127,7 +127,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount7)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName8 !== "" ? [{
@@ -137,7 +137,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount8)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName9 !== "" ? [{
@@ -147,7 +147,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount9)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadAdditionName10 !== "" ? [{
@@ -157,7 +157,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadAdditionAmount10)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadDeductionName1 !== "" ? [{
@@ -167,7 +167,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadDeductionAmount1)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadDeductionName2 !== "" ? [{
@@ -177,7 +177,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadDeductionAmount2)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadDeductionName3 !== "" ? [{
@@ -187,7 +187,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadDeductionAmount3)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadDeductionName4 !== "" ? [{
@@ -197,7 +197,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadDeductionAmount4)
             )
         }] : [],
         ...salaryProcessList?.salaryHeadDeductionName5 !== "" ? [{
@@ -207,7 +207,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.salaryHeadAdditionAmount1)
+                moneyFormat(record.salaryHeadDeductionAmount5)
             )
         }] : [],
         {
