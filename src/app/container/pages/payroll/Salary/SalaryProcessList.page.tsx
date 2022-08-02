@@ -5,6 +5,7 @@ import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeas
 import TableView from '../../../../contents/AntTableResponsive';
 import { Excel } from 'antd-table-saveas-excel';
 import { moneyFormat } from '../../../../utils/utils';
+import { SelectDepartment } from '../../../select/SelectDepartment';
 
 
 
@@ -14,9 +15,15 @@ const d = new Date();
 const year = d.getFullYear();
 
 export default function SalaryProcessList() {
-    const salaryProcessList = useStoreState((state) => state.payroll.salaryProcessList);
-    const fetchsalaryProcessList = useStoreActions((state) => state.payroll.fetchsalaryProcessList);
-
+    const salaryProcessList = useStoreState((state) => state.payroll.salaryProcessList3);
+    const fetchsalaryProcessList = useStoreActions((state) => state.payroll.fetchsalaryProcessList3);
+    const salaryProcessListDelete3 = useStoreActions((state) => state.payroll.salaryProcessListDelete3);
+    const fetchCompanyDepartmentList = useStoreActions(
+        (state) => state.common.fetchCompanyDepartmentList
+    );
+    useEffect(() => {
+        fetchCompanyDepartmentList();
+    }, []);
 
 
     /////////////
@@ -230,11 +237,28 @@ export default function SalaryProcessList() {
                 moneyFormat(record.netSalary)
             )
         },
+        {
+            title: 'Action',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => {
+                return (
+                    <Popconfirm
+                        title="Are you sure to delete this?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => salaryProcessListDelete3({ id: record?.salaryRecordId, data: search })}
+                    >
+                        <Tooltip title="Delete">
+                            <Button danger icon={<DeleteOutlined />} />
+                        </Tooltip>
+                    </Popconfirm>
 
+                )
+
+            }
+        },
     ];
-
-
-
 
     const [tableData, setTableData] = useState<any>([]);
     useEffect(() => {
@@ -242,9 +266,10 @@ export default function SalaryProcessList() {
     }, [salaryProcessList]);
 
     const [form] = Form.useForm();
+    const [search, setsearch] = useState<any>(null)
     const onProcess = (value) => {
+        setsearch(value)
         fetchsalaryProcessList(value);
-
     }
 
     return (
@@ -256,7 +281,19 @@ export default function SalaryProcessList() {
                 onFinish={onProcess}
             >
                 <Row>
-                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>  </Col>
+                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 2 }} xl={{ span: 2 }}>  </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                        <Form.Item
+                            name="departmentId"
+                            label="Department"
+                            className="title-Text"
+                            rules={[
+                                { required: true, message: "Please select department" },
+                            ]}
+                        >
+                            <SelectDepartment />
+                        </Form.Item>
+                    </Col>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                         <Form.Item
                             name="salaryYear"
@@ -298,7 +335,7 @@ export default function SalaryProcessList() {
                             </Select>
                         </Form.Item>
                     </Col>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 2 }} lg={{ span: 2 }} xl={{ span: 2 }}>
                         <Space size={'middle'} >
                             <Button type='primary' htmlType='submit' icon={<SearchOutlined />}> Search</Button>
                         </Space>

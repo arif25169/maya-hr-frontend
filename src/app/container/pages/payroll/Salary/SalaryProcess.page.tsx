@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox } from 'antd'
-import { DeleteOutlined, EditOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
 import { moneyFormat } from '../../../../utils/utils';
 import Item from 'antd/lib/list/Item';
+import { SelectDepartment } from '../../../select/SelectDepartment';
 
 const cleanObject = (input) => {
     if (typeof input === 'object' && input !== null) {
@@ -31,12 +32,15 @@ const year = d.getFullYear();
 
 export default function SalaryProcess() {
     const salarySheetViews = useStoreState((state) => state.payroll.salarySheetViews);
-    const fetchsalarySheetViews = useStoreActions((state) => state.payroll.fetchsalarySheetViews);
+    const fetchsalarySheetViewsByDep = useStoreActions((state) => state.payroll.fetchsalarySheetViewsByDep);
     const saveSalaryProcess = useStoreActions((state) => state.payroll.saveSalaryProcess);
-
+    const fetchCompanyDepartmentList = useStoreActions(
+        (state) => state.common.fetchCompanyDepartmentList
+    );
     useEffect(() => {
-        fetchsalarySheetViews();
+        fetchCompanyDepartmentList();
     }, []);
+
 
     /////////////
 
@@ -259,14 +263,14 @@ export default function SalaryProcess() {
 
     const [tableData, setTableData] = useState<any>([]);
     useEffect(() => {
-        setTableData(salarySheetViews?.employeeList?.map((item, index)=>({...item, index:index })));
+        setTableData(salarySheetViews?.employeeList?.map((item, index) => ({ ...item, index: index })));
     }, [salarySheetViews]);
 
     const onchangeValue: any = useCallback((key, data, index) => (e: React.ChangeEvent<HTMLInputElement>) => {
         const newData = [...tableData];
         newData[index][key] = e;
         let salaryHeadDeductionAmount = data?.salaryHeadDeductionAmount1 + data?.salaryHeadDeductionAmount2 + data?.salaryHeadDeductionAmount3 + data?.salaryHeadDeductionAmount4 + data?.salaryHeadDeductionAmount5;
-       // newData[index]['grossSalary'] = data?.netSalary - salaryHeadDeductionAmount;
+        // newData[index]['grossSalary'] = data?.netSalary - salaryHeadDeductionAmount;
         newData[index]['netSalary'] = data?.grossSalary - salaryHeadDeductionAmount;
         setTableData(newData);
     }, [tableData]);
@@ -287,7 +291,16 @@ export default function SalaryProcess() {
 
 
     const [form] = Form.useForm();
+
+    const [salaryMonth, setsalaryMonth] = useState<any>('');
+    const [salaryYear, setsalaryYear] = useState<any>('');
+
     const onProcess = (value) => {
+        fetchsalarySheetViewsByDep(value.departmentId);
+        setsalaryMonth(value.salaryMonth);
+        setsalaryYear(value.salaryYear)
+    }
+    const onSave = () => {
         if (selectedRowKeys.length === 0) {
             message.error("Please select at least one row");
             return;
@@ -395,8 +408,8 @@ export default function SalaryProcess() {
 
         let finalPayLoad = {
             "employeeList": cleanObject(payLoad),
-            "salaryMonth": value.salaryMonth,
-            "salaryYear": value.salaryYear,
+            "salaryMonth": salaryMonth,
+            "salaryYear": salaryYear,
         }
 
         saveSalaryProcess(finalPayLoad);
@@ -414,7 +427,19 @@ export default function SalaryProcess() {
                 onFinish={onProcess}
             >
                 <Row>
-                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>  </Col>
+                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 2 }} xl={{ span: 2 }}>  </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                        <Form.Item
+                            name="departmentId"
+                            label="Department"
+                            className="title-Text"
+                            rules={[
+                                { required: true, message: "Please select department" },
+                            ]}
+                        >
+                            <SelectDepartment />
+                        </Form.Item>
+                    </Col>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
                         <Form.Item
                             name="salaryYear"
@@ -456,38 +481,39 @@ export default function SalaryProcess() {
                             </Select>
                         </Form.Item>
                     </Col>
-
-                </Row>
-                <Row className="m-t-mo-30">
-                    <Col span="24">
-                        <div className="datatable-responsive-demo">
-                            {tableData?.length > 0 &&
-                                <>
-                                    <TableView
-                                        antTableProps={{
-                                            showHeader: true,
-                                            columns,
-                                            dataSource: tableData,
-                                            filterData: tableData,
-                                            pagination: true,
-                                            bordered: true,
-                                            rowKey: "employeeId",
-                                            rowSelection: rowSelection,
-                                        }}
-                                        mobileBreakPoint={768}
-                                    />
-
-                                </>
-                            }
-                            <Space size={'middle'} style={{ float: "right" }}>
-                                <Button type='primary' htmlType='submit' icon={<SettingOutlined />}> Process</Button>
-                            </Space>
-                        </div>
+                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 2 }} xl={{ span: 2 }}>
+                        <Button type='primary' htmlType='submit' icon={<SearchOutlined />}> Search</Button>
                     </Col>
                 </Row>
+                {tableData?.length > 0 &&
+                    <Row className="m-t-mo-30">
+                        <Col span="24">
+                            <div className="datatable-responsive-demo">
+                                {tableData?.length > 0 &&
+                                    <>
+                                        <TableView
+                                            antTableProps={{
+                                                showHeader: true,
+                                                columns,
+                                                dataSource: tableData,
+                                                filterData: tableData,
+                                                pagination: true,
+                                                bordered: true,
+                                                rowKey: "employeeId",
+                                                rowSelection: rowSelection,
+                                            }}
+                                            mobileBreakPoint={768}
+                                        />
 
-
-
+                                    </>
+                                }
+                                <Space size={'middle'} style={{ float: "right" }}>
+                                    <Button type='primary' onClick={() => onSave()} icon={<SettingOutlined />}> Process</Button>
+                                </Space>
+                            </div>
+                        </Col>
+                    </Row>
+                }
 
             </Form>
         </Card>
