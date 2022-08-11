@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeAttendanceShiftConfigurationList, fetchemployeeAttendanceShiftConfigurationReport, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchshiftList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveShiftConfiguration, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
+import { creategovtHolidayList, createHolidayList, deleteDisabledEmployee, deletegovtHolidayList, deleteHolidayList, deviceprocess, fetchattendanceDetailsAllEmployee, fetchattendanceDetailsAllEmployee2, fetchattendanceDetailsDepartmentEmployee, fetchattendanceDetailsselfEmployee, fetchattendanceDetailssingleEmployee, fetchdisabledEmployee, fetchemployeeAttendanceShiftConfigurationList, fetchemployeeAttendanceShiftConfigurationReport, fetchemployeeAtttendanceListForUpdate, fetchemployeeDateWiseAttReport, fetchemployeeMonthWiseAttReport, fetchenabledEmployee, fetchgovtHolidayList, fetchshiftList, fetchweeklyHolidayList, inputEmployeeAttendance, saveBatchIdmapping, saveShiftConfiguration, saveSingleIdmapping, updateAttendance, updateEmployeeAttendanceRemark } from '../../../http/attendance/attendance';
 
 export interface Attendance {
     inputEmployeeAttendance: Thunk<Attendance, any>;
@@ -74,7 +74,11 @@ export interface Attendance {
 
     shiftList: any;
     setshiftList: Action<Attendance, any>;
-    fetchshiftList: Thunk<Attendance>
+    fetchshiftList: Thunk<Attendance>;
+
+    employeeAtttendanceListForUpdate: any;
+	setemployeeAtttendanceListForUpdate: Action<Attendance, any>;
+	fetchemployeeAtttendanceListForUpdate: Thunk<Attendance, any>
 
 }
 
@@ -97,12 +101,40 @@ export const attendanceStore: Attendance = {
             notification.error({ message: "Something went wrong" })
         }
     }),
+
+    employeeAtttendanceListForUpdate: [],
+	fetchemployeeAtttendanceListForUpdate: thunk(async (actions, payload) => {
+		actions.setLoading(true);
+		const response = await fetchemployeeAtttendanceListForUpdate(payload);
+		if (response.status === 201 || response.status === 200) {
+			actions.setLoading(false);
+			const body = await response.json();
+			if (body.item?.length > 0) {
+				body.item.forEach((element, index) => {
+					element.index = index;
+				});
+				actions.setemployeeAtttendanceListForUpdate(body?.item);
+			} else {
+				notification.error({ message: "Please take attendance first on the specified date" })
+				actions.setemployeeAtttendanceListForUpdate([]);
+			}
+		} else {
+			notification.error({ message: "Something went wrong" })
+			actions.setLoading(false);
+		}
+	}),
+
+	setemployeeAtttendanceListForUpdate: action((state, payload) => {
+		state.employeeAtttendanceListForUpdate = payload;
+	}),
+
     updateAttendance: thunk(async (actions, payload) => {
-        const response = await updateAttendance(payload);
+        const response = await updateAttendance(payload.payload);
         if (response.status === 201 || response.status === 200) {
             const body: any = await response.json();
             if (body.messageType == 1) {
                 notification.success({ message: body.message })
+                actions.fetchemployeeAtttendanceListForUpdate(payload.data)
             } else {
                 notification.error({ message: body.message })
             }

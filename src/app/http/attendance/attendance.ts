@@ -1,7 +1,7 @@
 import { post, get, del} from "../http";
 export const inputEmployeeAttendance = (payload) => post('/employee/attendance/input', payload);
 export const updateAttendance = (payload) => post('/employee/attendance/update/batch', payload);
-export const deviceprocess = (payload) => post('/employee/attendance/auto/machine/data/process?date='+payload, payload);
+export const deviceprocess = (payload) => post('/employee/attendance/auto/machine/data/process?date='+payload.date+'&shiftId='+payload.shiftId);
 export const fetchenabledEmployee = () => get("/employee/device/map/enabled/list");
 export const saveSingleIdmapping = (payload) => post("/employee/device/map/save", payload);
 export const saveBatchIdmapping = (payload) => post("/employee/device/map/batch/save", payload);
@@ -27,3 +27,4 @@ export const fetchemployeeAttendanceShiftConfigurationList = (payload) => get(`/
 export const fetchemployeeAttendanceShiftConfigurationReport = (payload) => get(`/employee/attendance/shift/configuration/report/list?fromDate=${payload.fromDate}&toDate=${payload.toDate}&departmentId=${payload.departmentId}`);
 export const fetchshiftList = () => get("/employee/attendance/shift/configuration/shift/list");
 export const saveShiftConfiguration = (payload) => post("/employee/attendance/shift/configuration/save", payload);
+export const fetchemployeeAtttendanceListForUpdate = (payload) => get('/employee/attendance/list/for/update?attendanceDate='+payload.attendanceDate+'&shiftId='+payload.shiftId);

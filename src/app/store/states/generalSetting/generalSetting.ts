@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceFineUrl, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetcAttendanceFineUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveAttendanceFineUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceFineUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceFineUrl, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetcAttendanceFineUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchemployeeListForManualInput, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveAttendanceFineUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceFineUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -134,6 +134,10 @@ export interface GeneralSetting {
 	updateAttendanceFine: Thunk<GeneralSetting, any>;
 	deleteAttendanceFine: Thunk<GeneralSetting, any>;
 
+	employeeListForManualInput: any;
+	setemployeeListForManualInput: Action<GeneralSetting, any>;
+	fetchemployeeListForManualInput: Thunk<GeneralSetting>;
+
 }
 
 export const generalSettingStore: GeneralSetting = {
@@ -150,6 +154,7 @@ export const generalSettingStore: GeneralSetting = {
 	employeeAttendanceTimeConfig: [],
 	attendanceTimeConfigurationListByDepartmentWise: [],
 	attendanceFineList: [],
+	employeeListForManualInput: [],
 	loading: false,
 	setLoading: action((state, payload) => {
 		state.loading = payload;
@@ -1251,6 +1256,25 @@ export const generalSettingStore: GeneralSetting = {
 		} else {
 			notification.error({ message: 'Something Wrong' });
 		}
+	}),
+
+	fetchemployeeListForManualInput: thunk(async (actions, payload) => {
+		const response = await fetchemployeeListForManualInput(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.item?.length>0) {
+				actions.setemployeeListForManualInput(body.item)
+			} else {
+				actions.setemployeeListForManualInput([])
+				notification.error({ message: "No Data Found" })
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setemployeeListForManualInput: action((state, payload) => {
+		state.employeeListForManualInput = payload;
 	}),
 
 }
