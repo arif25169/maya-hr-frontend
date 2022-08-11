@@ -28,14 +28,17 @@ import {
   DownloadOutlined,
   EditOutlined,
   FileExcelOutlined,
+  FilePdfOutlined,
   SaveOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { Excel } from "antd-table-saveas-excel";
 import moment from "moment";
 import { SelectDepartment } from "../../select/SelectDepartment";
-
-import $ from "jquery";
+import $ from 'jquery';
+import jsPDF from "jspdf";
+import { pdfDataL, ppowerdbypdf, pdatepdf, lpowerdbypdf, ldatepdf } from '../../utils/pdf';
+import 'jspdf-autotable';
 
 export default function EmployeeAttendanceDepartmentWiseAllReport() {
   const { Option } = Select;
@@ -55,12 +58,14 @@ export default function EmployeeAttendanceDepartmentWiseAllReport() {
     fetchCompanyDepartmentList();
   }, []);
 
+  const [data,setData] = useState<any>(null)
   const onsearch = (value) => {
     let postData = {
       fromDate: moment(value?.fromDate).format("YYYY-MM-DD"),
       toDate: moment(value?.toDate).format("YYYY-MM-DD"),
       departmentId: value.departmentId,
     };
+    setData(postData)
     fetchattendanceDetailsDepartmentEmployee(postData);
   };
 
@@ -721,8 +726,8 @@ export default function EmployeeAttendanceDepartmentWiseAllReport() {
           },
         },
       ]
-      : []),    
-      ...(attendanceDetailsDepartmentEmployee?.thirtyFirstDay !== ""
+      : []),
+    ...(attendanceDetailsDepartmentEmployee?.thirtyFirstDay !== ""
       ? [
         {
           title: attendanceDetailsDepartmentEmployee?.thirtyFirstDay,
@@ -743,6 +748,150 @@ export default function EmployeeAttendanceDepartmentWiseAllReport() {
       ]
       : []),
   ];
+
+  var getColumns = function () {
+    return [
+      { title: "Id", dataKey: "customEmployeeId" },
+      { title: "Employee Name", dataKey: "employeeName" },
+      { title: "Working Days", dataKey: "totalWorkingDay" },
+      { title: "Present", dataKey: "totalPresent" },
+      { title: "Absent", dataKey: "totalAbsent" },
+      { title: "Delay", dataKey: "totalDelay" },
+      { title: "Early Leave", dataKey: "totalEarlyLeave" },
+      ...(attendanceDetailsDepartmentEmployee?.firstDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.firstDay, dataKey: "firstDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.secondDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.secondDay, dataKey: "secondDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.thirdDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.thirdDay, dataKey: "thirdDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.fourthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.fourthDay, dataKey: "fourthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.fifthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.fifthDay, dataKey: "fifthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.sixthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.sixthDay, dataKey: "sixthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.seventhDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.seventhDay, dataKey: "seventhDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.eighthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.eighthDay, dataKey: "eighthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.ninethDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.ninethDay, dataKey: "ninethDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.tenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.tenthDay, dataKey: "tenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.eleventhDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.eleventhDay, dataKey: "eleventhDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twelvethDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twelvethDay, dataKey: "twelvethDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.thirteenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.thirteenthDay, dataKey: "thirteenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.fifteenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.fifteenthDay, dataKey: "fifteenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.sixteenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.sixteenthDay, dataKey: "sixteenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.seventeenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.seventeenthDay, dataKey: "seventeenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.eighteenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.eighteenthDay, dataKey: "eighteenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.nineteenthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.nineteenthDay, dataKey: "nineteenthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentythDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentythDay, dataKey: "twentythDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentyFirstDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentyFirstDay, dataKey: "twentyFirstDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentySecondDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentySecondDay, dataKey: "twentySecondDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentyThirdDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentyThirdDay, dataKey: "twentyThirdDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentyFourthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentyFourthDay, dataKey: "twentyFourthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentyFifthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentyFifthDay, dataKey: "twentyFifthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentySixthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentySixthDay, dataKey: "twentySixthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentySeventhDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentySeventhDay, dataKey: "twentySeventhDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentyEighthDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentyEighthDay, dataKey: "twentyEighthDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.twentyNinethDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.twentyNinethDay, dataKey: "twentyNinethDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.thirtythDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.thirtythDay, dataKey: "thirtythDay" }] : [],
+
+      ...(attendanceDetailsDepartmentEmployee?.thirtyFirstDay !== "") ?
+        [{ title: attendanceDetailsDepartmentEmployee?.thirtyFirstDay, dataKey: "thirtyFirstDay" }] : [],
+
+    ];
+  };
+
+  function exportPdf() {
+
+
+    var details = `Employee Attendance Info of Department: ${$(".depSelect").text()} from ${data.fromDate} to ${data.toDate}`;
+
+    var doc = new jsPDF("l", "mm", "a4");
+    pdfDataL(doc, details);
+
+    var totalPagesExp = "{total_pages_count_string}";
+
+    var pageContent = function (data) {
+      // FOOTER
+      var str = lpowerdbypdf + data.pageCount;
+      if (typeof doc.putTotalPages === 'function') {
+        str = str + " of " + totalPagesExp + ldatepdf;
+      }
+      doc.setFontSize(8);
+      var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+      doc.text(str, data.settings.margin.right, pageHeight - 10);
+    };
+
+    doc.autoTable(getColumns(), attendanceDetailsDepartmentEmployee?.staffList, {
+
+      headerStyles: {
+        lineWidth: .01,
+        lineColor: [224, 224, 224],
+        overflow: 'linebreak',
+      },
+      theme: "grid",
+      styles: { fontSize: 7, overflow: 'linebreak', },
+      startY: 45,
+      addPageContent: pageContent
+    });
+
+    if (typeof doc.putTotalPages === 'function') {
+      doc.putTotalPages(totalPagesExp);
+    }
+
+    doc.save(details + ".pdf");
+
+  }
 
   return (
     <>
@@ -883,9 +1032,10 @@ export default function EmployeeAttendanceDepartmentWiseAllReport() {
                 >
                   Download Excel
                 </Button>
+                <Button type="primary" onClick={exportPdf} style={{ marginRight: "15px" }} icon={<FilePdfOutlined />}  >Download PDF</Button>
               </Space>
             </Col>
-            <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 12, }} lg={{ span: 6 , }} xl={{ span: 6  }}>
+            <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 12, }} lg={{ span: 6, }} xl={{ span: 6 }}>
               <Descriptions
                 title="Shortcut Symbol"
                 bordered
