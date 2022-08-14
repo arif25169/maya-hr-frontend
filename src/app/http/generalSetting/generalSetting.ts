@@ -56,6 +56,7 @@ export const fetchleaveAssignListByDepartment = (payload) => get("/leave/assign/
 export const fetchattendanceTimeConfigurationListByDepartmentWise = (payload) => get("/attendance/time/configuration/list/by/departmentid?departmentId="+payload.departmentId);
 export const deleteAttendanceTimeConfiguration = (payload) => del("/attendance/time/configuration/delete?attendnaceTimeConfigurationIds="+payload);
 export const fetchapplicantApplyList = (payload) => get('/leave/application/applicant/apply/list?year='+payload);
+export const fetchleaveApplicationFormView = (payload) => get('/leave/application/form/view?applyId='+payload);
 export const deleteLeaveApplication = (payload) => del("/leave/application/delete?applyId="+payload);
 export const fetchleaveApplicationPendingList = () => get('/leave/application/pending/list');
 export const fetchRemarksList = () => get('/employee/attendance/remark/list');

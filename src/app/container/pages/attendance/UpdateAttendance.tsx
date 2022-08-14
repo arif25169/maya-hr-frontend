@@ -74,7 +74,7 @@ export default function UpdateAttendance() {
             }
         },
         {
-            title: 'In-Time',
+            title: 'Out-Time',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => {
