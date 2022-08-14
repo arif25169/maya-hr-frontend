@@ -10,6 +10,13 @@ const { Option } = Select;
 const format = "YYYY-MM-DD";
 var year = (new Date().getFullYear()) * 1;
 
+declare module 'react' {
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        // extends React's HTMLAttributes
+        border?: any;
+    }
+}
+
 
 // Print Media
 const ComponentToPrint = React.forwardRef((props: any, ref: any) => {
