@@ -56,6 +56,7 @@ import EmployeeAttendanceDateWiseReport from "./container/pages/attendance/Emplo
 import EmployeeAttendanceMonthWiseReport from "./container/pages/attendance/EmployeeAttendanceMonthWiseReport";
 import LeaveApply from "./container/pages/generalSettings/LeaveApply";
 import LeavePendingList from "./container/pages/generalSettings/LeavePendingList";
+import LeavePendingListLineManager from "./container/pages/generalSettings/LeavePendingListLineManager";
 import EmployeeSelfAttendanceDetails from "./container/pages/generalSettings/EmployeeSelfAttendanceDetails";
 import EmployeeShiftConfig from "./container/pages/attendance/EmployeeShiftConfig";
 import EmployeeShiftReport from "./container/pages/attendance/EmployeeShiftReport";
@@ -66,6 +67,7 @@ import Profile from './container/pages/signup/Profile.page';
 import Users from "./container/pages/user/Users";
 import AttendanceFine from "./container/pages/generalSettings/AttendanceFine";
 import EmployeeDisableList from "./container/pages/employee/EmployeeDisableList";
+import EmployeeIdUpdate from "./container/pages/employee/EmployeeIdUpdate";
 
 const { Header, Content, Sider } = Layout;
 // Application
@@ -177,6 +179,7 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.HR_REPORT_MONTH_WISE} component={EmployeeAttendanceMonthWiseReport} />
             <Route exact path={'/' + ROUTES.APPLY_LEAVE} component={LeaveApply} />
             <Route exact path={'/' + ROUTES.LEAVE_PENDING} component={LeavePendingList} />
+            <Route exact path={'/' + ROUTES.LEAVE_PENDING_LINE_MANAGER} component={LeavePendingListLineManager} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_ATTENDNACE} component={EmployeeSelfAttendanceDetails} />
             <Route exact path={'/' + ROUTES.EOMPLOYEE_REMARKS} component={RemarksList} />
             <Route exact path={'/' + ROUTES.SHIFT_CONFIG} component={EmployeeShiftConfig} />
@@ -186,6 +189,7 @@ export default function Container() {
             <Route exact path={'/' + ROUTES.USER_LIST} component={Users} />
             <Route exact path={'/' + ROUTES.ATTENDANCE_FINE} component={AttendanceFine} />
             <Route exact path={'/' + ROUTES.EMPLOYEE_DISABLE_LIST} component={EmployeeDisableList} />
+            <Route exact path={'/' + ROUTES.ID_UPDATE} component={EmployeeIdUpdate} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', padding:"15px" }}>

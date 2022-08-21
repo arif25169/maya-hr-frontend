@@ -232,6 +232,7 @@ export default function Users(props) {
                                 <Select placeholder='User Roles' style={{ width: "100%" }} allowClear mode="multiple">
                                     <Option value="ROLE_ADMIN">ROLE_ADMIN</Option>
                                     <Option value="ROLE_EMPLOYEE">ROLE_EMPLOYEE</Option>
+                                    <Option value="ROLE_HR">ROLE_HR</Option>
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -306,6 +307,7 @@ export default function Users(props) {
                         <Select placeholder='User Roles' style={{ width: "100%" }} allowClear mode="multiple">
                             <Option value="ROLE_ADMIN">ROLE_ADMIN</Option>
                             <Option value="ROLE_EMPLOYEE">ROLE_EMPLOYEE</Option>
+                            <Option value="ROLE_HR">ROLE_HR</Option>
                         </Select>
                     </Form.Item>
 

@@ -6,16 +6,16 @@ import { useStoreActions, useStoreState } from '../../../store/hooks/easyPeasy';
 import 'react-multi-date-picker/styles/colors/green.css';
 
 
-export default function LeavePendingList() {
-    const leaveApplicationPendingList = useStoreState((state) => state.generalSetting.leaveApplicationPendingList);
-    const fetchleaveApplicationPendingList = useStoreActions((state) => state.generalSetting.fetchleaveApplicationPendingList);
-    const approveLeaveApplication = useStoreActions((state) => state.generalSetting.approveLeaveApplication);
-    const rejectLeaveApplication = useStoreActions((state) => state.generalSetting.rejectLeaveApplication);
+export default function LeavePendingListLineManager() {
+    const leaveApplicationPendingListForLineManager = useStoreState((state) => state.generalSetting.leaveApplicationPendingListForLineManager);
+    const fetchleaveApplicationPendingListForLineManager = useStoreActions((state) => state.generalSetting.fetchleaveApplicationPendingListForLineManager);
+    const approveLeaveApplicationByLineManager = useStoreActions((state) => state.generalSetting.approveLeaveApplicationByLineManager);
+    const rejectLeaveApplicationByLineManager = useStoreActions((state) => state.generalSetting.rejectLeaveApplicationByLineManager);
     const [form] = Form.useForm();
 
 
     useEffect(() => {
-        fetchleaveApplicationPendingList()
+        fetchleaveApplicationPendingListForLineManager()
     }, [])
 
     const columns = [
@@ -38,7 +38,7 @@ export default function LeavePendingList() {
                         title="Are you sure to reject this?"
                         okText="Yes"
                         cancelText="No"
-                        onConfirm={() => rejectLeaveApplication(record.applyId)}
+                        onConfirm={() => rejectLeaveApplicationByLineManager(record.applyId)}
                     >
                         <Tooltip title="Reject">
                             <Button danger icon={<CloseCircleOutlined  />} />
@@ -48,7 +48,7 @@ export default function LeavePendingList() {
                         title="Are you sure to approve this?"
                         okText="Yes"
                         cancelText="No"
-                        onConfirm={() => approveLeaveApplication(record.applyId)}
+                        onConfirm={() => approveLeaveApplicationByLineManager(record.applyId)}
                     >
                         <Tooltip title="Approve">
                             <Button type='primary' icon={<CheckCircleOutlined />} />
@@ -61,16 +61,16 @@ export default function LeavePendingList() {
     ];
     return (
         <>
-            <Card title="Pending Leave List">
+            <Card title="Junior Employee Applied Leave List">
 
-                {leaveApplicationPendingList?.length > 0 &&
+                {leaveApplicationPendingListForLineManager?.length > 0 &&
                     <TableView
                         antTableProps={{
                             showHeader: true,
                             columns: columns,
                             rowKey: "customEmployeeId",
-                            dataSource: leaveApplicationPendingList,
-                            filterData: leaveApplicationPendingList,
+                            dataSource: leaveApplicationPendingListForLineManager,
+                            filterData: leaveApplicationPendingListForLineManager,
                             pagination: true,
                             bordered: true
                         }}

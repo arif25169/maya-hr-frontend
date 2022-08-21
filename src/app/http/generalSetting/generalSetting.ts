@@ -58,10 +58,13 @@ export const deleteAttendanceTimeConfiguration = (payload) => del("/attendance/t
 export const fetchapplicantApplyList = (payload) => get('/leave/application/applicant/apply/list?year='+payload);
 export const fetchleaveApplicationFormView = (payload) => get('/leave/application/form/view?applyId='+payload);
 export const deleteLeaveApplication = (payload) => del("/leave/application/delete?applyId="+payload);
-export const fetchleaveApplicationPendingList = () => get('/leave/application/pending/list');
+export const fetchleaveApplicationPendingList = () => get('/leave/application/pending/list/for/hr');
+export const fetchleaveApplicationPendingListForLineManager = () => get('/leave/application/pending/list/for/line-manager');
+export const approveLeaveApplicationByLineManager = (payload) => post("/leave/application/approve/by/lineManager?applyId="+payload);
+export const rejectLeaveApplicationByLineManager = (payload) => post("//leave/application/reject/by/lineManager?applyId="+payload);
 export const fetchRemarksList = () => get('/employee/attendance/remark/list');
-export const approveLeaveApplication = (payload) => post("/leave/application/approve?applyId="+payload);
-export const rejectLeaveApplication = (payload) => post("/leave/application/reject?applyId="+payload);
+export const approveLeaveApplication = (payload) => post("/leave/application/approve/by/hr?applyId="+payload);
+export const rejectLeaveApplication = (payload) => post("/leave/application/reject/by/hr?applyId="+payload);
 
 export const approveLateAttendance = (payload) => post("/employee/attendance/approve/late/attendance?attendanceId="+payload);
 export const approveAbsentAttendance = (payload) => post("/employee/attendance/approve/absent/attendance?attendanceId="+payload);

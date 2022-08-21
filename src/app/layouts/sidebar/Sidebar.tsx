@@ -119,6 +119,9 @@ export function Sidebar() {
 						<Menu.Item key={ROUTES.CREATE_EMPLOYEE_EXCEL} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CREATE_EMPLOYEE_EXCEL} className="nav-text">Bulk</Link>
 						</Menu.Item>
+						<Menu.Item key={ROUTES.ID_UPDATE} icon={<ContainerOutlined />}>
+							<Link to={ROUTES.ID_UPDATE} className="nav-text">Id Update</Link>
+						</Menu.Item>					
 						<Menu.Item key={ROUTES.EMPLOYEE_BANK_INFO} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_BANK_INFO} className="nav-text">Bank Info</Link>
 						</Menu.Item>
@@ -272,6 +275,9 @@ export function Sidebar() {
 			<SubMenu key={"leaveMenuItemEm"} icon={<PartitionOutlined />} title="Leave" >
 				<Menu.Item key={ROUTES.APPLY_LEAVE + 'em'} icon={<ContainerOutlined />}>
 					<Link to={ROUTES.APPLY_LEAVE} className="nav-text">Apply Leave</Link>
+				</Menu.Item>				
+				<Menu.Item key={ROUTES.LEAVE_PENDING_LINE_MANAGER + 'em'} icon={<ContainerOutlined />}>
+					<Link to={ROUTES.LEAVE_PENDING_LINE_MANAGER} className="nav-text">Jnr. Emp. Applied Leave</Link>
 				</Menu.Item>
 			</SubMenu>
 		</>

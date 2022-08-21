@@ -31,6 +31,7 @@ export const saveSalaryProcess = (payload) => post("/salary/process/save", paylo
 export const assignSalaryGrade = (payload) => post("/salary/grade/assign", payload);
 export const assignDesignation = (payload) => post("/employee/designation/assign", payload);
 export const updateBank = (payload) => post("/employee/bank/info/bulk/update", payload);
+export const employeeCustomIdUpdate = (payload) => post("/employee/custom/id/bulk/update", payload);
 export const payEmployeeSalary = (payload) => post("/salary/payment/save", payload);
 export const batchPayEmployeeSalary = (payload) => post("/salary/payment/batch/save", payload);
 export const fetchsalaryProcessList = (payload) => get("/salary/process/list?month="+payload?.salaryMonth+"&year="+payload?.salaryYear);

@@ -28,7 +28,11 @@ export interface Hr {
 	
 	employeeListByDepartment2 : any;
 	fetchEmployeeByDepartment2 : Thunk<Hr>;
-	setEmployeeListByDepartment2:  Action<Hr, any>;
+	setEmployeeListByDepartment2:  Action<Hr, any>;	
+	
+	employeeListByDepartment3 : any;
+	fetchEmployeeByDepartment3 : Thunk<Hr>;
+	setEmployeeListByDepartment3:  Action<Hr, any>;
 
 	saveEmployeeFromExcell : Thunk<Hr, any>;
 
@@ -341,11 +345,12 @@ export const hrStore: Hr = {
 		const response = await fetchEmployeeByDepartment(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
-			if (body.messageType == 1) {
+			if (body?.item?.length>0) {
 				
 				actions.setEmployeeListByDepartment(body.item)
 			}else{
-				actions.setEmployeeListByDepartment([])
+				actions.setEmployeeListByDepartment([]);
+				notification.warn({ message: 'No Data Found' })
 			}
 		} else {
 			notification.error({ message: 'Something Wrong' });
@@ -384,10 +389,11 @@ export const hrStore: Hr = {
 		const response = await fetchEmployeeByDepartment(payload);
 		if (response.status === 201 || response.status === 200) {
 			const body = await response.json();
-			if (body.messageType == 1) {
+			if (body?.item?.length>0) {
 				
 				actions.setEmployeeListByDepartment2(body.item)
 			}else{
+				notification.warn({ message: 'No Data Found' })
 				actions.setEmployeeListByDepartment2([])
 			}
 		} else {
@@ -397,6 +403,28 @@ export const hrStore: Hr = {
 
 	setEmployeeListByDepartment2: action((state, payload) => {
 		state.employeeListByDepartment2 = payload;
+	}),	
+	
+	employeeListByDepartment3:[],
+	
+	fetchEmployeeByDepartment3: thunk(async (actions, payload) => {
+		const response = await fetchEmployeeByDepartment(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body?.item?.length>0) {
+				
+				actions.setEmployeeListByDepartment3(body.item)
+			}else{
+				notification.warn({ message: 'No Data Found' })
+				actions.setEmployeeListByDepartment3([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setEmployeeListByDepartment3: action((state, payload) => {
+		state.employeeListByDepartment3 = payload;
 	}),
 
 	downloadHrTraining: thunk(async (actions, payload) => {

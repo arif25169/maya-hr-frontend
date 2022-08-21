@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceFineUrl, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetcAttendanceFineUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchemployeeListForManualInput, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationFormView, fetchleaveApplicationPendingList, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, saveAttendanceFineUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceFineUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
+import { approveAbsentAttendance, approveLateAttendance, approveLeaveApplication, approveLeaveApplicationByLineManager, createHoliday, createLeaveAssignSaveUrl, createLeaveCategory, createLeaveConfig, deleteAttendanceFineUrl, deleteAttendanceTimeConfiguration, deleteDepartmentUrl, deleteDesignationUrl, deletedutyStation, deleteEmployeeTypeUrl, deleteHoliday, deleteLeaveApplication, deleteLeaveCategory, deleteLeaveConfig, deleteShiftUrl, employeeAttendanceConfigListUrl, employeeAttendanceConfigSaveUrl, employeeListByDepartmentIdUrl, employeeListForAttendanceConfigUrl, fetcAttendanceFineUrl, fetchapplicantApplyList, fetchattendanceTimeConfigurationListByDepartmentWise, fetchCompanyInfoUrl, fetchDepartmentUrl, fetchDesignationUrl, fetchdutyStationList, fetchemployeeAtttendanceListForUpdate, fetchemployeeListForManualInput, fetchEmployeeTypeUrl, fetchenabledEmployeeListTakeAttendance, fetchholidayList, fetchleaveApplicationFormView, fetchleaveApplicationPendingList, fetchleaveApplicationPendingListForLineManager, fetchleaveAssignListByDepartment, fetchleaveCategoryList, fetchleaveConfigList, fetchRemarksList, fetchShiftUrl, goToCompany, leaveApply, leaveConfigListByDepartmentIdUrl, rejectLeaveApplication, rejectLeaveApplicationByLineManager, saveAttendanceFineUrl, saveCompanyUrl, saveDepartmentUrl, saveDesignationUrl, savedutyStation, saveEmployeeTypeUrl, saveShiftUrl, updateAttendanceFineUrl, updateAttendanceTimeConfiguration, updateCompanyInfoUrl, updateDepartmentUrl, updateDesignationUrl, updatedutyStation, updateEmployeeTypeUrl, updateHoliday, updateLeaveCategory, updateLeaveConfig, updateShiftUrl } from '../../../http/generalSetting/generalSetting';
 
 export interface GeneralSetting {
 	setSaveCompany: Thunk<GeneralSetting, any>,
@@ -125,6 +125,12 @@ export interface GeneralSetting {
 	rejectLeaveApplication: Thunk<GeneralSetting, any>;
 	approveLateAttendance: Thunk<GeneralSetting, any>;
 	approveAbsentAttendance: Thunk<GeneralSetting, any>;
+
+	leaveApplicationPendingListForLineManager: any;
+	setleaveApplicationPendingListForLineManager: Action<GeneralSetting, any>;
+	fetchleaveApplicationPendingListForLineManager: Thunk<GeneralSetting>;
+	approveLeaveApplicationByLineManager: Thunk<GeneralSetting, any>;
+	rejectLeaveApplicationByLineManager: Thunk<GeneralSetting, any>;
 
 	remarksLits: any;
 	setRemarksList: Action<GeneralSetting, any>;
@@ -1099,6 +1105,66 @@ export const generalSettingStore: GeneralSetting = {
 			if (body.messageType == 1) {
 				notification.success({ message: body.message })
 				actions.fetchleaveApplicationPendingList(payload)
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+
+	leaveApplicationPendingListForLineManager: [],
+
+	setleaveApplicationPendingListForLineManager: action((state, payload) => {
+		state.leaveApplicationPendingListForLineManager = payload;
+	}),
+
+	fetchleaveApplicationPendingListForLineManager: thunk(async (actions, payload) => {
+		const response = await fetchleaveApplicationPendingListForLineManager();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body?.item?.length > 0) {
+				actions.setleaveApplicationPendingListForLineManager(body.item);
+			} else {
+				notification['warning']({
+					message: 'No data found',
+				});
+				actions.setleaveApplicationPendingListForLineManager(body.item);
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+	approveLeaveApplicationByLineManager: thunk(async (actions, payload) => {
+		const response = await approveLeaveApplicationByLineManager(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchleaveApplicationPendingListForLineManager(payload)
+			} else {
+				notification.error({ message: body.message })
+			}
+		} else {
+			const body = await response.json();
+			notification['error']({
+				message: 'Something went wrong',
+			});
+		}
+	}),
+	rejectLeaveApplicationByLineManager: thunk(async (actions, payload) => {
+		const response = await rejectLeaveApplicationByLineManager(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body.message })
+				actions.fetchleaveApplicationPendingListForLineManager(payload)
 			} else {
 				notification.error({ message: body.message })
 			}
