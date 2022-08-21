@@ -95,7 +95,7 @@ export default function TopNavBar(props: any) {
             <>
               <Avatar
                 size={{ xs: 35, sm: 35, md: 35, lg: 35, xl: 40, xxl: 45 }}
-                src={containerBG}
+                src={"data:image/png;base64," + companyInfo?.logoName}
                 style={{ marginLeft: 10 }}
               />
               <span className='instiute-name' style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 2 }}>{companyInfo?.companyName}</span>
@@ -114,7 +114,7 @@ export default function TopNavBar(props: any) {
             <>
               <Avatar
                 size={{ xs: 35, sm: 35, md: 35, lg: 35, xl: 40, xxl: 45 }}
-                src={containerBG}
+                src={"data:image/png;base64," + companyInfo?.logoName}
                 style={{ marginLeft: 10 }}
               />
               <span style={{ fontSize: isMobile ? 14 : 18, fontWeight: "bold", color: 'white', textTransform: "uppercase", letterSpacing: isMobile ? 0 : 1, marginLeft: 5 }}>{companyInfo?.companyName}</span>

@@ -47,7 +47,7 @@ export const updateCompanyInfoUrl = (payload) => post("/company/update",payload)
 
 export const employeeListForAttendanceConfigUrl = () => get('/employee/list');
 export const fetchenabledEmployeeListTakeAttendance = () => get('/employee/list');
-export const fetchemployeeAtttendanceListForUpdate = (payload) => get('/employee/attendance/list/for/update?attendanceDate='+payload);
+export const fetchemployeeAtttendanceListForUpdate = (payload) => get('/employee/attendance/list/for/update?attendanceDate='+payload.attendanceDate+'&shiftId='+payload.shiftId);
 export const employeeAttendanceConfigSaveUrl = (payload) => post('/attendance/time/configuration/save', payload);
 export const updateAttendanceTimeConfiguration = (payload) => post('/attendance/time/configuration/update', payload);
 export const employeeAttendanceConfigListUrl = () => get('/attendance/time/configuration/list');
@@ -56,6 +56,7 @@ export const fetchleaveAssignListByDepartment = (payload) => get("/leave/assign/
 export const fetchattendanceTimeConfigurationListByDepartmentWise = (payload) => get("/attendance/time/configuration/list/by/departmentid?departmentId="+payload.departmentId);
 export const deleteAttendanceTimeConfiguration = (payload) => del("/attendance/time/configuration/delete?attendnaceTimeConfigurationIds="+payload);
 export const fetchapplicantApplyList = (payload) => get('/leave/application/applicant/apply/list?year='+payload);
+export const fetchleaveApplicationFormView = (payload) => get('/leave/application/form/view?applyId='+payload);
 export const deleteLeaveApplication = (payload) => del("/leave/application/delete?applyId="+payload);
 export const fetchleaveApplicationPendingList = () => get('/leave/application/pending/list');
 export const fetchRemarksList = () => get('/employee/attendance/remark/list');
@@ -74,4 +75,5 @@ export const deletedutyStation = (payload) => del("/duty-station/delete?dutyStat
 export const saveAttendanceFineUrl = (payload) => post("/attendance/fine/save", payload);
 export const updateAttendanceFineUrl = (payload) => post("/attendance/fine/update", payload);
 export const fetcAttendanceFineUrl = (payload) => get(`/attendance/fine/list?month=${payload.month}&year=${payload.year}`);
+export const fetchemployeeListForManualInput = (payload) => get(`/employee/attendance/list/for/manual/input?attendanceDate=${payload.attendanceDate}&departmentId=${payload.departmentId}&shiftId=${payload.shiftId}`);
 export const deleteAttendanceFineUrl = (payload) => del(`/attendance/fine/delete?attendanceFineId=${payload}`);

@@ -181,10 +181,10 @@ export function Sidebar() {
 					<SubMenu key={"attendanceSetting"} icon={<PartitionOutlined />} title="Settings" >
 						{/* <Menu.Item key={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.EMPLOYEE_ATTENDANCE_CONFIG} className="nav-text">Time Config</Link>
-						</Menu.Item> 
+						</Menu.Item>  */}
 						<Menu.Item key={ROUTES.ID_MAPPING} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.ID_MAPPING} className="nav-text">ID Mapping</Link>
-						</Menu.Item> */}
+						</Menu.Item>
 						<Menu.Item key={ROUTES.CREATE_SHIFT} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CREATE_SHIFT} className="nav-text">Shift</Link>
 						</Menu.Item>	
