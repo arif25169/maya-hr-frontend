@@ -160,6 +160,12 @@ export default function EmployeeAtachments() {
                                             <Option key="4" value="CV or Resume">CV or Resume</Option>
                                             <Option key="5" value="Others Documents_1">Others Documents_1</Option>
                                             <Option key="6" value="Others Documents_2">Others Documents_2</Option>
+
+                                            <Option key="7" value="Offer of Employment">Offer of Employment</Option>
+                                            <Option key="8" value="Medical Report">Medical Report</Option>
+                                            <Option key="9" value="Appointment Letter">Appointment Letter</Option>
+                                            <Option key="10" value="Personal Data Form">Personal Data Form</Option>
+                                            <Option key="11" value="Certificate">Certificate</Option>
                                         </Select>
                                     </Form.Item>
                                 </Col>
