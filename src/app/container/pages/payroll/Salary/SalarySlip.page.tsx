@@ -54,13 +54,13 @@ const ComponentToPrint = React.forwardRef((props: any, ref: any) => {
                         <td style={{ width: "25%" }}>Employee Code</td>
                         <td style={{ width: "25%", textAlign: 'center', }} >{details?.employeeCustomId}</td>
                         <td style={{ width: "25%" }} >Salary Month-Working Days</td>
-                        <td style={{ textAlign: 'center', width: "25%" }}>{details?.salaryMonthWorkingDays}</td>
+                        <td style={{ textAlign: 'center', width: "25%" }}>{details?.salaryMonthWorkingDays===0?null:details?.salaryMonthWorkingDays}</td>
                     </tr>
                     <tr style={{ border: '1px solid', paddingLeft: 2 }}>
                         <td style={{ width: "25%" }}>Designation</td>
                         <td style={{ width: "25%", textAlign: 'center', }}>{details?.designation}</td>
                         <td style={{ width: "25%" }}>Salary Month-Days Attended</td>
-                        <td style={{ textAlign: 'center', width: "25%" }}>{details?.salaryMonthAttended}</td>
+                        <td style={{ textAlign: 'center', width: "25%" }}>{details?.salaryMonthAttended===0?null:details?.salaryMonthAttended}</td>
                     </tr>
                 </tbody>
             </table>
@@ -121,25 +121,26 @@ const ComponentToPrint = React.forwardRef((props: any, ref: any) => {
                 </tbody>
             </table>
             <br />
-            <table style={{ width: "100%" }} className="paysalary1">
+            <table style={{ width: "100%", textAlign: 'center' }} className="paysalary1">
                 <tbody>
                     <tr style={{ fontWeight: 'bold', }}>
                         <th colSpan={4}>Payment Information</th>
                     </tr>
                     <tr style={{ border: '1px solid', paddingLeft: 2 }}>
-                        <td style={{ width: "25%" }}>Payment Type: {details?.paymentType} </td>
-                        <td style={{ width: "25%", textAlign: 'center', }}>{details?.paymentType === "Cash" ? <span style={{ color: "#fff" }}>x</span> : <>{details?.paymentType} No. {details?.paymentNo}</>}</td>
-                        <td style={{ width: "25%" }}>{details?.paymentType} Date</td>
-                        <td style={{ textAlign: 'center', width: "25%" }}>{details?.paymentDate}</td>
+                        <td style={{ width: "20%", fontWeight:'bold' }}>Payment Type</td>
+                        <td style={{ width: "20%", fontWeight:'bold' }}>Date</td>
+                        <td style={{ width: "20%", fontWeight:'bold' }}>Name of Bank</td>
+                        <td style={{ width: "20%", fontWeight:'bold' }}>Account No.</td>
+                        <td style={{ width: "20%", fontWeight:'bold' }}>Branch Name</td>
                     </tr>
-                    {details?.paymentType !== "Cash" &&
-                        <tr style={{ border: '1px solid', paddingLeft: 2 }}>
-                            <td style={{ width: "25%" }}>Name of Bank </td>
-                            <td style={{ width: "25%", textAlign: 'center', }} >{details?.bankName}</td>
-                            <td style={{ width: "25%" }} >Branch Name</td>
-                            <td style={{ width: "25%", textAlign: 'center', }}>{details?.branchName}</td>
-                        </tr>
-                    }
+                    <tr style={{ border: '1px solid', paddingLeft: 2 }}>
+                        <td style={{ width: "20%" }}>{details?.paymentType} </td>
+                        <td style={{ width: "20%" }}>{details?.paymentDate} </td>
+                        <td style={{ width: "20%" }}>{details?.bankName} </td>
+                        <td style={{ width: "20%" }}>{details?.accountNo} </td>
+                        <td style={{ width: "20%" }}>{details?.branchName} </td>
+
+                    </tr>
                 </tbody>
             </table>
             <div style={{ marginTop: 80, display: "flex", justifyContent: "space-evenly" }}>

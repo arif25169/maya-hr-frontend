@@ -4,6 +4,7 @@ import { DeleteOutlined, DownloadOutlined, EditOutlined, FileExcelOutlined, File
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsive';
 import { moneyFormat } from '../../../../utils/utils';
+import moment from 'moment'
 import $ from 'jquery';
 import jsPDF from "jspdf";
 import { pdfDataL, ppowerdbypdf, pdatepdf, lpowerdbypdf, ldatepdf } from '../../../utils/pdf';
@@ -731,7 +732,8 @@ export default function SalaryProcess() {
 
         var doc = new jsPDF("p", "mm", "a4");
         pdfDataL(doc, details);
-
+        doc.writeText(0, 30, `Month: ${salaryMonth} & Year: ${salaryYear}`, { align: "center" });
+        doc.writeText(-15, 30, `Date: ${moment(new Date()).format("DD/MM/YYYY")}`, { align: "right" });
         var totalPagesExp = "{total_pages_count_string}";
 
         var pageContent = function (data) {
@@ -742,6 +744,7 @@ export default function SalaryProcess() {
             }
             doc.setFontSize(8);
             var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+            doc.text(str, data.settings.margin.right, pageHeight - 10);
             doc.text(str, data.settings.margin.right, pageHeight - 10);
         };
 
@@ -757,7 +760,9 @@ export default function SalaryProcess() {
             startY: 45,
             addPageContent: pageContent
         });
-
+        doc.setFontType("normal")
+        doc.setFontSize(10);
+        doc.text('Authorized Signature', 14, doc.autoTable.previous.finalY + 25);
         if (typeof doc.putTotalPages === 'function') {
             doc.putTotalPages(totalPagesExp);
         }
