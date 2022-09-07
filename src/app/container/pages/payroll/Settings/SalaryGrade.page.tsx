@@ -48,13 +48,23 @@ export default function SalaryGrade() {
             showOnDesktop: true
         },
         {
-            title: 'Basic Amount',
-            dataIndex: 'basicAmount',
-            key: 'basicAmount',
+            title: 'Basic Amount(Minimum)',
+            dataIndex: 'basicAmountMinimum',
+            key: 'basicAmountMinimum',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.basicAmount)
+                moneyFormat(record.basicAmountMinimum)
+            )
+        },
+        {
+            title: 'Basic Amount(Maximum)',
+            dataIndex: 'basicAmountMaximum',
+            key: 'basicAmountMaximum',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.basicAmountMaximum)
             )
         },
         {
@@ -76,7 +86,8 @@ export default function SalaryGrade() {
                         <Button type='primary' icon={<EditOutlined />} onClick={() => {
                             updateForm.setFieldsValue({
                                 gradeName: record.gradeName,
-                                basicAmount: record.basicAmount,
+                                basicAmountMinimum: record.basicAmountMinimum,
+                                basicAmountMaximum: record.basicAmountMaximum,
                                 note: record.note,
                             });
                             setIsModalVisible(true);
@@ -110,7 +121,7 @@ export default function SalaryGrade() {
                         form={saveForm}
                     >
                         <Row>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                                 <Form.Item
                                     name="gradeName"
                                     label="Grade Name"
@@ -122,19 +133,31 @@ export default function SalaryGrade() {
                                     <Input placeholder="Grade Name" />
                                 </Form.Item>
                             </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                                 <Form.Item
-                                    name="basicAmount"
-                                    label="Basic Amount"
+                                    name="basicAmountMinimum"
+                                    label="Basic Amount (Minimum)"
                                     className="title-Text"
                                     rules={[
                                         { required: true, message: "Please input amount" },
                                     ]}
                                 >
-                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
+                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount (min)" />
                                 </Form.Item>
                             </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
+                                <Form.Item
+                                    name="basicAmountMaximum"
+                                    label="Basic Amount (Maximum)"
+                                    className="title-Text"
+                                    rules={[
+                                        { required: true, message: "Please input amount" },
+                                    ]}
+                                >
+                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount (max)" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                                 <Form.Item
                                     name="note"
                                     label="Note"
@@ -210,8 +233,20 @@ export default function SalaryGrade() {
                         </Col>
                         <Col span={24}>
                             <Form.Item
-                                name="basicAmount"
-                                label="Basic Amount"
+                                name="basicAmountMinimum"
+                                label="Basic Amount (Minimum)"
+                                className="title-Text"
+                                rules={[
+                                    { required: true, message: "Please input amount" },
+                                ]}
+                            >
+                                <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={24}>
+                            <Form.Item
+                                name="basicAmountMaximum"
+                                label="Basic Amount (Maximum)"
                                 className="title-Text"
                                 rules={[
                                     { required: true, message: "Please input amount" },

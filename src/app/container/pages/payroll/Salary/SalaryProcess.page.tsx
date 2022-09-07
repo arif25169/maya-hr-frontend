@@ -10,7 +10,9 @@ import jsPDF from "jspdf";
 import { pdfDataL, ppowerdbypdf, pdatepdf, lpowerdbypdf, ldatepdf } from '../../../utils/pdf';
 import 'jspdf-autotable';
 import { Excel } from 'antd-table-saveas-excel';
-import { SelectDepartment2 } from '../../../select/SelectDepartment2';
+import { SelectDepartment } from '../../../select/SelectDepartment';
+import { SelectGradeDeduction } from '../../../select/SelectGradeDeduction';
+import { SelectGradeAddition } from '../../../select/SelectGradeAddition';
 
 const cleanObject = (input) => {
     if (typeof input === 'object' && input !== null) {
@@ -39,7 +41,7 @@ var details = "Employee salary sheet";
 export default function SalaryProcess() {
     const salarySheetViews = useStoreState((state) => state.payroll.salarySheetViews);
     const fetchsalarySheetViews = useStoreActions((state) => state.payroll.fetchsalarySheetViews);
-    const fetchsalarySheetViewsByDep = useStoreActions((state) => state.payroll.fetchsalarySheetViewsByDep);
+    const fetchsalarySheetViewsByDepNew = useStoreActions((state) => state.payroll.fetchsalarySheetViewsByDepNew);
     const saveSalaryProcess = useStoreActions((state) => state.payroll.saveSalaryProcess);
     const fetchCompanyDepartmentList = useStoreActions(
         (state) => state.common.fetchCompanyDepartmentList
@@ -571,15 +573,18 @@ export default function SalaryProcess() {
     const [salaryYear, setsalaryYear] = useState<any>('');
 
     const [all, setall] = useState<any>('')
+    const [absentFineId, setabsentFineId] = useState<any>(null)
+    const [bonusId, setbonusId] = useState<any>(null)
+
+
 
     const onProcess = (value) => {
         if (value.departmentId === 'all') {
             details = "Employee salary sheet";
         } else details = `Employee salary sheet of Department-${$(".depSelect").text()}`;
-        setall(value.departmentId)
-        if (value.departmentId === 'all') {
-            fetchsalarySheetViews();
-        } else fetchsalarySheetViewsByDep(value.departmentId);
+        value.absentFineId= absentFineId;
+        value.bonusId= bonusId;
+        fetchsalarySheetViewsByDepNew(value);
         setsalaryMonth(value.salaryMonth);
         setsalaryYear(value.salaryYear)
     }
@@ -752,11 +757,11 @@ export default function SalaryProcess() {
 
             headerStyles: {
                 lineWidth: .01,
-                overflow:"linebreak",
+                overflow: "linebreak",
                 lineColor: [224, 224, 224]
             },
             theme: "grid",
-            styles: { fontSize: 7,  overflow:"linebreak", },
+            styles: { fontSize: 7, overflow: "linebreak", },
             startY: 45,
             addPageContent: pageContent
         });
@@ -780,8 +785,8 @@ export default function SalaryProcess() {
                 onFinish={onProcess}
             >
                 <Row>
-                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 2 }} xl={{ span: 2 }}>  </Col>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 0 }} xl={{ span: 0 }}>  </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 4 }} lg={{ span: 6 }} xl={{ span: 4 }}>
                         <Form.Item
                             name="departmentId"
                             label="Department"
@@ -790,10 +795,10 @@ export default function SalaryProcess() {
                                 { required: true, message: "Please select department" },
                             ]}
                         >
-                            <SelectDepartment2 />
+                            <SelectDepartment />
                         </Form.Item>
                     </Col>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }} xl={{ span: 3 }}>
                         <Form.Item
                             name="salaryYear"
                             label="Salary Year"
@@ -809,7 +814,7 @@ export default function SalaryProcess() {
                             </Select>
                         </Form.Item>
                     </Col>
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }} xl={{ span: 3 }}>
                         <Form.Item
                             name="salaryMonth"
                             label="Salary Month"
@@ -832,6 +837,36 @@ export default function SalaryProcess() {
                                 <Option key="11" value="November">November</Option>
                                 <Option key="12" value="December">December</Option>
                             </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        <Form.Item
+                            name="x"
+                            label="Absent Fine"
+                            className="title-Text"
+                            // initialValue={null}
+                        >
+                            <SelectGradeDeduction onChange={e=>{setabsentFineId(e); console.log(e)}} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }} xl={{ span: 4 }}>
+                        <Form.Item
+                            name="y"
+                            label="Bonus"
+                            className="title-Text"
+                    //    
+                        >
+                            <SelectGradeAddition  onChange={e=>setbonusId(e)}/>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }} xl={{ span: 3 }}>
+                        <Form.Item
+                            name="bonusAcceptanceOfBasic"
+                            label="Acceptance of Basic"
+                            className="title-Text"
+                            initialValue={null}
+                        >
+                            <InputNumber placeholder='0-1' min={0} max={1} />
                         </Form.Item>
                     </Col>
                     <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 2 }} xl={{ span: 2 }}>
@@ -866,7 +901,7 @@ export default function SalaryProcess() {
                                         style={{
 
                                         }}
-                                        icon={<FileExcelOutlined/>}
+                                        icon={<FileExcelOutlined />}
                                         type="primary"
                                         onClick={() => {
                                             const excel = new Excel();

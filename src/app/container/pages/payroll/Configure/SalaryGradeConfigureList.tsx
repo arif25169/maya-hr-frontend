@@ -1,282 +1,353 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, List, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox, Descriptions } from 'antd'
-import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox } from 'antd'
+import { DeleteOutlined, EditOutlined, SaveOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
-import TableView from '../../../../contents/AntTableResponsiveNoSearch';
+import TableView from '../../../../contents/AntTableResponsive';
+import { Excel } from 'antd-table-saveas-excel';
 import { moneyFormat } from '../../../../utils/utils';
+import { SelectDepartment } from '../../../select/SelectDepartment';
 
 
 
+const { Option } = Select;
+
+const d = new Date();
+const year = d.getFullYear();
 
 export default function SalaryGradeConfigureList() {
-    const salaryGradeConfigurationList = useStoreState((state) => state.payroll.salaryGradeConfigurationList);
-    const fetchsalaryGradeConfigurationList = useStoreActions((state) => state.payroll.fetchsalaryGradeConfigurationList);
-    const updateAdditionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.updateAdditionSalaryGradeConfiguration);
-    const updateDeductionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.updateDeductionSalaryGradeConfiguration);
-    const deleteAdditionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.deleteAdditionSalaryGradeConfiguration);
-    const deleteDeductionSalaryGradeConfiguration = useStoreActions((state) => state.payroll.deleteDeductionSalaryGradeConfiguration);
-
+    const salryConfigurationSheetByDepartment = useStoreState((state) => state.payroll.salryConfigurationSheetByDepartment);
+    const fetchsalryConfigurationSheetByDepartment = useStoreActions((state) => state.payroll.fetchsalryConfigurationSheetByDepartment);
+    const deleteSalryConfiguration = useStoreActions((state) => state.payroll.deleteSalryConfiguration);
+    const fetchCompanyDepartmentList = useStoreActions(
+        (state) => state.common.fetchCompanyDepartmentList
+    );
     useEffect(() => {
-        fetchsalaryGradeConfigurationList();
-    }, [])
-
-    console.log(salaryGradeConfigurationList)
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isModalVisible2, setIsModalVisible2] = useState(false);
-    const [configId, setconfigId] = useState<any>(null);
+        fetchCompanyDepartmentList();
+    }, []);
 
 
-    const additioncolumns = [
+    /////////////
+
+    const columns: any = [
         {
-            title: 'Salary Head',
-            dataIndex: 'salaryHeadName',
-            key: 'salaryHeadName',
+            title: 'Employee Id',
+            dataIndex: 'customEmployeeId',
+            key: 'customEmployeeId',
             showOnResponse: true,
             showOnDesktop: true
         },
         {
-            title: 'Amount',
-            dataIndex: 'amount',
-            key: 'amount',
+            title: 'Name',
+            dataIndex: 'employeeName',
+            key: 'employeeName',
+            showOnResponse: true,
+            showOnDesktop: true
+        },
+        {
+            title: 'Designation',
+            dataIndex: 'designation',
+            key: 'designation',
+            showOnResponse: true,
+            showOnDesktop: true
+        },
+        {
+            title: 'Grade',
+            dataIndex: 'salaryGrade',
+            key: 'salaryGrade',
+            showOnResponse: true,
+            showOnDesktop: true
+        },
+        {
+            title: 'Basic Salary',
+            dataIndex: 'basicSalary',
+            key: 'netSalary',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (
-                moneyFormat(record.amount)
+                moneyFormat(record.basicSalary)
+            )
+        },
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName1 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName1,
+            dataIndex: 'salaryHeadAdditionAmount1',
+            key: 'salaryHeadAdditionAmount1',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount1)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName2 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName2,
+            dataIndex: 'salaryHeadAdditionAmount2',
+            key: 'salaryHeadAdditionAmount2',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount2)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName3 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName3,
+            dataIndex: 'salaryHeadAdditionAmount3',
+            key: 'salaryHeadAdditionAmount3',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount3)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName4 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName4,
+            dataIndex: 'salaryHeadAdditionAmount4',
+            key: 'salaryHeadAdditionAmount4',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount4)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName5 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName5,
+            dataIndex: 'salaryHeadAdditionAmount5',
+            key: 'salaryHeadAdditionAmount5',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount5)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName6 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName6,
+            dataIndex: 'salaryHeadAdditionAmount6',
+            key: 'salaryHeadAdditionAmount6',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount6)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName7 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName7,
+            dataIndex: 'salaryHeadAdditionAmount7',
+            key: 'salaryHeadAdditionAmount7',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount7)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName8 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName8,
+            dataIndex: 'salaryHeadAdditionAmount8',
+            key: 'salaryHeadAdditionAmount8',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount8)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName9 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName9,
+            dataIndex: 'salaryHeadAdditionAmount9',
+            key: 'salaryHeadAdditionAmount9',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount9)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName10 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName10,
+            dataIndex: 'salaryHeadAdditionAmount10',
+            key: 'salaryHeadAdditionAmount10',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadAdditionAmount10)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadDeductionName1 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadDeductionName1,
+            dataIndex: 'salaryHeadDeductionAmount1',
+            key: 'salaryHeadDeductionAmount1',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount1)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadDeductionName2 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadDeductionName2,
+            dataIndex: 'salaryHeadDeductionAmount2',
+            key: 'salaryHeadDeductionAmount2',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount2)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadDeductionName3 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadDeductionName3,
+            dataIndex: 'salaryHeadDeductionAmount3',
+            key: 'salaryHeadDeductionAmount3',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount3)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadDeductionName4 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadDeductionName4,
+            dataIndex: 'salaryHeadDeductionAmount4',
+            key: 'salaryHeadDeductionAmount4',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount4)
+            )
+        }] : [],
+        ...salryConfigurationSheetByDepartment?.salaryHeadDeductionName5 !== "" ? [{
+            title: salryConfigurationSheetByDepartment?.salaryHeadDeductionName5,
+            dataIndex: 'salaryHeadDeductionAmount5',
+            key: 'salaryHeadDeductionAmount5',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.salaryHeadDeductionAmount5)
+            )
+        }] : [],
+        {
+            title: 'Gross Salary',
+            dataIndex: 'grossSalary',
+            key: 'grossSalary',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.grossSalary)
+            )
+        },
+        {
+            title: 'Net Salary',
+            dataIndex: 'netSalary',
+            key: 'netSalary',
+            showOnResponse: true,
+            showOnDesktop: true,
+            render: (text: any, record: any, index) => (
+                moneyFormat(record.netSalary)
             )
         },
         {
             title: 'Action',
-            key: 'configId',
             showOnResponse: true,
             showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                <Space size="middle">
-                    <Tooltip title="Edit">
-                        <Button type='primary' icon={<EditOutlined />} onClick={() => {
-                            updateFormAddition.setFieldsValue({
-                                amount: record.amount,
-                            });
-                            setIsModalVisible(true);
-                            setconfigId(record.configId);
-
-                        }} />
-                    </Tooltip>
+            render: (text: any, record: any, index) => {
+                return (
                     <Popconfirm
                         title="Are you sure to delete this?"
                         okText="Yes"
                         cancelText="No"
-                        onConfirm={() => deleteAdditionSalaryGradeConfiguration(record?.configId)}
+                        onConfirm={() => deleteSalryConfiguration({ id: record?.salaryConfigId, data: search })}
                     >
                         <Tooltip title="Delete">
                             <Button danger icon={<DeleteOutlined />} />
                         </Tooltip>
                     </Popconfirm>
 
-                </Space>
-            ),
-        }
+                )
 
+            }
+        },
     ];
 
-    const deductioncolumns = [
-        {
-            title: 'Salary Head',
-            dataIndex: 'salaryHeadName',
-            key: 'salaryHeadName',
-            showOnResponse: true,
-            showOnDesktop: true
-        },
-        {
-            title: 'Amount',
-            dataIndex: 'amount',
-            key: 'amount',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                moneyFormat(record.amount)
-            )
-        },
-        {
-            title: 'Action',
-            key: 'configId',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                <Space size="middle">
-                    <Tooltip title="Edit">
-                        <Button type='primary' icon={<EditOutlined />} onClick={() => {
-                            updateFormDeduction.setFieldsValue({
-                                amount: record.amount,
-                            });
-                            setIsModalVisible2(true);
-                            setconfigId(record.configId);
+    const [tableData, setTableData] = useState<any>([]);
+    useEffect(() => {
+        setTableData(salryConfigurationSheetByDepartment?.employeeList);
+    }, [salryConfigurationSheetByDepartment]);
 
-                        }} />
-                    </Tooltip>
-                    <Popconfirm
-                        title="Are you sure to delete this?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={() => deleteDeductionSalaryGradeConfiguration(record?.configId)}
-                    >
-                        <Tooltip title="Delete">
-                            <Button danger icon={<DeleteOutlined />} />
-                        </Tooltip>
-                    </Popconfirm>
-
-                </Space>
-            ),
-        }
-    ];
-    const [updateFormAddition] = Form.useForm();
-    const [updateFormDeduction] = Form.useForm();
-
-    const updateSubmitFormAddition = (value) => {
-        value.configId = configId;
-        updateAdditionSalaryGradeConfiguration(value);
-        setIsModalVisible(false);
-        updateFormAddition.resetFields();
-    }
-
-    const updateSubmitFormDeduction = (value) => {
-        value.configId = configId;
-        updateDeductionSalaryGradeConfiguration(value);
-        setIsModalVisible2(false);
-        updateFormDeduction.resetFields();
+    const [form] = Form.useForm();
+    const [search, setsearch] = useState<any>(null)
+    const onProcess = (value) => {
+        setsearch(value.departmentId)
+        fetchsalryConfigurationSheetByDepartment(value.departmentId);
     }
 
     return (
         <>
-            <List
-                bordered
-                dataSource={salaryGradeConfigurationList}
-                renderItem={(item: any, index) => (
-                    <Card>
-                        <Row>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                                <Descriptions
-                                    // title="User Info"
-                                    bordered
-                                    style={{ marginBottom: 10 }}
-                                    column={{ xxl: 4, xl: 4, lg: 4, md: 1, sm: 1, xs: 1 }}
-                                >
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Salary Grade Name"><span style={{ fontWeight: "normal" }}>{item?.salaryGradeName}</span></Descriptions.Item>
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Basic Salary"><span style={{ fontWeight: "normal" }}>{moneyFormat(item?.basic)}</span></Descriptions.Item>
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Net Salary"><span style={{ fontWeight: "normal" }}>{moneyFormat(item?.netSalary)}</span></Descriptions.Item>
-                                    <Descriptions.Item style={{ fontWeight: "bold" }} label="Gross Salary"><span style={{ fontWeight: "normal" }}>{moneyFormat(item?.grossSalary)}</span></Descriptions.Item>
-                                </Descriptions>
-                            </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
-                                <Card title="Addition List">
+            <Form
+                layout="vertical"
+                id="classConfigInfo"
+                form={form}
+                onFinish={onProcess}
+            >
+                <Row>
+                    <Col xs={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} md={{ span: 24 }} lg={{ span: 8 }} xl={{ span: 8 }}>  </Col>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }} lg={{ span: 6 }} xl={{ span: 8 }}>
+                        <Form.Item
+                            name="departmentId"
+                            label="Department"
+                            className="title-Text"
+                            rules={[
+                                { required: true, message: "Please select department" },
+                            ]}
+                        >
+                            <SelectDepartment />
+                        </Form.Item>
+                    </Col>
 
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 2 }} lg={{ span: 2 }} xl={{ span: 2 }}>
+                        <Space size={'middle'} >
+                            <Button type='primary' htmlType='submit' icon={<SearchOutlined />}> Search</Button>
+                        </Space>
+                    </Col>
+
+                </Row>
+                <Row className="m-t-mo-30">
+                    <Col span="24">
+                        <div className="datatable-responsive-demo">
+                            {tableData?.length > 0 &&
+                                <>
                                     <TableView
                                         antTableProps={{
                                             showHeader: true,
-                                            columns: additioncolumns,
-                                            dataSource: item?.salaryHeadAdditionConfigurations,
-                                            filterData: item?.salaryHeadAdditionConfigurations,
-                                            pagination: false,
+                                            columns,
+                                            dataSource: tableData,
+                                            filterData: tableData,
+                                            pagination: true,
                                             bordered: true,
-                                            rowKey: "configId",
+                                            rowKey: "customEmployeeId",
 
-                                            style: { maxHeight: 300, overflow: 'auto' }
                                         }}
                                         mobileBreakPoint={768}
                                     />
-                                </Card>
-                            </Col>
-                            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }}>
 
-                                <Card title="Deduction List">
+                                    <Space style={{ float: "right" }}>
+                                        <Button
+                                            style={{
+                                                marginBottom: 20,
+                                            }}
+                                            type="primary"
+                                            onClick={() => {
+                                                const excel = new Excel();
+                                                excel
+                                                    .addSheet('Salary Process')
+                                                    .addColumns(columns)
+                                                    .addDataSource(tableData, {
+                                                        str2Percent: true,
+                                                    })
+                                                    .saveAs(`Salary Process View of ${form.getFieldValue('salaryMonth')}-${form.getFieldValue('salaryYear')}.xlsx`);
+                                            }}
+                                        >
+                                            Download Excel
+                                        </Button>
+                                    </Space>
 
-                                    <TableView
-                                        antTableProps={{
-                                            showHeader: true,
-                                            columns: deductioncolumns,
-                                            dataSource: item?.salaryHeadDeductionConfigurations,
-                                            filterData: item?.salaryHeadDeductionConfigurations,
-                                            pagination: false,
-                                            bordered: true,
-                                            rowKey: "salaryHeadDeductionId",
-                                            style: { maxHeight: 300, overflow: 'auto' }
-                                        }}
-                                        mobileBreakPoint={768}
-                                    />
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Card>
-                )}
-            />
-            <Modal
-                title="Update"
-                visible={isModalVisible}
-                //  onOk={handleOk}
-                okButtonProps={{ form: 'update', htmlType: 'submit' }}
-                onCancel={() => setIsModalVisible(false)}
-                cancelText="Close"
-                okText="Update"
-                centered
-                destroyOnClose
-                maskClosable={false}
-            >
-                <Form
-                    layout="vertical"
-                    id="update"
-                    onFinish={updateSubmitFormAddition}
-                    form={updateFormAddition}
-                >
-                    <Row>
-                        <Col span={24}>
-                            <Form.Item
-                                name="amount"
-                                label="Amount"
-                                className="title-Text"
-                                rules={[
-                                    { required: true, message: "Please input amount" },
-                                ]}
-                            >
-                                <InputNumber  formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Form>
-            </Modal>
-            <Modal
-                title="Update2"
-                visible={isModalVisible2}
-                //  onOk={handleOk}
-                okButtonProps={{ form: 'update', htmlType: 'submit' }}
-                onCancel={() => setIsModalVisible2(false)}
-                cancelText="Close"
-                okText="Update"
-                centered
-                destroyOnClose
-                maskClosable={false}
-            >
-                <Form
-                    layout="vertical"
-                    id="update"
-                    onFinish={updateSubmitFormDeduction}
-                    form={updateFormDeduction}
-                >
-                    <Row>
-                        <Col span={24}>
-                            <Form.Item
-                                name="amount"
-                                label="Amount"
-                                className="title-Text"
-                                rules={[
-                                    { required: true, message: "Please input amount" },
-                                ]}
-                            >
-                                <InputNumber  formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Form>
-            </Modal>
-
+                                </>
+                            }
+                        </div>
+                    </Col>
+                </Row>
+            </Form>
         </>
     )
 

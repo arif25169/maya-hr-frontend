@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
 import { fetchDistrictList, fetchThanaList, fetchpartnerProfile, fetchclassList, fetchdepartmentList, fetchfeeHeadList, fetchsessionYearList, fetchdesignationList, fetchsessionList, fetchsessionYearListByClassId, fetchdepartmentListByClassId, fetchsessionYearListByClassDeptConfigId, fetchstudentBasicDetailsInfosBySesssionAndClassDepartSemesterYear, fetchstudentBasicDetails, fetchclassRoutineList, fetchclassRoutineView, classRoutineSave, classRoutineDelete, fetchexamRoutineList, fetchexamRoutineView, examRoutineSave, examRoutineDelete } from '../../../http/common/common';
-import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, deleteWorkExperienceInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchTraningInfoUrl, fetchWorkExperienceInfoListUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveTraningInfoUrl, saveWorkExperienceInfoUrl, searchEmployeeDisableListUrl, searchEmployeeListUrl, traningInfoUpdateUrl, workExperienceInfoUpdateUrl } from '../../../http/hr/hr';
+import { bankInfoUpdateUrl, basicInfoUpdateUrl, deleteAttachment, deleteEmployeeInformation, deleteTrainingInfoUrl, deleteWorkExperienceInfoUrl, downloadHrTraining, educationInfoUpdateUrl, fetchAllEmployeeList, fetchattachmentList, fetchEmployeeByDepartment, fetchEmployeeEducationListUrl, fetchemployeeEnableList, fetchTraningInfoUrl, fetchviewSingleSalryConfiguration, fetchWorkExperienceInfoListUrl, saveEmployeeAttachmentInfo, saveEmployeeDataFromExcelUrl, saveEmployeeEducationDataUrl, saveSalaryGradeConfiguration, saveTraningInfoUrl, saveWorkExperienceInfoUrl, searchEmployeeDisableListUrl, searchEmployeeListUrl, traningInfoUpdateUrl, workExperienceInfoUpdateUrl } from '../../../http/hr/hr';
 import FileSaver from 'file-saver'
 
 export interface Hr {
@@ -72,6 +72,15 @@ export interface Hr {
 	setEmployeeDisableList:  Action<Hr, any>;
 	updateEmployeeDisableInfo: Thunk<Hr, any>;
 
+	employeeEnableList : any;
+	fetchemployeeEnableList : Thunk<Hr>;
+	setemployeeEnableList:  Action<Hr, any>;	
+	
+	viewSingleSalryConfiguration : any;
+	fetchviewSingleSalryConfiguration : Thunk<Hr, any>;
+	setviewSingleSalryConfiguration:  Action<Hr, any>;
+	saveSalaryGradeConfiguration: Thunk<Hr, any>;
+
 }
 
 export const hrStore: Hr = {
@@ -83,6 +92,8 @@ export const hrStore: Hr = {
 	passingYearUpdateDataStore: '',
 	workExperienceInfoList:[], 
 	employeeDisableList:[],
+	employeeEnableList:[],
+	viewSingleSalryConfiguration:null,
 	setPassingYearUpdateDataStore: thunk((state, payload) => {
 		console.log(payload);
 		
@@ -566,5 +577,58 @@ export const hrStore: Hr = {
 			notification.error({ message: 'Something Wrong' });
 		}
 	}),	
+	fetchemployeeEnableList: thunk(async (actions, payload) => {
+		const response = await fetchemployeeEnableList();
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				if (body.item?.length===0){
+					notification.warn({message:"No Data Found"})
+				}
+				actions.setemployeeEnableList(body.item)
+			}else{
+				actions.setemployeeEnableList([])
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setemployeeEnableList: action((state, payload) => {
+		state.employeeEnableList = payload;
+	}),		
+	fetchviewSingleSalryConfiguration: thunk(async (actions, payload) => {
+		const response = await fetchviewSingleSalryConfiguration(payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				actions.setviewSingleSalryConfiguration(body.item)
+			}else{
+				notification.error({ message: 'No configuration found for this employee' });
+				actions.setviewSingleSalryConfiguration(null)
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
+
+	setviewSingleSalryConfiguration: action((state, payload) => {
+		state.viewSingleSalryConfiguration = payload;
+	}),	
+
+	saveSalaryGradeConfiguration: thunk(async (actions, payload) => {
+		const response = await saveSalaryGradeConfiguration(payload.payload);
+		if (response.status === 201 || response.status === 200) {
+			const body = await response.json();
+			if (body.messageType == 1) {
+				notification.success({ message: body?.message });
+				actions.fetchviewSingleSalryConfiguration(payload.id)
+			}else{
+				notification.error({ message: 'Something Wrong' });
+			}
+		} else {
+			notification.error({ message: 'Something Wrong' });
+		}
+	}),
 
 }
