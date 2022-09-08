@@ -6,6 +6,7 @@ import TableView from '../../../../contents/AntTableResponsive';
 import { Excel } from 'antd-table-saveas-excel';
 import { moneyFormat } from '../../../../utils/utils';
 import { SelectDepartment } from '../../../select/SelectDepartment';
+import { SelectDepartment2 } from '../../../select/SelectDepartment2';
 
 
 
@@ -17,6 +18,7 @@ const year = d.getFullYear();
 export default function SalaryProcessList() {
     const salaryProcessList = useStoreState((state) => state.payroll.salaryProcessList3);
     const fetchsalaryProcessList = useStoreActions((state) => state.payroll.fetchsalaryProcessList3);
+    const fetchsalaryProcessList3noDep = useStoreActions((state) => state.payroll.fetchsalaryProcessList3noDep);
     const salaryProcessListDelete3 = useStoreActions((state) => state.payroll.salaryProcessListDelete3);
     const fetchCompanyDepartmentList = useStoreActions(
         (state) => state.common.fetchCompanyDepartmentList
@@ -269,7 +271,9 @@ export default function SalaryProcessList() {
     const [search, setsearch] = useState<any>(null)
     const onProcess = (value) => {
         setsearch(value)
-        fetchsalaryProcessList(value);
+        if (value.departmentId==='all'){
+            fetchsalaryProcessList3noDep(value)
+        } else fetchsalaryProcessList(value);
     }
 
     return (
@@ -291,7 +295,7 @@ export default function SalaryProcessList() {
                                 { required: true, message: "Please select department" },
                             ]}
                         >
-                            <SelectDepartment />
+                            <SelectDepartment2 />
                         </Form.Item>
                     </Col>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} xl={{ span: 6 }}>

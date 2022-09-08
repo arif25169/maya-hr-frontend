@@ -703,7 +703,7 @@ export default function SalaryProcess() {
         }
 
         saveSalaryProcess(finalPayLoad);
-        form.resetFields();
+        // form.resetFields();
         setselectedRowKeys([]);
         setselectedValue([]);
     };

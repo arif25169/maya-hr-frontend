@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, batchPayEmployeeSalary, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, deleteSalryConfiguration, employeeCustomIdUpdate, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalaryProcessList3, fetchsalarySheetViews, fetchsalarySheetViewsByDep, fetchsalarySheetViewsByDepNew, fetchsalryConfigurationSheetByDepartment, fetchsalryConfigurationSheetByDepartment2, fetchviewForSalaryPayment, payEmployeeSalary, salaryProcessListDelete3, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateBank, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, batchPayEmployeeSalary, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, deleteSalryConfiguration, employeeCustomIdUpdate, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalaryProcessList3, fetchsalaryProcessList3noDep, fetchsalarySheetViews, fetchsalarySheetViewsByDep, fetchsalarySheetViewsByDepNew, fetchsalryConfigurationSheetByDepartment, fetchsalryConfigurationSheetByDepartment2, fetchviewForSalaryPayment, payEmployeeSalary, salaryProcessListDelete3, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, saveSalaryProcess2, updateAdditionSalaryGradeConfiguration, updateBank, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -62,6 +62,7 @@ export interface Payroll {
     salaryProcessList3: any;
     setsalaryProcessList3: Action<Payroll, any>;
     fetchsalaryProcessList3: Thunk<Payroll, any>;
+    fetchsalaryProcessList3noDep: Thunk<Payroll, any>;
     salaryProcessListDelete3: Thunk<Payroll, any>;
 
     salaryProcessList2: any;
@@ -494,7 +495,7 @@ export const payrollStore: Payroll = {
     }),
 
     saveSalaryProcess: thunk(async (actions, payload) => {
-        const response = await saveSalaryProcess(payload);
+        const response = await saveSalaryProcess2(payload);
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             if (body.messageType == 1) {
@@ -606,6 +607,25 @@ export const payrollStore: Payroll = {
 
     fetchsalaryProcessList3: thunk(async (actions, payload) => {
         const response = await fetchsalaryProcessList3(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.item?.employeeList?.length > 0) {
+                actions.setsalaryProcessList3(body.item);
+            } else {
+                notification['warning']({
+                    message: 'No data found',
+                });
+                actions.setsalaryProcessList3(body.item);
+            }
+        } else {
+            const body = await response.json();
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),    
+    fetchsalaryProcessList3noDep: thunk(async (actions, payload) => {
+        const response = await fetchsalaryProcessList3noDep(payload);
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             if (body?.item?.employeeList?.length > 0) {

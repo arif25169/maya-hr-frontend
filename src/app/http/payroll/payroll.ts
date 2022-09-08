@@ -29,6 +29,7 @@ export const fetchsalarySheetViews = () => get("/salary-sheet/view");
 export const fetchsalarySheetViewsByDep = (payload) => get("/salary-sheet/view/by/department?departmentId="+payload);
 export const fetchsalarySheetViewsByDepNew = (payload) => post("/employee/salary/configuration/sheet/by/department/for/payment",payload);
 export const saveSalaryProcess = (payload) => post("/salary/process/save", payload);
+export const saveSalaryProcess2 = (payload) => post("/salary/process/save/batch", payload);
 export const assignSalaryGrade = (payload) => post("/salary/grade/assign", payload);
 export const assignDesignation = (payload) => post("/employee/designation/assign", payload);
 export const updateBank = (payload) => post("/employee/bank/info/bulk/update", payload);
@@ -36,7 +37,8 @@ export const employeeCustomIdUpdate = (payload) => post("/employee/custom/id/bul
 export const payEmployeeSalary = (payload) => post("/salary/payment/save", payload);
 export const batchPayEmployeeSalary = (payload) => post("/salary/payment/batch/save", payload);
 export const fetchsalaryProcessList = (payload) => get("/salary/process/list?month="+payload?.salaryMonth+"&year="+payload?.salaryYear);
-export const fetchsalaryProcessList3 = (payload) => get("/salary/process/list?month="+payload?.salaryMonth+"&year="+payload?.salaryYear+"&departmentId="+payload?.departmentId);
+export const fetchsalaryProcessList3 = (payload) => get("/salary/process/list/by/department?month="+payload?.salaryMonth+"&year="+payload?.salaryYear+"&departmentId="+payload?.departmentId);
+export const fetchsalaryProcessList3noDep = (payload) => get("/salary/process/list/by/department?month="+payload?.salaryMonth+"&year="+payload?.salaryYear);
 export const salaryProcessListDelete3 = (payload) => del("/salary/record/single/delete?salaryRecordId="+payload);
 export const deleteSalryConfiguration = (payload) => del("/employee/salary/configuration/delete?salaryConfigId="+payload);
 export const fetchsalryConfigurationSheetByDepartment = (payload) => get("/employee/salary/configuration/sheet/by/department?departmentId="+payload);

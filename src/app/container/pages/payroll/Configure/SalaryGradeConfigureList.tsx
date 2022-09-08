@@ -343,7 +343,7 @@ export default function SalaryGradeConfigureList() {
                                                     .addDataSource(tableData, {
                                                         str2Percent: true,
                                                     })
-                                                    .saveAs(`Salary Process View of ${form.getFieldValue('salaryMonth')}-${form.getFieldValue('salaryYear')}.xlsx`);
+                                                    .saveAs(`Salary Process of ${form.getFieldValue('salaryMonth')}-${form.getFieldValue('salaryYear')}.xlsx`);
                                             }}
                                         >
                                             Download Excel
