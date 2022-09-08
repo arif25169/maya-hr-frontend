@@ -40,6 +40,7 @@ export const fetchsalaryProcessList3 = (payload) => get("/salary/process/list?mo
 export const salaryProcessListDelete3 = (payload) => del("/salary/record/single/delete?salaryRecordId="+payload);
 export const deleteSalryConfiguration = (payload) => del("/employee/salary/configuration/delete?salaryConfigId="+payload);
 export const fetchsalryConfigurationSheetByDepartment = (payload) => get("/employee/salary/configuration/sheet/by/department?departmentId="+payload);
+export const fetchsalryConfigurationSheetByDepartment2 = () => get("/employee/salary/configuration/sheet/by/department");
 
 export const fetchbankAdviseContentView = () => get("/bank/advise/content/view");
 export const saveBankAdviseContent = (payload) => post("/bank/advise/content/save",payload);

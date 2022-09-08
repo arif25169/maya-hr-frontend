@@ -54,7 +54,7 @@ export const SelectDepartment2 = ({
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
     >
-      <Option key={1} value={1}>
+      <Option key={1} value={null}>
         All
       </Option>
       {companyDepartmentList ? (

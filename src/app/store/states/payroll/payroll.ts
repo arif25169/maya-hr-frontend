@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import { Action, Thunk, thunk, action } from 'easy-peasy';
-import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, batchPayEmployeeSalary, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, deleteSalryConfiguration, employeeCustomIdUpdate, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalaryProcessList3, fetchsalarySheetViews, fetchsalarySheetViewsByDep, fetchsalarySheetViewsByDepNew, fetchsalryConfigurationSheetByDepartment, fetchviewForSalaryPayment, payEmployeeSalary, salaryProcessListDelete3, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateBank, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
+import { addSalaryHeadAddition, addSalaryHeadDeduction, assignDesignation, assignSalaryGrade, batchPayEmployeeSalary, deleteAdditionSalaryGradeConfiguration, deleteDeductionSalaryGradeConfiguration, deleteSalaryGrade, deleteSalaryHeadAddition, deleteSalaryHeadDeduction, deleteSalryConfiguration, employeeCustomIdUpdate, fetchbankAdviseContentView, fetchbankAdviseListView, fetchsalaryGradeConfigurationList, fetchsalaryGradeList, fetchsalaryHeadListAddition, fetchsalaryHeadListDeduction, fetchsalaryProcessList, fetchsalaryProcessList3, fetchsalarySheetViews, fetchsalarySheetViewsByDep, fetchsalarySheetViewsByDepNew, fetchsalryConfigurationSheetByDepartment, fetchsalryConfigurationSheetByDepartment2, fetchviewForSalaryPayment, payEmployeeSalary, salaryProcessListDelete3, saveBankAdviseContent, saveSalaryGrade, saveSalaryGradeConfiguration, saveSalaryProcess, updateAdditionSalaryGradeConfiguration, updateBank, updateDeductionSalaryGradeConfiguration, updateSalaryGrade, updateSalaryHeadAddition, updateSalaryHeadDeduction } from '../../../http/payroll/payroll';
 
 export interface Payroll {
     //////
@@ -85,6 +85,7 @@ export interface Payroll {
     salryConfigurationSheetByDepartment: any;
     setsalryConfigurationSheetByDepartment: Action<Payroll, any>;
     fetchsalryConfigurationSheetByDepartment: Thunk<Payroll, any>;
+    fetchsalryConfigurationSheetByDepartment2: Thunk<Payroll>;
     deleteSalryConfiguration: Thunk<Payroll, any>;
 }
 
@@ -631,6 +632,24 @@ export const payrollStore: Payroll = {
 
     fetchsalryConfigurationSheetByDepartment: thunk(async (actions, payload) => {
         const response = await fetchsalryConfigurationSheetByDepartment(payload);
+        if (response.status === 201 || response.status === 200) {
+            const body = await response.json();
+            if (body?.item?.employeeList?.length > 0) {
+                actions.setsalryConfigurationSheetByDepartment(body.item);
+            } else {
+                notification['warning']({
+                    message: 'No data found',
+                });
+                actions.setsalryConfigurationSheetByDepartment(body.item);
+            }
+        } else {
+            notification['error']({
+                message: 'Something went wrong',
+            });
+        }
+    }),     
+    fetchsalryConfigurationSheetByDepartment2: thunk(async (actions,) => {
+        const response = await fetchsalryConfigurationSheetByDepartment2();
         if (response.status === 201 || response.status === 200) {
             const body = await response.json();
             if (body?.item?.employeeList?.length > 0) {

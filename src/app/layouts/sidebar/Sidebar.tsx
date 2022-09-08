@@ -154,11 +154,11 @@ export function Sidebar() {
 					</SubMenu>
 					<SubMenu key={"payrollConfigure"} icon={<PartitionOutlined />} title="Configure" >
 						<Menu.Item key={ROUTES.CONFIGURE_PAYROLL_GRADE} icon={<ContainerOutlined />}>
-							<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Grade</Link>
+							<Link to={ROUTES.CONFIGURE_PAYROLL_GRADE} className="nav-text">Salary</Link>
 						</Menu.Item>
-						<Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<ContainerOutlined />}>
+						{/* <Menu.Item key={ROUTES.CONFIGURE_EMPLOYEE_GRADE} icon={<ContainerOutlined />}>
 							<Link to={ROUTES.CONFIGURE_EMPLOYEE_GRADE} className="nav-text">Grade Assign</Link>
-						</Menu.Item>
+						</Menu.Item> */}
 					</SubMenu>
 					<SubMenu key={"salaryProcessMenu"} icon={<PartitionOutlined />} title="Salary Process" >
 						<Menu.Item key={ROUTES.SALARY_PROCESS_PAYROLL} icon={<ContainerOutlined />}>

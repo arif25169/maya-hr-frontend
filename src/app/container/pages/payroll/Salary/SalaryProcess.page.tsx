@@ -13,6 +13,7 @@ import { Excel } from 'antd-table-saveas-excel';
 import { SelectDepartment } from '../../../select/SelectDepartment';
 import { SelectGradeDeduction } from '../../../select/SelectGradeDeduction';
 import { SelectGradeAddition } from '../../../select/SelectGradeAddition';
+import { SelectDepartment2 } from '../../../select/SelectDepartment2';
 
 const cleanObject = (input) => {
     if (typeof input === 'object' && input !== null) {
@@ -580,6 +581,7 @@ export default function SalaryProcess() {
 
     const onProcess = (value) => {
         if (value.departmentId === 'all') {
+            value.departmentId = null;
             details = "Employee salary sheet";
         } else details = `Employee salary sheet of Department-${$(".depSelect").text()}`;
         value.absentFineId= absentFineId;
@@ -795,7 +797,7 @@ export default function SalaryProcess() {
                                 { required: true, message: "Please select department" },
                             ]}
                         >
-                            <SelectDepartment />
+                            <SelectDepartment2 />
                         </Form.Item>
                     </Col>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }} xl={{ span: 3 }}>

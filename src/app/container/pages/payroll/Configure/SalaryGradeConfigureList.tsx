@@ -6,6 +6,7 @@ import TableView from '../../../../contents/AntTableResponsive';
 import { Excel } from 'antd-table-saveas-excel';
 import { moneyFormat } from '../../../../utils/utils';
 import { SelectDepartment } from '../../../select/SelectDepartment';
+import { SelectDepartment2 } from '../../../select/SelectDepartment2';
 
 
 
@@ -17,6 +18,7 @@ const year = d.getFullYear();
 export default function SalaryGradeConfigureList() {
     const salryConfigurationSheetByDepartment = useStoreState((state) => state.payroll.salryConfigurationSheetByDepartment);
     const fetchsalryConfigurationSheetByDepartment = useStoreActions((state) => state.payroll.fetchsalryConfigurationSheetByDepartment);
+    const fetchsalryConfigurationSheetByDepartment2 = useStoreActions((state) => state.payroll.fetchsalryConfigurationSheetByDepartment2);
     const deleteSalryConfiguration = useStoreActions((state) => state.payroll.deleteSalryConfiguration);
     const fetchCompanyDepartmentList = useStoreActions(
         (state) => state.common.fetchCompanyDepartmentList
@@ -268,8 +270,14 @@ export default function SalaryGradeConfigureList() {
     const [form] = Form.useForm();
     const [search, setsearch] = useState<any>(null)
     const onProcess = (value) => {
-        setsearch(value.departmentId)
-        fetchsalryConfigurationSheetByDepartment(value.departmentId);
+        if (value.departmentId==='all'){
+            setsearch(null)
+            fetchsalryConfigurationSheetByDepartment2();
+        } else{
+            setsearch(value.departmentId);
+            fetchsalryConfigurationSheetByDepartment(value.departmentId);
+        }
+
     }
 
     return (
@@ -291,7 +299,7 @@ export default function SalaryGradeConfigureList() {
                                 { required: true, message: "Please select department" },
                             ]}
                         >
-                            <SelectDepartment />
+                            <SelectDepartment2 />
                         </Form.Item>
                     </Col>
 
