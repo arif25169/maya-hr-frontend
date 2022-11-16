@@ -59,16 +59,16 @@ export default function SalaryGradeConfigureList() {
             showOnResponse: true,
             showOnDesktop: true
         },
-        {
-            title: 'Basic Salary',
-            dataIndex: 'basicSalary',
-            key: 'netSalary',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                moneyFormat(record.basicSalary)
-            )
-        },
+        // {
+        //     title: 'Basic Salary',
+        //     dataIndex: 'basicSalary',
+        //     key: 'netSalary',
+        //     showOnResponse: true,
+        //     showOnDesktop: true,
+        //     render: (text: any, record: any, index) => (
+        //         moneyFormat(record.basicSalary)
+        //     )
+        // },
         ...salryConfigurationSheetByDepartment?.salaryHeadAdditionName1 !== "" ? [{
             title: salryConfigurationSheetByDepartment?.salaryHeadAdditionName1,
             dataIndex: 'salaryHeadAdditionAmount1',

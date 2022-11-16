@@ -76,16 +76,16 @@ export default function SalaryProcess() {
             showOnResponse: true,
             showOnDesktop: true
         },
-        {
-            title: 'Basic Salary',
-            dataIndex: 'basicSalary',
-            key: 'netSalary',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                moneyFormat(record.basicSalary)
-            )
-        },
+        // {
+        //     title: 'Basic Salary',
+        //     dataIndex: 'basicSalary',
+        //     key: 'netSalary',
+        //     showOnResponse: true,
+        //     showOnDesktop: true,
+        //     render: (text: any, record: any, index) => (
+        //         moneyFormat(record.basicSalary)
+        //     )
+        // },
 
         ...(salarySheetViews?.salaryHeadAdditionName1 !== "") ? [
             {
@@ -328,16 +328,16 @@ export default function SalaryProcess() {
             showOnResponse: true,
             showOnDesktop: true
         },
-        {
-            title: 'Basic Salary',
-            dataIndex: 'basicSalary',
-            key: 'netSalary',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                moneyFormat(record.basicSalary)
-            )
-        },
+        // {
+        //     title: 'Basic Salary',
+        //     dataIndex: 'basicSalary',
+        //     key: 'netSalary',
+        //     showOnResponse: true,
+        //     showOnDesktop: true,
+        //     render: (text: any, record: any, index) => (
+        //         moneyFormat(record.basicSalary)
+        //     )
+        // },
 
         ...(salarySheetViews?.salaryHeadAdditionName1 !== "") ? [
             {
@@ -597,7 +597,7 @@ export default function SalaryProcess() {
         };
         let payLoad = selectedValue?.map((item: any) => {
             return {
-                "basicSalary": item.basicSalary,
+                // "basicSalary": item.basicSalary,
                 "employeeId": item.employeeId,
                 "grossSalary": item.grossSalary,
                 "netSalary": item.netSalary,

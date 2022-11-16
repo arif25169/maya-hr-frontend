@@ -60,9 +60,9 @@ export default function SalaryProcessList() {
             showOnDesktop: true
         },
         {
-            title: 'Basic Salary',
+            title: 'Grade Salary',
             dataIndex: 'basicSalary',
-            key: 'netSalary',
+            key: 'basicSalary',
             showOnResponse: true,
             showOnDesktop: true,
             render: (text: any, record: any, index) => (

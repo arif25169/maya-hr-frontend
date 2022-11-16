@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox, Descriptions } from 'antd'
+import { Button, Card, Col, Divider, Form, Input, InputNumber, Popconfirm, Row, Select, Space, Tooltip, message, Modal, Checkbox, Descriptions, notification } from 'antd'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { useStoreActions, useStoreState } from '../../../../store/hooks/easyPeasy';
 import TableView from '../../../../contents/AntTableResponsiveSimple';
@@ -37,6 +37,17 @@ export default function SalaryGradeConfigureAdd() {
     ]
 
     const createSubmitForm = (value) => {
+        let checkAddition= tableAddition.reduce((acc, obj) => acc + obj.percentage, 0);
+        let checkDeduction= tableDeduction.reduce((acc, obj) => acc + obj.percentage, 0);
+        if (checkAddition!==100){
+            notification.error({message:"Addition amount and grade amount should be equal"});
+            return;
+        }
+        if (checkDeduction>100){
+            notification.error({message:"Please check deduction value"});
+            return;
+        }
+
         let salaryHeadAdditionList = tableAddition.filter(item=>item.amount>0).map(item=>{
             return {
                 "salaryHeadId": item.salaryHeadAdditionId,
@@ -156,8 +167,8 @@ export default function SalaryGradeConfigureAdd() {
             newData[index][key] = e;
             newData[index]['amount'] = ((e as any) / 100) * finalAmount;
             setTableAddition(newData);
-            saveForm.setFieldsValue({ grossAmount: finalAmount + (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
-            saveForm.setFieldsValue({ netAmount: finalAmount + (newData.reduce((acc, obj) => acc + obj.amount, 0)) - (tableDeduction.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ grossAmount: (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ netAmount:  (newData.reduce((acc, obj) => acc + obj.amount, 0)) - (tableDeduction.reduce((acc, obj) => acc + obj.amount, 0)) })
             // setGrossAmount(newData.reduce((acc,obj)=>acc+obj.amount,0))
         }, [tableAddition]);
 
@@ -167,8 +178,8 @@ export default function SalaryGradeConfigureAdd() {
             newData[index][key] = e;
             newData[index]['percentage'] = (((e as any) * 100) / finalAmount).toFixed(2);
             setTableAddition(newData);
-            saveForm.setFieldsValue({ grossAmount: finalAmount + (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
-            saveForm.setFieldsValue({ netAmount: finalAmount + (newData.reduce((acc, obj) => acc + obj.amount, 0)) - (tableDeduction.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ grossAmount:  (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ netAmount: (newData.reduce((acc, obj) => acc + obj.amount, 0)) - (tableDeduction.reduce((acc, obj) => acc + obj.amount, 0)) })
         }, [tableAddition]);
     const deductioncolumns = [
         {
@@ -222,8 +233,8 @@ export default function SalaryGradeConfigureAdd() {
             newData[index][key] = e;
             newData[index]['amount'] = ((e as any) / 100) * finalAmount;
             setTableDeduction(newData);
-            saveForm.setFieldsValue({ grossAmount: finalAmount + (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) })
-            saveForm.setFieldsValue({ netAmount: finalAmount + (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) - (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ grossAmount: (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ netAmount:  (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) - (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
         }, [tableDeduction]);
 
     const onchangeAmountDeduction: any =
@@ -232,8 +243,8 @@ export default function SalaryGradeConfigureAdd() {
             newData[index][key] = e;
             newData[index]['percentage'] = (((e as any) * 100) / finalAmount).toFixed(2);
             setTableDeduction(newData);
-            saveForm.setFieldsValue({ grossAmount: finalAmount + (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) })
-            saveForm.setFieldsValue({ netAmount: finalAmount + (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) - (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ grossAmount:  (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) })
+            saveForm.setFieldsValue({ netAmount: (tableAddition.reduce((acc, obj) => acc + obj.amount, 0)) - (newData.reduce((acc, obj) => acc + obj.amount, 0)) })
         }, [tableDeduction]);
 
     const [selectedRowKeys, setselectedRowKeys] = useState<any>([]);
@@ -331,10 +342,10 @@ export default function SalaryGradeConfigureAdd() {
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                         <Form.Item
                             name="basicAmountMinimum"
-                            label="Basic Amount"
+                            label="Grade Amount"
                             className="title-Text"
                         >
-                            <InputNumber min={amount} max={amountmax} onChange={e => { setfinalAmount(e); saveForm.setFieldsValue({ grossAmount: 0, netAmount: 0 }); setTableAddition(salaryHeadListAddition?.map((item) => ({ ...item, percentage: 0, amount: 0 }))); setTableDeduction(salaryHeadListDeduction.map((item) => ({ ...item, percentage: 0, amount: 0 }))); }} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
+                            <InputNumber min={amount} max={amountmax} onChange={e => { setfinalAmount(e); saveForm.setFieldsValue({ grossAmount: 0, netAmount: 0 }); setTableAddition(salaryHeadListAddition?.map((item) => ({ ...item, percentage: 0, amount: 0 }))); setTableDeduction(salaryHeadListDeduction.map((item) => ({ ...item, percentage: 0, amount: 0 }))); }} formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Grade Amount" />
                         </Form.Item>
                     </Col>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}></Col>
@@ -425,7 +436,7 @@ export default function SalaryGradeConfigureAdd() {
                                     <Descriptions.Item label={<strong>Department</strong>}>{viewSingleSalryConfiguration?.departmentName}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Designation</strong>}>{viewSingleSalryConfiguration?.designation}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Grade</strong>}>{viewSingleSalryConfiguration?.salaryGradeName}</Descriptions.Item>
-                                    <Descriptions.Item label={<strong>Basic Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.basicSalary)}</Descriptions.Item>
+                                    <Descriptions.Item label={<strong>Grade Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.basicSalary)}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Gross Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.grossSalary)}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Net Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.netSalary)}</Descriptions.Item>
                                 </Descriptions>

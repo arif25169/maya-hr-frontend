@@ -48,7 +48,7 @@ export default function SalaryGrade() {
             showOnDesktop: true
         },
         {
-            title: 'Basic Amount(Minimum)',
+            title: 'Amount (Minimum)',
             dataIndex: 'basicAmountMinimum',
             key: 'basicAmountMinimum',
             showOnResponse: true,
@@ -58,7 +58,7 @@ export default function SalaryGrade() {
             )
         },
         {
-            title: 'Basic Amount(Maximum)',
+            title: 'Amount (Maximum)',
             dataIndex: 'basicAmountMaximum',
             key: 'basicAmountMaximum',
             showOnResponse: true,
@@ -136,25 +136,25 @@ export default function SalaryGrade() {
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                                 <Form.Item
                                     name="basicAmountMinimum"
-                                    label="Basic Amount (Minimum)"
+                                    label="Amount (Minimum)"
                                     className="title-Text"
                                     rules={[
                                         { required: true, message: "Please input amount" },
                                     ]}
                                 >
-                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount (min)" />
+                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount (min)" />
                                 </Form.Item>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
                                 <Form.Item
                                     name="basicAmountMaximum"
-                                    label="Basic Amount (Maximum)"
+                                    label="Amount (Maximum)"
                                     className="title-Text"
                                     rules={[
                                         { required: true, message: "Please input amount" },
                                     ]}
                                 >
-                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount (max)" />
+                                    <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount (max)" />
                                 </Form.Item>
                             </Col>
                             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 5 }} xl={{ span: 5 }}>
@@ -234,25 +234,25 @@ export default function SalaryGrade() {
                         <Col span={24}>
                             <Form.Item
                                 name="basicAmountMinimum"
-                                label="Basic Amount (Minimum)"
+                                label="Amount (Minimum)"
                                 className="title-Text"
                                 rules={[
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
+                                <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount (Minimum)" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
                             <Form.Item
                                 name="basicAmountMaximum"
-                                label="Basic Amount (Maximum)"
+                                label="Amount (Maximum)"
                                 className="title-Text"
                                 rules={[
                                     { required: true, message: "Please input amount" },
                                 ]}
                             >
-                                <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Basic Amount" />
+                                <InputNumber formatter={value => `${value}`.replace(/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g, "$1,")} placeholder="Amount (Maximum)" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
