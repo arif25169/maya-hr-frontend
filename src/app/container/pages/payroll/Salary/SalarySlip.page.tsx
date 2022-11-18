@@ -196,16 +196,7 @@ export default function SalarySlip() {
             showOnResponse: true,
             showOnDesktop: true
         },
-        {
-            title: 'Basic Salary',
-            dataIndex: 'basicSalary',
-            key: 'basicSalary',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                moneyFormat(record.basicSalary)
-            )
-        },
+
 
         salaryProcessList?.salaryHeadAdditionName1 !== "" && {
             title: salaryProcessList?.salaryHeadAdditionName1,

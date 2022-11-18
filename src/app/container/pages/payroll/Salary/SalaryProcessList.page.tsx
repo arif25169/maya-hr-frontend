@@ -59,16 +59,7 @@ export default function SalaryProcessList() {
             showOnResponse: true,
             showOnDesktop: true
         },
-        {
-            title: 'Grade Salary',
-            dataIndex: 'basicSalary',
-            key: 'basicSalary',
-            showOnResponse: true,
-            showOnDesktop: true,
-            render: (text: any, record: any, index) => (
-                moneyFormat(record.basicSalary)
-            )
-        },
+
         ...salaryProcessList?.salaryHeadAdditionName1 !== "" ? [{
             title: salaryProcessList?.salaryHeadAdditionName1,
             dataIndex: 'salaryHeadAdditionAmount1',
@@ -375,7 +366,7 @@ export default function SalaryProcessList() {
                                                 const excel = new Excel();
                                                 excel
                                                     .addSheet('Salary Process')
-                                                    .addColumns(columns)
+                                                    .addColumns(columns.slice(0,columns?.length-1))
                                                     .addDataSource(tableData, {
                                                         str2Percent: true,
                                                     })

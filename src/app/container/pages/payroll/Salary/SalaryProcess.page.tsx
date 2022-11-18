@@ -854,7 +854,7 @@ export default function SalaryProcess() {
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }} xl={{ span: 4 }}>
                         <Form.Item
                             name="y"
-                            label="Bonus"
+                            label="Bonus Head"
                             className="title-Text"
                     //    
                         >
