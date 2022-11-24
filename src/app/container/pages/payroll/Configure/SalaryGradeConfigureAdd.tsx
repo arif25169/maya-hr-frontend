@@ -436,7 +436,7 @@ export default function SalaryGradeConfigureAdd() {
                                     <Descriptions.Item label={<strong>Department</strong>}>{viewSingleSalryConfiguration?.departmentName}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Designation</strong>}>{viewSingleSalryConfiguration?.designation}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Grade</strong>}>{viewSingleSalryConfiguration?.salaryGradeName}</Descriptions.Item>
-                                    <Descriptions.Item label={<strong>Grade Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.basicSalary)}</Descriptions.Item>
+                                    {/* <Descriptions.Item label={<strong>Grade Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.basicSalary)}</Descriptions.Item> */}
                                     <Descriptions.Item label={<strong>Gross Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.grossSalary)}</Descriptions.Item>
                                     <Descriptions.Item label={<strong>Net Salary</strong>}>{moneyFormat(viewSingleSalryConfiguration?.netSalary)}</Descriptions.Item>
                                 </Descriptions>

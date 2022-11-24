@@ -813,10 +813,19 @@ export const generalSettingStore: GeneralSetting = {
 				actions.setCompanyInfo(body.item);
 				localStorage.setItem("companyInfo", JSON.stringify(body.item));
 			} else {
-				actions.setCompanyInfo([])
+				actions.setCompanyInfo([]);
+
 			}
 		} else {
-			notification.error({ message: 'Something Wrong' });
+			//notification.error({ message: 'Something Wrong' });
+			notification['error']({
+				message: 'Session',
+				description: "Session has expired",
+			});
+			setTimeout(() => {
+				localStorage.clear();
+				window.location.reload()
+			}, 500);
 		}
 	}),
 
