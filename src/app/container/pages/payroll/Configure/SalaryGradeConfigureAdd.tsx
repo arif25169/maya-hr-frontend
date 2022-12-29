@@ -37,13 +37,13 @@ export default function SalaryGradeConfigureAdd() {
     ]
 
     const createSubmitForm = (value) => {
-        let checkAddition= tableAddition.reduce((acc, obj) => acc + obj.percentage, 0);
-        let checkDeduction= tableDeduction.reduce((acc, obj) => acc + obj.percentage, 0);
-        if (checkAddition!==100){
+        let checkAddition= tableAddition.reduce((acc, obj) => acc + parseFloat(obj.percentage), 0);
+        let checkDeduction= tableDeduction.reduce((acc, obj) => acc + parseFloat(obj.percentage), 0);
+        if (Math.round(checkAddition)!==100){
             notification.error({message:"Addition amount and grade amount should be equal"});
             return;
         }
-        if (checkDeduction>100){
+        if (Math.round(checkDeduction)>100){
             notification.error({message:"Please check deduction value"});
             return;
         }
